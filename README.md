@@ -79,3 +79,9 @@ see their package (maybe include here)
 - multilevel modeling from Ron's earlier student (name?) into ranking  
 - comparison loss functions with weighting  
 - additional ranking methods by other authors  
+
+# Packages to Reference:
+- PLMIX: An R package for modeling and clustering partially ranked data https://arxiv.org/pdf/1612.08141.pdf    
+- pmr https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665468/     
+- mederrRank https://cran.r-project.org/web/packages/mederrRank/mederrRank.pdf   
+- http://jmlr.csail.mit.edu/papers/volume12/weng11a/weng11a.pdf  
