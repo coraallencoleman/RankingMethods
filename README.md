@@ -1,15 +1,15 @@
-#Ranking Methods
+# Ranking Methods
 Bayesian ranking methods implementation  
 
-##1. Rank by Posterior Mean   
+## 1. Rank by Posterior Mean   
 file: posteriormeans.r
 pros:  
   - simple, typically used across fields
 cons:  
   - ignores varying levels on uncertainty in the point estimates of various ranked items
 
-#Positional Loss  
-##2. Loss on Ranks  
+# Positional Loss  
+## 2. Loss on Ranks  
 pros:  
   - accounts for varying levels on uncertainty in the point estimates of various ranked items
 cons:  
