@@ -1,4 +1,4 @@
-### Loss Functions on the Ranking Scale ###
+### Loss Functions on the Rank Scale ###
 
 ##Cora Allen-Coleman Feb 2018 ##
 
@@ -101,7 +101,7 @@ loss_on_ranks <- function(model, loss){
   return(solve_LSAP(LossRnk))
 }
 
-loss_on_ranks(rand_int_model, "zero")
+loss_on_ranks(rand_int_model, "square")
 
 
 ### Graph estimates of shrinkage ##

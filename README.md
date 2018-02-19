@@ -8,11 +8,11 @@ pros:
 cons:  
   - assumes ranks are evenly spaced (TODO check)
 ### a. Square Error Loss on Ranks
-file:  
+file: loss_on_ranks.r (function = loss_on_ranks)  
 ### b. Absolute Error Loss on Ranks
-file:  
+file: loss_on_ranks.r (function = loss_on_ranks)  
 ### c. Zero One Loss on Ranks
-file:  
+file: loss_on_ranks.r (function = loss_on_ranks)  
 
 ## 2. Loss on Probability Scale  
 pros:
@@ -25,12 +25,12 @@ file:
 ### c. Zero One Loss on Probability Scale
 file:  
 
-## 3. Loss on Point Estimate Scale
+## 3. Loss on Data Scale (same as prob scale for binomial, right?)
 (TODO can we be this flexible?)  
 pros:  
   - accounts for varying levels on uncertainty in the point estimates of various ranked items
 cons:  
-  - ranking will depend on scale (TODO check this)
+  - ranking will depend on data's scale (TODO check this)
 ### a. Square Error Loss on Point Estimate Scale
 file:    
 ### b. Absolute Error Loss on Probability Scale
