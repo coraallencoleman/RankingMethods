@@ -2,14 +2,26 @@
 
 ##Cora Allen-Coleman Feb 2018 ##
 
-#Data
-raw_data <- read.csv("/Users/cora/git_repos/RankingMethods/LBW.csv", header = TRUE)
-m1_est <- read.csv("/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking/presentations/rankings_introduction/m1_estimates.csv", header = TRUE)
+## for now, allows for only random intercept binomial multilevel bayesian model ##
 
+library(rstan)
+
+##Data set up ##
+#Data
+raw_data <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+data = list(
+  J = nrow(raw_data),
+  num = with(raw_data, NumLBW),
+  count = with(raw_data, NumBirths),
+  county = with(raw_data,as.integer(as.factor(County)))
+)
 
 ## Create Model with Random Intercepts for Each County ##
-library(rstan)
-library(rethinking)
+rand_int_model = stan(file="/Users/cora/git_repos/RankingMethods/loss_on_ranks.stan",data=raw_data)
+
+#library(rethinking)
 m1 <- map2stan(
   alist(
     NumLBW ~ dbinom(NumBirths, p) ,
