@@ -1,10 +1,11 @@
-//loss on ranks
+//loss on rank scale
 
 data
 {
   int<lower=1> J; // number of counties
-  int<lower=1> num[J]; // number of births
-  int<lower=1> count[J]; // number low birth weight
+  int<lower=1> n[J]; // number of births
+  int<lower=0> count[J]; // number low birth weight
+  int<lower=1,upper=J> county[J]; //all J counties
 }
 
 parameters
@@ -18,8 +19,7 @@ parameters
 transformed parameters
 {
   vector[J] p;
-  for ( i in 1:J )
-  {
+  for ( i in 1:J ){
     p[i] = inv_logit(intercept + alpha[i]);
   }
 }
@@ -27,11 +27,10 @@ transformed parameters
 model
 {
   // prior distributions for parameters
-  intercept ~ normal(0, 100); // intercept
-  alpha[J] ~ normal(intercept, sigma); // county intercept effects
+  intercept ~ normal(0, 5); // intercept
   sigma ~ cauchy(0,1); //st dev of county effect distribution
 
   // likelihood model
-  count ~ binomial(num, p); //NumLBW is count, NumBirths is num
-  alpha[J] ~ normal(alpha, sigma);
+  alpha ~ normal(0, sigma); // county intercept effects
+  count ~ binomial(n, p); //NumLBW is count, NumBirths is num. Originally NumLBW ~ dbinom(NumBirths, p)
 }
