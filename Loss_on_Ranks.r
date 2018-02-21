@@ -71,7 +71,10 @@ for (i in 1:21) {
 }
 
 ### Combining Above into One Function ### requires rstan and clue
-loss_on_ranks <- function(model, loss){
+loss_on_ranks <- function(model, loss, parameter, scale){
+  # model: a stan model
+  # loss: a loss function for ranking. Options: square, abosolute, zero
+  # scale: scale upon which to do loss. Options: parameter, rank
   #TODO include paramter option too.
   #rstan::extract(rand_int_model, pars="p")$p
   #cat('"',parameter,'"', sep ="")
@@ -97,11 +100,13 @@ loss_on_ranks <- function(model, loss){
         LossRnk[i,j] <- mean(ranks[i,]!=j)
       }
     }
+  } else {
+    return("error: loss function not recognized")
   }
   return(solve_LSAP(LossRnk))
 }
 
-loss_on_ranks(rand_int_model, "square")
+loss_on_ranks(rand_int_model, "ab")
 
 
 ### Graph estimates of shrinkage ##

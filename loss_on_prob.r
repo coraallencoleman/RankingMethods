@@ -38,6 +38,8 @@ loss_on_prob <- function(model, loss){
         Loss[i,j] <- mean(rstan::extract(model, pars="p")$p[,i]!=ProbOrder[j,])
       }
     }
+  }else {
+    return("error: loss function not recognized")
   }
   return(solve_LSAP(Loss))
 }
