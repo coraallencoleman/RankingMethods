@@ -1,5 +1,4 @@
 ### Loss Functions on the Rank Scale ###
-
 ##Cora Allen-Coleman Feb 2018 ##
 
 ## TODO So far, only been tested with relatively simple bayesian models. Test with more complex model ##
@@ -10,8 +9,8 @@ library(clue)
 
 ##Data set up ##
 #Data
-raw_data <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
-raw_data <- raw_data[, c("County", "NumLBW", "NumBirths")]#subset data to include only columns used by stan
+raw_data0 <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
+raw_data <- raw_data0[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
 raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
 
 ## Stan Model ##
@@ -66,4 +65,11 @@ rank_on_loss <- function(model, loss, parameter, scale){
   return(solve_LSAP(LossRnk))
 }
 
-rank_on_loss(rand_int_model, "square", "p", "rank")
+ranks <- rank_on_loss(rand_int_model, "square", "p", "rank");ranks
+
+## Ranked Data Frame ##
+County <- raw_data0[,c(3)]
+rankedDataFrame <- as.data.frame(County)
+rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]
+rankedDataFrame$rank <- as.integer(ranks)
+library(dplyr); arrange(rankedDataFrame, rank)
