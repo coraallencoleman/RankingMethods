@@ -1,4 +1,4 @@
-### Weighted Loss Functions on the Rank Scale (Ranking by Position) ###
+### Weighted Loss Function for Ranking by Position ###
 ##Cora Allen-Coleman Feb 2018 ##
 
 ## TODO So far, only been tested with relatively simple bayesian models. Test with more complex model ##
@@ -6,28 +6,6 @@
 
 library(rstan)
 library(clue)
-
-##Data set up ##
-#Data
-raw_data0 <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
-raw_data <- raw_data0[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
-raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
-
-## Stan Model ##
-rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
-data = list(
-  J = nrow(raw_data),
-  n = with(raw_data, NumBirths),
-  count = with(raw_data, NumLBW),
-  county = with(raw_data,as.integer(as.factor(County)))
-)
-## Create Model with Random Intercepts for Each County ##
-rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
-
-## Weights ##
-w_equal <- rep(1/21, times = 21)
-w_unequal <- rep(0, times = 21); w_unequal[c(1:4)] <- .25
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 rank_on_weighted_loss <- function(model, loss, parameter, scale, weights){
@@ -44,8 +22,7 @@ rank_on_weighted_loss <- function(model, loss, parameter, scale, weights){
     return("error: enter valid scaleForRanking")
   }
   ranks <- apply(rstan::extract(model, pars=parameter)[[1]], 1, scale)
-  return(ranks)
-  ranks <- weights*ranks #TODO Ron, this weights items, not position, right?
+  ranks <- weights*ranks #TODO Ron, this weights items, not rank position, right?
   LossRnk <- matrix(NA,nrow(ranks),nrow(ranks))
   if (loss == "square"){
     for (i in 1:21) {
@@ -73,6 +50,29 @@ rank_on_weighted_loss <- function(model, loss, parameter, scale, weights){
   return(solve_LSAP(LossRnk))
 }
 
+
+##Example Data ##
+raw_data0 <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
+raw_data <- raw_data0[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
+raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
+
+## Stan Model ##
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+data = list(
+  J = nrow(raw_data),
+  n = with(raw_data, NumBirths),
+  count = with(raw_data, NumLBW),
+  county = with(raw_data,as.integer(as.factor(County)))
+)
+## Create Model with Random Intercepts for Each County ##
+rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
+
+## Weights ##
+w_equal <- rep(1/21, times = 21)
+w_unequal <- rep(0, times = 21); w_unequal[c(1:4)] <- .25
+
+## Testing function on Example Data ##
 ranks <- rank_on_weighted_loss(rand_int_model, "square", "p", "rank", w_equal);ranks
 
 ## Ranked Data Frame ##
