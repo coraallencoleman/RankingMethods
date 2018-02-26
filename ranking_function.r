@@ -1,28 +1,31 @@
 ### Weighted Loss Function for Ranking by Position ###
-##Cora Allen-Coleman Feb 2018 ##
+## Cora Allen-Coleman Feb 2018 ##
 
+## TODO put in defaults for all inputs
+## TODO as much flexiblity in f and loss as possible
+## TODO add rank weights i.e. function(model, loss, parameter, f=functionscale, rankweights, itemweights){}
+## TODO add item weights
+## TODO an option for giving function a matrix of samples for each item nitems x samples
 ## TODO So far, only been tested with relatively simple bayesian models. allow for stan model OR matrix of parameter samples ##
 ## TODO Nested for loops faster by vectorizing apply outer product
-## TODO as much flexiblity in f and loss as possible
+
 ## TODO should there be autoscaling of original matrix to prevent numbers that are too small
-## TODO put in defaults for all of these things
 
 library(rstan)
 library(clue)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
-rank_on_weighted_loss <- function(model, loss, parameter, f=functionscale, rankweights, itemweights){
-  #TODO an option for giving function a matrix of samples for each item nitems x samples
-  
+rank_on_weighted_loss <- function(model, loss, parameter, f=functionscale){
   # dependencies: rstan, clue
   ## parameters ##
   # model: a stan model
   # loss: a loss function for ranking. Options: square, absolute, zero. allow them to just give power for loss 
-    #(will have to use absolute value instead of parentheses)
+    #If input power, will have to use absolute value instead of parentheses)
   # parameter: parameter to rank, as created by stan model (as string)
-  # scale: scale for loss calculation. Options: parameterscale, rank. "identity, rank, logit" can input a function here
+  # f=functionscale: scale for loss calculation. Options: parameterscale, rank. "identity, rank, logit" set to input a function here
   # could do any monotone function for rho. For rank, super simple
-  # weight: a vector of length equal to number of items to be ranked, ranks on items
+  # rankweight: a vector of length equal to number of items to be ranked, ranks on items
+  # itemweight: 
   # set defaults
   if (scale == "parameterscale"){
     scale <- sort 

@@ -1,11 +1,12 @@
 ### Weighted Loss Function for Ranking by Position ###
 ##Cora Allen-Coleman Feb 2018 ##
 
+## TODO put in defaults for all of these things
 ## TODO So far, only been tested with relatively simple bayesian models. allow for stan model OR matrix of parameter samples ##
 ## TODO Nested for loops faster by vectorizing apply outer product
 ## TODO as much flexiblity in f and loss as possible
 ## TODO should there be autoscaling of original matrix to prevent numbers that are too small
-## TODO put in defaults for all of these things
+
 
 library(rstan)
 library(clue)
