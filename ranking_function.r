@@ -23,12 +23,10 @@ weight_loss_ranking <- function(model, loss = 2, parameter, f=identity){
   #, rankweights = rep(1, times = n), itemweights = rep(1, times = n)
   
   #extract estimates (i) and sorted estimates (j)
-  i <- rstan::extract(model, pars=parameter)[[1]] 
-  j <- apply(rstan::extract(model, pars=parameter)[[1]], 1, sort)
-    
   #apply function/scale transformation to matrices
+  i <- rstan::extract(model, pars=parameter)[[1]] 
   rho_i <- apply(i, 2, f)
-  rho_j <- apply(j, 2, f) #apply(j, 1, f) already on rank scale
+  rho_j <- apply(rho_i, 1, sort) #Q: sort after scale transformation?
     
   #n = # items to be ranked
   n <- ncol(i)
