@@ -28,7 +28,7 @@ weight_loss_ranking <- function(model, loss = 2, parameter, f=identity){
     
   #apply function/scale transformation to matrices
   rho_i <- apply(i, 2, f)
-  rho_j <- f(j) #apply(j, 1, f) already on rank scale
+  rho_j <- apply(j, 2, f) #apply(j, 1, f) already on rank scale
     
   #n = # items to be ranked
   n <- ncol(i)
