@@ -19,14 +19,16 @@ library(clue)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
-weight_loss_ranking <- function(model, loss = 2, parameter, f=identity, rankweights = rep(1, times = n), itemweights = rep(1, times = n)){
-  #extract estimates (i) and sorts (j)
+weight_loss_ranking <- function(model, loss = 2, parameter, f=identity){
+  #, rankweights = rep(1, times = n), itemweights = rep(1, times = n)
+  
+  #extract estimates (i) and sorted estimates (j)
   i <- rstan::extract(model, pars=parameter)[[1]] 
   j <- apply(rstan::extract(model, pars=parameter)[[1]], 1, sort)
     
   #apply function/scale transformation to matrices
-  rho_i <- apply(i, 1, f)
-  rho_j <- apply(j, 1, f)
+  rho_i <- apply(i, 2, f)
+  rho_j <- f(j) #apply(j, 1, f) already on rank scale
     
   #n = # items to be ranked
   n <- ncol(i)
@@ -35,8 +37,7 @@ weight_loss_ranking <- function(model, loss = 2, parameter, f=identity, rankweig
   LossRnk <- matrix(NA,n,n) #loss = mean(|rho(i) - rho(j)|^2)
   for (i in 1:n) {
     for (j in 1:n) {
-      LossRnk[i,j] <- mean(abs((rho_i[,i]-rho_j[j,]))^loss) 
-      #rankweights[j]*itemweights[i]*mean(abs((ranks[i,]-j))^loss) for rank position weighting. for both, just multiply
+      LossRnk[i,j] <- mean(abs((rho_i[,i]-rho_j[j,]))^loss) #rankweights[j]*itemweights[i]*mean(abs((ranks[i,]-j))^loss) for rank position weighting. for both, just multiply
     }
   }
   return(solve_LSAP(LossRnk))
