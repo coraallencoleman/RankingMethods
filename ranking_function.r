@@ -1,15 +1,14 @@
 ### Weighted Loss Function for Ranking by Position ###
 ## Cora Allen-Coleman Feb 2018 ##
 
-## TODO defaults for all inputs (NOTE: defaults dont make sense for model or parameter) Q
-## TODO as much flexiblity in f and loss as possible
-## TODO loss for zero one loss
-## TODO loss calculation should always be rho(i) - rho(j)
 ## TODO add rank weights i.e. function(model, loss, parameter, f=functionscale, rankweights, itemweights){}
 ## TODO add item weights
 ## TODO an option for giving function a matrix of samples for each item nitems x samples
 
 ## TODO 3 outer product of the matrix to vectorize to replace double for loops (meeting) vectorizing apply outer product
+
+## TODO loss for zero one loss
+
 
 ## TODO So far, only been tested with relatively simple bayesian models. allow for stan model OR matrix of parameter samples ##
 ## TODO should there be autoscaling of original matrix to prevent numbers that are too small
@@ -20,23 +19,22 @@ library(clue)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
-weight_loss_ranking <- function(model, loss = 2, parameter, f=identity){
-  #1 extract estimates and sort
+weight_loss_ranking <- function(model, loss = 2, parameter, f=identity, rankweights = rep(1, times = n), itemweights = rep(1, times = n)){
+  #extract estimates (i) and sorts (j)
   i <- rstan::extract(model, pars=parameter)[[1]] 
   j <- apply(rstan::extract(model, pars=parameter)[[1]], 1, sort)
     
-  #2 get matrices apply transformation to matrices
-  rho_i <- f(i)
-  rho_j <- f(j)
+  #apply function/scale transformation to matrices
+  rho_i <- apply(i, 1, f)
+  rho_j <- apply(j, 1, f)
     
   #n = # items to be ranked
   n <- ncol(i)
-    
+  
+  #calculate loss 
   LossRnk <- matrix(NA,n,n) #loss = mean(|rho(i) - rho(j)|^2)
   for (i in 1:n) {
     for (j in 1:n) {
-      #LossRnk[i,j] <- weight[i]*mean((ranks[i,]-j)^2)
-      #TODO do i have i and j [,?] switched? i is county, j is rank position
       LossRnk[i,j] <- mean(abs((rho_i[,i]-rho_j[j,]))^loss) 
       #rankweights[j]*itemweights[i]*mean(abs((ranks[i,]-j))^loss) for rank position weighting. for both, just multiply
     }
