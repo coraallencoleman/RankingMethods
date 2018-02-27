@@ -6,15 +6,13 @@
 ## TODO Nested for loops faster by vectorizing apply outer product
 ## TODO as much flexiblity in f and loss as possible
 ## TODO should there be autoscaling of original matrix to prevent numbers that are too small
-
+## TODO an option for giving function a matrix of samples for each item nitems x samples
 
 library(rstan)
 library(clue)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 rank_on_weighted_loss <- function(model, loss, parameter, f=functionscale, rankweights, itemweights){
-  #TODO an option for giving function a matrix of samples for each item nitems x samples
-  
   # dependencies: rstan, clue
   ## parameters ##
   # model: a stan model
