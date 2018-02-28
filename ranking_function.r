@@ -1,6 +1,7 @@
 ### Weighted Loss Function for Ranking by Position ###
 ## Cora Allen-Coleman Feb 2018 ##
 
+## Q: for rank, must use r function sort. How can we fix this? OR is this fine?
 ## TODO add rank weights i.e. function(model, loss, parameter, f=functionscale, rankweights, itemweights){}
 ## TODO add item weights
 ## TODO an option for giving function a matrix of samples for each item nitems x samples
@@ -22,8 +23,9 @@ library(clue)
 weight_loss_ranking <- function(model, loss = 2, parameter, f=identity){
   #, rankweights = rep(1, times = n), itemweights = rep(1, times = n)
   
-  #extract estimates (i) and sorted estimates (j)
-  #apply function/scale transformation to matrices
+  #extract samples (matrix i)
+  #apply function/scale transformation to matrix i
+  #sort transformed samples (matrix j)
   i <- rstan::extract(model, pars=parameter)[[1]] 
   rho_i <- apply(i, 2, f)
   rho_j <- apply(rho_i, 1, sort) #Q: sort after scale transformation?
@@ -42,15 +44,13 @@ weight_loss_ranking <- function(model, loss = 2, parameter, f=identity){
 }
 
 ## Testing Function on Example Data ##
-ranks <- weight_loss_ranking(rand_int_model, parameter = "p", loss = 2);ranks
-
+ranks <- weight_loss_ranking(rand_int_model, parameter = "p", loss = 2, f = sort);ranks
 ## Ranked Data Frame ##
 County <- raw_data0[,c(3)]
 rankedDataFrame <- as.data.frame(County)
 rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
-
 
 
 ##Example Data ##
@@ -70,15 +70,13 @@ data = list(
 ## Create Model with Random Intercepts for Each County ##
 rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
 
-## Weights ##
-w_equal <- rep(1/21, times = 21)
-w_unequal <- rep(1/17, times = 21); w_unequal[c(1:4)] <- .25 #LSAP might be weird with actual 0 
-#(this is a problem with Louis)
+## Weights Notes##
+#LSAP might be weird with actual 0 (this is a problem with Louis)
 #what we really want is orders of magnitude between weights
 #these weights dont need to sum to one (to normalize, divide each by sum)
 #c(1, e, e^2, e^3) then normalize if you want. TODO question: what should epsilon be? When do we have numerical stability problem
 
-
+## Future Work Notes ##
 #TODO bring in heuristic methods for LSAP look for papers by Louis' group 
 # TODO question: does our 1, e, e^2 etc work better than 1, 1, 1, 0, 0, 0, (these zeros will all be tied). 
 # Epsilon losses automatically breaks ties. Mostly want to show that it doesnt change answer about top 10 + ranking of bottom set will be better.
