@@ -1,5 +1,5 @@
 ### Weighted Loss Function for Ranking by Position ###
-## Cora Allen-Coleman Feb 2018 ##
+## Cora Allen-Coleman Spring 2018 ##
 
 library(rstan)
 library(clue)
@@ -24,10 +24,10 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   
 # Dependencies: rstan, clue
   
-  if (!is.null(sampleMatrix)){ #checks for sample matrix
+  if (!is.null(sampleMatrix)){ #checks for sampleMatrix
     i = sampleMatrix
-  } else if (!is.null(model)){
-    i <- rstan::extract(model, pars=parameter)[[1]] #extract samples (matrix i)
+  } else if (!is.null(model)){ #checks for model
+    i <- rstan::extract(model, pars=parameter)[[1]] #extract samples from model
   }
   rho_i <- apply(i, 2, f) #apply function/scale transformation to matrix i
   rho_j <- apply(rho_i, 1, sort) #sort transformed samples (matrix j)
@@ -45,7 +45,8 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
 }
 
 ## Testing Function on Example Data (below) ##
-ranks <- weight_loss_ranking(rand_int_model, parameter = "p", loss = 2) #model case
+require(boot)
+ranks <- weight_loss_ranking(rand_int_model, parameter = "p", loss = 2, f = inv.logit) #model case
 ranks <- weight_loss_ranking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
 
 ## Ranked Data Frame Output ##
@@ -79,7 +80,6 @@ i_samples <- rstan::extract(model, pars=parameter)[[1]]
 unequal <- rep(1, times = 21); unequal[4:9] <- 3
 
 ## Future Work Notes ##
-## TODO test logit
 ## TODO loss for zero one loss
 
 ## TODO 3 outer product of the matrix to vectorize to replace double for loops. vectorizing apply outer product
