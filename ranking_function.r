@@ -54,8 +54,8 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
 }
 
 ## Testing Function on Example Data (below) ##
-ranks <- weight_loss_ranking(rand_int_model, parameter = "p", loss = 2) #model case
-#ranks <- weight_loss_ranking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
+ranks <- WeightedLossRanking(rand_int_model, parameter = "p", loss = 0) #model case
+#ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
 
 ## Ranked Data Frame Output ##
 County <- raw_data0[,c(3)]
@@ -82,7 +82,7 @@ data = list(
 rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
 
 ## sampleMatrix input ##
-i_samples <- rstan::extract(model, pars=parameter)[[1]] 
+i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
 
 ## Possible Weights ##
 unequal <- rep(1, times = 21); unequal[4:9] <- 3
