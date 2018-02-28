@@ -3,8 +3,7 @@
 
 ## Q: for rank, must use r function sort. How can we fix this? OR is this fine?
 
-## TODO an option for giving function a matrix of samples for each item nitems x samples
-
+## TODO test logit
 ## TODO 3 outer product of the matrix to vectorize to replace double for loops (meeting) vectorizing apply outer product
 ## So far, only been tested with relatively simple bayesian models. allow for stan model OR matrix of parameter samples ##
 
@@ -12,44 +11,43 @@
 
 ## TODO should there be autoscaling of original matrix to prevent numbers that are too small
 ## TODO add checks for invalid inputs
+## TODO question: what should epsilon be? When do we have numerical stability problem
 
 library(rstan)
 library(clue)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
-weight_loss_ranking <- function(model = NULL, sampleMatrix = NULL, loss = 2, parameter, f=identity, rankweights = rep(1, times = n), itemweights = rep(1, times = n)){
-## DEPENDENCIES: rstan, clue
-## PARAMETERS ##
-  # model: a stan model
-  # loss: an exponent indicating the loss function for ranking. 
-    # options: 2=square, 1=absolute, zero TODO  
-    # default is 2
-  # parameter: parameter to rank, as created by stan model. Enter this as a string (with quotes).
-  # f: scale for loss calculation. 
-    # options: identity, rank (input R's sort function for now), logit TODO or any desired function
-    # default is identity
-  # rankweights: a vector of length equal to number of items to be ranked. Weights positions.
-    # default is a vector of equal weights
-  # itemweights: a vector of length equal to number of items to be ranked. Weights items.
-    # default is a vector equal weights
+WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = NULL, loss = 2,  f=identity, 
+                                rankweights = rep(1, times = n), itemweights = rep(1, times = n)){
+# Computes optimal ranking for a list of estimates
+#   
+# Args:
+#   model: a stan model for the estimates
+#   parameter: parameter to rank, as a string. Only necessary if inputting model rather than sampleMatrix.
+#   sampleMatrix: a matrix of samples. dim = n samples by n items
+#   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, zero? TODO
+#   f: scale for loss calculation. options: identity, rank (input R's sort function for now) TODO
+#   rankweights: a vector of length equal to number of items to be ranked. Weights positions.
+#   itemweights: a vector of length equal to number of items to be ranked. Weights items.
+#
+# Returns:
+#   optimal ranking for a list of estimates
   
-  if (!is.null(sampleMatrix)){#checks for sample matrix
+# Dependencies: rstan, clue
+  
+  if (!is.null(sampleMatrix)){ #checks for sample matrix
     i = sampleMatrix
   } else if (!is.null(model)){
-    #extract samples (matrix i)
-    i <- rstan::extract(model, pars=parameter)[[1]] 
+    i <- rstan::extract(model, pars=parameter)[[1]] #extract samples (matrix i)
   }
-  #apply function/scale transformation to matrix i
-  #sort transformed samples (matrix j)
-  rho_i <- apply(i, 2, f)
-  rho_j <- apply(rho_i, 1, sort) #Q: sort after scale transformation?
+  rho_i <- apply(i, 2, f) #apply function/scale transformation to matrix i
+  rho_j <- apply(rho_i, 1, sort) #sort transformed samples (matrix j)
   
-  #n = # items to be ranked
-  n <- ncol(i)
+  n <- ncol(i) #n = # items to be ranked
   
   #calculate loss 
-  LossRnk <- matrix(NA,n,n) #loss = mean(|rho(i) - rho(j)|^2)
+  LossRnk <- matrix(NA,n,n)
   for (i in 1:n) {
     for (j in 1:n) {
       LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(abs((rho_i[,i]-rho_j[j,]))^loss) #rankweights[j]*itemweights[i]*mean(abs((ranks[i,]-j))^loss) for rank position weighting. for both, just multiply
@@ -58,9 +56,12 @@ weight_loss_ranking <- function(model = NULL, sampleMatrix = NULL, loss = 2, par
   return(solve_LSAP(LossRnk))
 }
 
-## Testing Function on Example Data ##
+## Testing Function on Example Data (below) ##
 ranks <- weight_loss_ranking(rand_int_model, parameter = "p", loss = 2) #model case
-#ranks <- weight_loss_ranking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
+ranks <- weight_loss_ranking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
+
+## Possible Weights ##
+unequal <- rep(1, times = 21); unequal[4:9] <- 3
 
 ## Ranked Data Frame ##
 County <- raw_data0[,c(3)]
@@ -86,9 +87,9 @@ data = list(
 )
 ## Create Model with Random Intercepts for Each County ##
 rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
+i_samples <- rstan::extract(model, pars=parameter)[[1]]
 
-## Weights ##
-unequal <- rep(1, times = 21); unequal[4:9] <- 3
+
 
 #LSAP might act weirdly with actual 0 weights (this is a problem with Louis)
 #what we really want is orders of magnitude between weights
