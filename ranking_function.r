@@ -29,8 +29,8 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   } else if (!is.null(model)){ #checks for model
     i <- rstan::extract(model, pars=parameter)[[1]] #extract samples from model
   }
-  rho_i <- apply(i, 2, f) #apply function/scale transformation to matrix i
-  rho_j <- apply(rho_i, 1, sort) #sort transformed samples (matrix j)
+  rho_i <- apply(i, 1, f) #apply function/scale transformation to matrix i
+  rho_j <- apply(rho_i, 2, sort) #sort transformed samples (matrix j)
   
   n <- ncol(i) #n = # items to be ranked
   
@@ -38,8 +38,9 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(rho_i[,i]!=rho_j[j,])
-      }
+        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(rho_i[,i]!=rho_j[j,]) #should only do this with ranks (integers or set tolerance and compare)
+      #a more sensible loss function might be "are parameters within a certain tolerance?" close to correct spot
+        }
     }
     return(solve_LSAP(LossRnk))
   } else{ #other loss cases
