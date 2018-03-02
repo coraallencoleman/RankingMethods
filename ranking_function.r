@@ -38,8 +38,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(rho_i[,i]!=rho_j[j,]) #should only do this with ranks (integers or set tolerance and compare)
-      #a more sensible loss function might be "are parameters within a certain tolerance?" close to correct spot
+        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(all.equal(rho_i[,i],rho_j[j,]))
         }
     }
     return(solve_LSAP(LossRnk))
