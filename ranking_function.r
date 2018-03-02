@@ -15,7 +15,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
 #   parameter: parameter to rank, as a string. Only necessary if inputting model rather than sampleMatrix.
 #   sampleMatrix: a matrix of samples. dim = n samples by n items
 #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
-#   f: scale for loss calculation. options: identity, rank (input R's sort function for now) TODO
+#   f: scale for loss calculation. options: identity, rank
 #   rankweights: a vector of length equal to number of items to be ranked. Weights positions.
 #   itemweights: a vector of length equal to number of items to be ranked. Weights items.
 #
@@ -64,26 +64,6 @@ rankedDataFrame <- as.data.frame(County)
 rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
-
-##Example Data ##
-raw_data0 <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
-raw_data <- raw_data0[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
-raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
-
-## Stan Model ##
-rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
-data = list(
-  J = nrow(raw_data),
-  n = with(raw_data, NumBirths),
-  count = with(raw_data, NumLBW),
-  county = with(raw_data,as.integer(as.factor(County)))
-)
-## Create Model with Random Intercepts for Each County ##
-rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
-
-## sampleMatrix input ##
-i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
 
 ## Possible Weights ##
 unequal <- rep(1, times = 21); unequal[4:9] <- 3

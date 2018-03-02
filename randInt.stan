@@ -1,4 +1,4 @@
-//example model for ranking function
+//example rand int model for ranking function n = 21 counties
 
 data
 {

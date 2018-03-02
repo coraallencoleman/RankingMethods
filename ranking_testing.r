@@ -1,23 +1,35 @@
 #Testing for WeightedLossRanking function
+#load libraries
+library(rstan)
 
-## Testing Function on Example Data ## (run this for testing after data below in environment)
-ranks <- WeightedLossRanking(rand_int_model, parameter = "p", loss = 0) #model case
+#STEP 2
+##Testing for small Normal data ##
+small_normal_ranks <- WeightedLossRanking(normal_model, parameter = "alpha", loss = 2)
+#estimating five means for each of the five items
+
+##Testing for Normal Two Level Model Data ## 
+norm_ranks <- WeightedLossRanking(normal_model, parameter = "alpha", loss = 2)
+#expected rank? Might not be useful to do this (too long)
+
+## Testing Function on Example County Data ## (STEP 2)
+ranks <- WeightedLossRanking(rand_int_model, parameter = "p", loss = 2)
 #ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
-
-## Ranked Data Frame Output ##
+## County n = 21Ranked Data Frame Output ##
 County <- raw_data0[,c(3)]
 rankedDataFrame <- as.data.frame(County)
 rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
 
+##STEP 1: Read in data + create models
+##Testing for small Normal data ##
+#estimating five means for each of the five items
 
-##Example Data ## (do this first)
+##Example County Data n = 21 ## 
 raw_data0 <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
 raw_data <- raw_data0[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
 raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
-
-## Stan Model ##
+## Stan Data + Model ##
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 data = list(
@@ -28,6 +40,19 @@ data = list(
 )
 ## Create Model with Random Intercepts for Each County ##
 rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
-
-## sampleMatrix input for this model ##
+## sampleMatrix input for County Data model ##
 i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
+
+##Two Level Normal Model n = 5 ##
+#using subset of from Assignment 2 in MultilevelModels class
+#data
+math <- read.csv("/Users/cora/HardDriveDocuments/UW-Madison/Courses/Spring2018/MultilevelModels/Assignments/assignment2/hw02.csv", header = TRUE)
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+math_data = list(
+  N = nrow(math),
+  J = with(math,length(unique(School))),
+  y = with(math, Score),
+  school = with(math,as.integer(as.factor(School))) #goes in numeric order, but shifts them up so that all starting at 1
+)
+normal_model <- stan(file="/Users/cora/git_repos/RankingMethods/normal_two_level.stan",data=math_data, seed=10)
