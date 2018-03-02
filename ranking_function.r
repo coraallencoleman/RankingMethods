@@ -31,22 +31,24 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   }
   rho_i <- apply(i, 1, f) #apply function/scale transformation to matrix i
   rho_j <- apply(rho_i, 2, sort) #sort transformed samples (matrix j)
-  
+  print(dim(i))
+  print(dim(rho_i))
+  print(dim(rho_j))
   n <- ncol(i) #n = # items to be ranked
   
   if (loss == 0){ #zero one loss case
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(all.equal(rho_i[,i],rho_j[j,]))
+        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(isTRUE(all.equal(rho_i[i,],rho_j[j,])))
         }
     }
     return(solve_LSAP(LossRnk))
-  } else{ #other loss cases
+  } else{ #all other loss cases
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(abs((rho_i[,i]-rho_j[j,]))^loss)
+        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(abs((rho_i[i,]-rho_j[j,]))^loss)
       }
     }
     return(solve_LSAP(LossRnk))
@@ -54,8 +56,8 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
 }
 
 ## Testing Function on Example Data (below) ##
-ranks <- WeightedLossRanking(rand_int_model, parameter = "p", loss = 0) #model case
-#ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
+ranks <- WeightedLossRanking(model = rand_int_model, parameter = "p", loss = 0) #model case
+ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 0) #sample matrix case
 
 ## Ranked Data Frame Output ##
 County <- raw_data0[,c(3)]
