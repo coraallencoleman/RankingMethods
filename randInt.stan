@@ -1,4 +1,4 @@
-//loss on rank scale
+//example model for ranking function
 
 data
 {
