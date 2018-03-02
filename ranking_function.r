@@ -42,7 +42,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
         }
     }
     if (lossTotal == TRUE){
-      print(sum(LossRnk))
+      print(paste("Total Loss: ", sum(LossRnk)))
     }
     return(solve_LSAP(LossRnk))
   } else{ #all other loss cases
@@ -53,7 +53,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
       }
     }
     if (lossTotal == TRUE){
-      print(cat("Total Loss: ", sum(LossRnk)))
+      print(paste("Total Loss: ", sum(LossRnk)))
     }
     return(solve_LSAP(LossRnk))
   }
