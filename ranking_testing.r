@@ -1,6 +1,7 @@
 #Testing for WeightedLossRanking function
 #load libraries
 library(rstan)
+set.seed(10)
 
 #STEP 2
 ##Testing for small Normal data ##
@@ -21,11 +22,31 @@ rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
 
-##STEP 1: Read in data + create models
-##Testing for small Normal data ##
-#estimating five means for each of the five items
+##STEP 1: Read in data + create models 
 
-##Example County Data n = 21 ## 
+## Binomial Random Intercept n = 10 with conflicts ##
+#simulate county-like data
+cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
+colnames(cafes) <- c("cafe")
+cafes$attempts <- c(rep(c(10, 100, 1000), times = 4)) #create lots of variation here
+cafes$probs <- rep(c(.6, .7, .8, .9), each = 3) #four levels of true p
+cafes$SuccessfulConnections <- rbinom(n = 12, size = cafes$attempts, cafes$probs)
+## sim data + model ##
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+sim_data = list(
+  J = nrow(cafes), #should be 12
+  n = with(cafes, attempts),
+  count = with(cafes, SuccessfulConnections),
+  cafe = with(cafes,as.integer(as.factor(cafe)))
+)
+## Create Model with Random Intercepts for Each County ##
+sim_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
+
+
+
+
+## Example County Data n = 21 ## 
 raw_data0 <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
 raw_data <- raw_data0[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
 raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
