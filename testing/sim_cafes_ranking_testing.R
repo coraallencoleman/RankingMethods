@@ -2,7 +2,7 @@
 #simulate county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
 colnames(cafes) <- c("cafe")
-cafes$true_p <- rep(c(.5, .6, .7, .8), each = 3) #four levels of true p
+cafes$true_p <- rep(c(.7, .725, .75, .775), each = 3) #four levels of true p
 cafes$attempts <- c(rep(c(100, 1000, 10000), times = 4)) #create lots of variation here
 cafes$SuccessfulConnections <- rbinom(n = 12, size = cafes$attempts, cafes$true_p)
 ## sim data + model ##
@@ -38,6 +38,13 @@ rankedCafes<-arrange(rankedCafes, post_mean_p) #posterior mean order
 
 #Graphs
 #Mean with CI
+rankedCafes<-arrange(rankedCafes, post_mean_p)
 post_means <- ggplot(rankedCafes, aes(cafe, y=post_mean_p)) + geom_point() + 
-  geom_errorbar(aes(ymin=rankedCafes$Lower, ymax=rankedCafes$Upper), width=.1) + xlab("Cafes") + ylab("Posterior Means and CIs") + ggtitle("Posterior Means and Credible Intervals")
+  geom_errorbar(aes(ymin=rankedCafes$Lower, ymax=rankedCafes$Upper), width=.1, color = "blue") + xlab("Cafes") + ylab("Posterior Means and CIs") + ggtitle("Posterior Means and Credible Intervals");post_means
+ggsave(filename = "/Users/cora/git_repos/RankingMethods/plots/sim_posterior_meanandCIs.png", plot = post_means, device = png, width = 5, height = 5)
+
+#Posterior Rank Plot
+rankedCafes <- arrange(rankedCafes, desc(rank))
+post_means <- ggplot(rankedCafes, aes(cafe, y=post_mean_p)) + geom_point() + 
+  geom_errorbar(aes(ymin=rankedCafes$Lower, ymax=rankedCafes$Upper), width=.1) + xlab("Cafes") + ylab("Posterior Means and CIs") + ggtitle("Posterior Means and Credible Intervals");post_means
 ggsave(filename = "/Users/cora/git_repos/RankingMethods/plots/sim_posterior_meanandCIs.png", plot = post_means, device = png, width = 5, height = 5)
