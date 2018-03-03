@@ -1,6 +1,7 @@
 #Testing for WeightedLossRanking function
 #load libraries
 library(rstan)
+library(dplyr)
 set.seed(10)
 
 #STEP 2
@@ -28,9 +29,9 @@ library(dplyr); arrange(rankedDataFrame, rank)
 #simulate county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
 colnames(cafes) <- c("cafe")
+cafes$true_p <- rep(c(.6, .7, .8, .9), each = 3) #four levels of true p
 cafes$attempts <- c(rep(c(10, 100, 1000), times = 4)) #create lots of variation here
-cafes$probs <- rep(c(.6, .7, .8, .9), each = 3) #four levels of true p
-cafes$SuccessfulConnections <- rbinom(n = 12, size = cafes$attempts, cafes$probs)
+cafes$SuccessfulConnections <- rbinom(n = 12, size = cafes$attempts, cafes$true_p)
 ## sim data + model ##
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
@@ -42,8 +43,14 @@ sim_data = list(
 )
 ## Create Model with Random Intercepts for Each County ##
 sim_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
-
-
+#get posterior means from stan model
+#get credible intervals from stan model
+## Cafe Ranked Data Frame Output ##
+sim_ranks <- WeightedLossRanking(model = sim_rand_int_model, parameter = "p", f = rank, loss = 2, lossTotal = TRUE)
+rankedCafes <- as.data.frame(cafes)
+rankedCafes$p <- cafes$p*100
+rankedCafes$rank <- as.integer(sim_ranks) #this ranks lowest to highest
+rankedCafes<-arrange(rankedCafes, desc(rank))
 
 
 ## Example County Data n = 21 ## 
