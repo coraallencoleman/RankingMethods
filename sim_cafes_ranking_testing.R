@@ -1,4 +1,5 @@
 ## Binomial Random Intercept n = 10 with conflicts ##
+library(rstan)
 #simulate county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
 colnames(cafes) <- c("cafe")
@@ -41,3 +42,7 @@ rankedCafes<-arrange(rankedCafes, post_mean_p) #posterior mean order
 post_means <- ggplot(rankedCafes, aes(cafe, y=post_mean_p)) + geom_point() + 
   geom_errorbar(aes(ymin=rankedCafes$Lower, ymax=rankedCafes$Upper), width=.1) + xlab("Cafes") + ylab("Posterior Means and CIs") + ggtitle("Posterior Means and Credible Intervals")
 ggsave(filename = "/Users/cora/git_repos/RankingMethods/plots/sim_posterior_meanandCIs.png", plot = post_means, device = png, width = 5, height = 5)
+
+
+#Equal Variance Example with Graph
+
