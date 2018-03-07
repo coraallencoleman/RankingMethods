@@ -1,5 +1,6 @@
 ## Binomial Random Intercept n = 10 with conflicts ##
 library(rstan)
+library(ggplot2)
 #simulate county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
 colnames(cafes) <- c("cafe")
@@ -45,4 +46,23 @@ ggsave(filename = "/Users/cora/git_repos/RankingMethods/plots/sim_posterior_mean
 
 
 #Equal Variance Example with Graph
+#create a plot for each of the cafe's estimate p[i] distribution
+p <- data.frame(p)
+p2 <- stack(p)
+p2$cafe <- p2$ind
+names(p) <- seq(1:12)
+ggplot(p2, aes(x = values, group = cafe, color = cafe, fill = cafe)) + geom_density()
 
+# Make list of variable names to loop over.
+var_list = combn(names(iris)[1:3], 2, simplify=FALSE)
+
+# Make plots.
+plot_list = list()
+for (i in 1:ncol(p)) {
+  g = 
+  plot_list[[i]] = g
+}
+
+ggarrange(density.p, stable.p, text.p, 
+          ncol = 1, nrow = 3,
+          heights = c(1, 0.5, 0.3))
