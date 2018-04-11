@@ -24,6 +24,9 @@ rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
 
+## Testing Function on Illinois County Data ##
+
+
 ##STEP 1: Read in data + create models 
 
 ## Binomial Random Intercept n = 10 with conflicts ##
@@ -68,9 +71,28 @@ data = list(
   county = with(raw_data,as.integer(as.factor(County)))
 )
 ## Create Model with Random Intercepts for Each County ##
-rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
+NJ_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
 ## sampleMatrix input for County Data model ##
-i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
+NJ_i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
+
+## Illinois County Test Data n = 102!
+#http://www.countyhealthrankings.org/app/illinois/2018/measure/outcomes/1/map
+raw_data_I <- read.csv("/Users/cora/git_repos/RankingMethods/data/Illinois_LBW.csv", header = TRUE)
+raw_data <- raw_data_I[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
+raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
+## Stan Data + Model ##
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+data = list(
+  J = nrow(raw_data),
+  n = with(raw_data, NumBirths),
+  count = with(raw_data, NumLBW),
+  county = with(raw_data,as.integer(as.factor(County)))
+)
+## Create Model with Random Intercepts for Each County ##
+IL_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
+## sampleMatrix input for County Data model ##
+IL_i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
 
 ##Two Level Normal Model n = 5 ##
 #using subset of from Assignment 2 in MultilevelModels class

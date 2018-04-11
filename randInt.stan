@@ -1,4 +1,4 @@
-//example rand int model for ranking function n = 21 counties
+//example rand int model for ranking function n = 21 counties or n=102 for Illinois
 
 data
 {
