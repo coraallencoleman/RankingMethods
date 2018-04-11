@@ -15,17 +15,25 @@ norm_ranks <- WeightedLossRanking(normal_model, parameter = "alpha", loss = 2)
 #expected rank? Might not be useful to do this (too long)
 
 ## Testing Function on Example County Data ##
-ranks <- WeightedLossRanking(rand_int_model, parameter = "p", loss = 0)
+ranks <- WeightedLossRanking(NJ_rand_int_model, parameter = "p", loss = 2) #TODO loss = 0 doesnt work right
 #ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
 ## County n = 21Ranked Data Frame Output ##
 County <- raw_data0[,c(3)]
 rankedDataFrame <- as.data.frame(County)
-rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
+rankedDataFrame$p <- raw_data0$NumLBW/raw_data0$NumBirths*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
 
 ## Testing Function on Illinois County Data ##
-
+ranks <- WeightedLossRanking(IL_rand_int_model, parameter = "p", loss = 2)
+#ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
+## County n = 21Ranked Data Frame Output ##
+County <- raw_data_I$County
+rankedDataFrame <- as.data.frame(County)
+rankedDataFrame$p <- raw_data_I$NumLBW/raw_data_I$NumBirths*100
+rankedDataFrame$rank <- as.integer(ranks)
+library(dplyr); arrange(rankedDataFrame, rank) #lots of disagreement here. 
+#TODO compare for different types of ranking
 
 ##STEP 1: Read in data + create models 
 
