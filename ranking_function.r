@@ -34,7 +34,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   rho_j <- apply(rho_i, 2, sort) #sort transformed samples (matrix j)
   n <- ncol(i) #n = # items to be ranked
 
-  if (loss == 0){ #zero one loss case
+  if (loss == 0){ #zero one loss case TODO fix this
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {

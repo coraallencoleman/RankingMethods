@@ -1,12 +1,15 @@
+#OLD CODE. all of this code is now in ranking_testing.r
+
 ## Binomial Random Intercept n = 10 with conflicts ##
 library(rstan)
 library(ggplot2)
 #simulate county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
 colnames(cafes) <- c("cafe")
-cafes$true_p <- seq(from = 0.6, to = 0.72, by = 0.01) #four levels of true p
+cafes$true_p <- seq(from = 0.6, to = 0.71, by = 0.01) #four levels of true p
 cafes$attempts <- c(rep(c(100, 1000, 10000), times = 4)) #create lots of variation here
 cafes$SuccessfulConnections <- rbinom(n = 12, size = cafes$attempts, cafes$true_p)
+
 ## sim data + model ##
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())

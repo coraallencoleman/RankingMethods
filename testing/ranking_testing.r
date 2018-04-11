@@ -15,7 +15,7 @@ norm_ranks <- WeightedLossRanking(normal_model, parameter = "alpha", loss = 2)
 #expected rank? Might not be useful to do this (too long)
 
 ## Testing Function on Example County Data ##
-ranks <- WeightedLossRanking(NJ_rand_int_model, parameter = "p", loss = 2) #TODO loss = 0 doesnt work right
+ranks <- WeightedLossRanking(NJ_rand_int_model, parameter = "p", loss = 2) #TODO loss = 0 doesnt work
 #ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
 ## County n = 21Ranked Data Frame Output ##
 County <- raw_data0[,c(3)]
@@ -35,7 +35,9 @@ rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank) #lots of disagreement here. 
 #TODO compare for different types of ranking
 
-##STEP 1: Read in data + create models 
+
+
+#STEP 1: Read in data + create models 
 
 ## Binomial Random Intercept n = 10 with conflicts ##
 #simulate county-like data
@@ -53,17 +55,17 @@ sim_data = list(
   count = with(cafes, SuccessfulConnections),
   cafe = with(cafes,as.integer(as.factor(cafe)))
 )
-## Create Model with Random Intercepts for Each County ##
+
+## Create Model with Random Intercepts for Each Cafe ##
 sim_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
 #get posterior means from stan model
 #get credible intervals from stan model
 ## Cafe Ranked Data Frame Output ##
 sim_ranks <- WeightedLossRanking(model = sim_rand_int_model, parameter = "p", f = rank, loss = 2, lossTotal = TRUE)
 rankedCafes <- as.data.frame(cafes)
-rankedCafes$p <- cafes$p*100
+rankedCafes$true_p <- cafes$true_p*100
 rankedCafes$rank <- as.integer(sim_ranks) #this ranks lowest to highest
 rankedCafes<-arrange(rankedCafes, desc(rank))
-
 
 ## Example County Data n = 21 ## 
 raw_data0 <- read.csv("/Users/cora/git_repos/RankingMethods/data/LBW.csv", header = TRUE)
@@ -83,6 +85,7 @@ NJ_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.sta
 ## sampleMatrix input for County Data model ##
 NJ_i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
 
+
 ## Illinois County Test Data n = 102!
 #http://www.countyhealthrankings.org/app/illinois/2018/measure/outcomes/1/map
 raw_data_I <- read.csv("/Users/cora/git_repos/RankingMethods/data/Illinois_LBW.csv", header = TRUE)
@@ -101,6 +104,7 @@ data = list(
 IL_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
 ## sampleMatrix input for County Data model ##
 IL_i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
+
 
 ##Two Level Normal Model n = 5 ##
 #using subset of from Assignment 2 in MultilevelModels class
