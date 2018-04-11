@@ -1,25 +1,25 @@
 # Ranking Methods
 Bayesian ranking methods implementation  
 
-#Testing  
-##ranking_testing.r  
+# Testing  
+## ranking_testing.r    
 - tests ranking_function.r using a simple normal model, normal two-level data, and simple random intercept model.  
 - Step 1 listed after Step 2 for ease of testing when editing ranking_function.r  
 - relies on several .stan files.  
 
-###Tests Four Sets:  
+### Tests Four Sets:    
  - small normal n = 5  
  - normal two-level data from Multilevel Models class  
  - binomial random intercept n = 10 with conflicts (cafe)  
  - NJ n = 21 county LBW  
  - IL n = 102 county LBW  
 
-##ranking_metric.r  
+## ranking_metric.r  
 - compare ranking Methods  
 - could use total loss?  
 - answer how often we meet our goal: how often you meet your goal (% true top 10 in ranking's top 10)?  
 
-##ranking_function.r  
+## ranking_function.r  
 - houses WeightedLossRanking function
 
 
@@ -118,8 +118,8 @@ July 2018: write paper, write talk, practice talk
 July 28-30: JSM talk
 August 2018: send paper to Ron for final edits, submit
 
-##TODO
+## TODO   
 - fix WeightedLossRanking function when loss = 0
-- create way to compare rankings (a metric?) could use total loss?
-- create a metric that allows you to test how often you meet your goal
+- ranking_metric create way to compare rankings (a metric?) could use total loss?
+- ranking_metric create a metric that allows you to test how often you meet your goal
 (% true top 10 in ranking's top 10).
