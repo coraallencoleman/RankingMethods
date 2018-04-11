@@ -85,3 +85,13 @@ see their package (maybe include here)
 - pmr https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665468/     
 - mederrRank https://cran.r-project.org/web/packages/mederrRank/mederrRank.pdf   
 - http://jmlr.csail.mit.edu/papers/volume12/weng11a/weng11a.pdf  
+
+
+## Paper Timeline ##
+Feb 2018: abstract to JSM (accepted April 2018)
+April 2018: draft program + outline paper
+May 2018: finish program + rough draft of methods section
+June 2018: simulations + draft paper
+July 2018: write paper, write talk, practice talk
+July 28-30: JSM talk
+August 2018: send paper to Ron for final edits, submit

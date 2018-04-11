@@ -1,0 +1,141 @@
+---
+title: "Binomial with Beta Prior Sampling Ranking Simulation"
+author: "Cora Allen-Coleman"
+date: "9/20/2017"
+output: pdf_document
+---
+
+#Introduction
+If we have a list of baseball players, what is the best way to rank them by batting average? We can estimate the probability that each player is ranked at each position: "What is player i's probability of being ranked nth?"  
+  
+If n is the number of items to be ranked (baseball players here) then:  
+  
+$P_i = \text{Player}_i$ where $i = 1,..., n$  
+$r_j = \text{Rank }_j$ where $j = 1, ..., n$  
+Observed Successes: $\hat x_{i}$  
+Observed Batting Attempts: $\hat a_{i}$  
+Observed Batting Averages: $\hat b_{i}$ ~ Binomial($b_i, a_i$) where $b_i$ is the player's true batting average parameter  
+$\theta_{i,j} = P(P_i \text{ is ranked at position j } | \tilde x, \text{ prior})$    
+   
+To estimate $\theta_{i,n}$, we'll sample from the distribution of possible batting averages for each player, using a Beta($\alpha, \beta$) prior.  
+  
+data/likelihood: $\hat b_{i}$ ~ Binomial($b_i, \hat a_i$)  
+prior: Beta$(\alpha, \beta)$ = Beta(0.5, 0.5)    
+posterior for sampled batting averages: $\tilde b_{i}\text{ \textasciitilde  Beta}(\alpha + \hat x_i, \beta + \hat a_i - \hat x_i)$ 
+  
+Procedure:   
+  
+1. Sample a vector of sampled batting averages, one for each player: ($\tilde b_{1}, \tilde b_{2}, ..., \tilde b_{n}$)  
+
+2. Record the of the players using their sampled $\tilde b_{i}$: ($\tilde r_{1}, \tilde r_{1}, ..., \tilde r_{n}$)  
+3. Repeat steps 1 and 2 10,000 times. CHECK  
+
+4. Estimate the probability that each player is in each position $\theta_{i,j}$.   
+  
+Create a matrix of probabilities:  
+$$\tilde \theta_{i,j} = \frac{\text{Count of times player i is at spot j}}{\text{total simulations}} $$
+
+Choose a position for each player.  
+How do you choose the position for each player? Do we go spot by spot (over j), so that the player with the higher $\tilde \theta_{i,j}$ gets spot j from rank 1 to rank n? Or in the other direction? How do we deal with ties?  
+For this initial attempt, I will use this technique:   
+Start at rank 1 (j = 1). Choose the player with high probability of being at rank 1 (largest $\theta_{i, 1}$). If there are ties, choose the player who comes first in the list. Once a player has been chosen for a rank, they can't be chosen for a following rank. Continue for ranks 2 through n.  
+  
+Does this technique prioritize the correctness of early ranks (1-3) over later ranks?  
+  
+```{r, echo=FALSE}
+require(plyr)
+require(ggplot2)
+batData <- read.table("battingAverages.txt", header = T)
+batData$X <- batData$n*batData$avg #X = number of successes
+batData$sd <- sqrt(batData$X1000variance/1000)
+n <- length(batData$X) #this is n, the number of players
+```
+
+##Computer Model Implementation  
+##Step 1: Sample batting averages for each player 10,000 times.  
+a. Create an nxn matrix of sampled rank counts full of zeros for all players  
+```{r}
+samples <- 20000
+#stores ranks with nrow = #samples and col = players
+ranks <- as.data.frame(matrix(rep(0, n*samples), nrow = samples, ncol = n)) #rows = samples, columns=rank positions
+nums <- seq(1, n, by=1)
+names(ranks) <- paste("Player", nums, sep="")
+rankCounts <- as.data.frame(matrix(rep(0, n*n), nrow = n, ncol = n)) #rows = samples, columns=rank positions
+names(rankCounts) <- paste("Rank", nums, sep="")
+#rankCounts[1] is the vector for player 1
+```
+
+b. Sample a $\tilde b_i$ vector for each player.
+```{r}
+set.seed(1)
+alpha <- .5
+beta <- .5
+```
+
+c. Store the rank of the batting averages for each of the samples.  
+```{r}
+for (sample in 1:samples){
+  batAvg <- c()
+  for (i in 1:n){
+    batAvg[i] <- rbeta(1, alpha + batData$X[i], beta + batData$n[i] - batData$X[i])
+  }
+  #ranks of the each of the players for this vector
+  ranks[sample,] <- rank(batAvg)
+}
+```
+d. Count the number of times each player ranked at each position in the rankCount matrix.  
+```{r}
+for (player in 1:n){
+    df <- as.data.frame(count(ranks[,player],))
+    for (rank in 1:nrow(df)){
+      rankCounts[player, df$x[rank]] <- df$freq[rank]
+    }
+}
+```
+
+##Step 2: Calculate the probability that each player is in each position.
+a. Create a matrix of where:  
+$$\tilde \theta_{i,j} = \frac{\text{Count of times player i sampled at position j}}{\text{total simulations}} $$  
+
+```{r}
+rankProbs <- rankCounts/samples
+```
+b. Starting at rank 1, choose the player with the higher probability of being in that position. Store them at that rank and their probability of being in that position. Set their probabilities to zero so that they can't be chosen for later ranks.  
+```{r}
+estimatedRanks <- as.data.frame(matrix(rep(0, 2*n), nrow = 2, ncol = n)) #rows = samples, columns=rank positions
+names(estimatedRanks) <- c("Rank1", "Rank2", "Rank3", "Rank4", "Rank5", "Rank6", "Rank7", "Rank8", "Rank9", "Rank10", "Rank11", "Rank12")
+
+for (position in 1:n){
+  estimatedRanks[1,position] <- which.max(rankProbs[,position])
+  estimatedRanks[2,position] <- rankProbs[which.max(rankProbs[,position]), position] #store prob
+  #replace this player's row with 00s
+  rankProbs[which.max(rankProbs[,position]), ] <- rep(0, n)
+}
+rankProbs <- rankCounts/samples #fixes rankProb
+estimatedRanks #rows = players
+```
+
+##Step 3 Calculate Variance
+```{r}
+varianceEstimates <- c(rep(0, n))
+for (player in 1:n){
+  meanRank <- which(estimatedRanks[1,] == player)
+  for (sampledRank in 1:n){
+    varianceEstimates[player] <- varianceEstimates[player] + rankCounts[player, sampledRank]*((sampledRank - meanRank)^2)
+  }
+}
+varianceEstimates <- varianceEstimates/samples; varianceEstimates #by player
+
+```
+
+
+##Step 4: Sampling Size  
+How many times to sample? Decide by comparing variance estimates by sampling sizes.  
+  
+**Notes for Discussion:**  
+- What are reasonable choices for alpha and beta? Do I want my expectation to be 0.5? or 1/n? E = alpha/(alpha + beta)  
+- How do you choose the position for each player? Do we go spot by spot (over j), so that the player with the higher $\theta_{i,j}$ gets spot j from rank 1 to rank n? Or in the other direction? How do we deal with ties?  
+- Do these variance estimates make sense?
+  
+###To Do:
+- Graph variance over sampling sizes
