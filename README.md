@@ -1,6 +1,10 @@
 # Ranking Methods
 Bayesian ranking methods implementation  
 
+##Ranking_Testing
+- tests ranking_function.r using a simple normal model, normal two-level data, and simple random intercept model.
+- Step 1 listed after Step 2 for ease of testing when editing ranking_function.r
+
 # Positional Loss  
 ## 1. Loss on Ranks  
 pros:  
@@ -94,4 +98,4 @@ May 2018: finish program + rough draft of methods section
 June 2018: simulations + draft paper
 July 2018: write paper, write talk, practice talk
 July 28-30: JSM talk
-August 2018: send paper to Ron for final edits, submit
+August 2018: send paper to Ron for final edits, submi

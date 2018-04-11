@@ -1,7 +1,8 @@
 #Testing for WeightedLossRanking function
-#load libraries
+#Step 0 Load
 library(rstan)
 library(dplyr)
+  #load in WeightedLossRanking from ranking_function.r
 set.seed(10)
 
 #STEP 2
@@ -13,8 +14,8 @@ small_normal_ranks <- WeightedLossRanking(normal_model, parameter = "alpha", los
 norm_ranks <- WeightedLossRanking(normal_model, parameter = "alpha", loss = 2)
 #expected rank? Might not be useful to do this (too long)
 
-## Testing Function on Example County Data ## (STEP 2)
-ranks <- WeightedLossRanking(rand_int_model, parameter = "p", loss = 2)
+## Testing Function on Example County Data ##
+ranks <- WeightedLossRanking(rand_int_model, parameter = "p", loss = 0)
 #ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 2) #sample matrix case
 ## County n = 21Ranked Data Frame Output ##
 County <- raw_data0[,c(3)]
