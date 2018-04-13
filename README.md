@@ -120,6 +120,31 @@ August 2018: send paper to Ron for final edits, submit
 
 ## TODO   
 - fix WeightedLossRanking function when loss = 0
+- make the function faster?
 - ranking_metric create way to compare rankings (a metric?) could use total loss?
 - ranking_metric create a metric that allows you to test how often you meet your goal
 (% true top 10 in ranking's top 10).
+
+## Function specific TODOs (older)
+## Future Work Notes ##
+## TODO 3 outer product of the matrix to vectorize to replace double for loops. vectorizing apply outer product
+## TODO loss for zero one loss
+## TODO Q: for rank, must use r function sort. How can we fix this? OR is this fine?
+## TODO should there be autoscaling of original matrix to prevent numbers that are too small?
+## TODO add checks for invalid inputs
+
+## TODO Add heuristic methods for LSAP + compare. Look for papers by Louis' group
+
+## TODO Compare weighting strategies.
+##  Q: what should epsilon be? When do we have numerical stability problems?
+##  LSAP might act weirdly with actual 0 weights (this is a problem with Louis)
+##  what we really want is orders of magnitude between weights. (weights dont need to sum to one. To normalize, divide each by sum)
+##  e.g. c(1, e, e^2, e^3) then normalize if you want. TODO question: what should epsilon be? When do we have numerical stability problem
+##  Q: does our 1, e, e^2 etc work better than 1, 1, 1, 0, 0, 0, (these zeros will all be tied).
+##  Epsilon losses automatically breaks ties. Mostly want to show that it doesnt change answer about top 10 + ranking of bottom set will be better.
+##  Q: do I really want to have cliffs? Should it be smooth, gradual? How would we make this smooth? Are there various ways to try to get the good points of cliff functions.
+##  Can you make a smooth function that performs as well as cliffs? Is there a natural cliff? (page views on google?)
+##  Then is this related to threshold functions? e.g. i just care about my item, everyone else is less important
+##  Smoothness might be desireable in situations where you see the whole list. (college rankings)
+
+## TODO create visualizations: D3.js? this could be a good situation to use weights based on people's interests. Show different weight vectors.

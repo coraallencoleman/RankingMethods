@@ -2,7 +2,7 @@
 #Step 0: Load
 library(rstan)
 library(dplyr)
-#read WeightedLossRanking from ranking_function.r into environment
+#run entire ranking_function.r file. This puts WeightedLossRanking from ranking_function.r into environment and adds packages
 set.seed(10)
 
 #STEP 2
@@ -38,7 +38,6 @@ library(dplyr); arrange(rankedDataFrame, rank) #lots of disagreement here.
 
 
 #STEP 1: Read in data + create models 
-
 ## Binomial Random Intercept n = 10 with conflicts ##
 #simulate county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
