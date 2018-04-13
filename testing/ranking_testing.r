@@ -1,8 +1,8 @@
 #Testing for WeightedLossRanking function
-#Step 0 Load
+#Step 0: Load
 library(rstan)
 library(dplyr)
-  #load in WeightedLossRanking from ranking_function.r
+#read WeightedLossRanking from ranking_function.r into environment
 set.seed(10)
 
 #STEP 2

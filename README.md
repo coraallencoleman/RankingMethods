@@ -110,13 +110,13 @@ see their package (maybe include here)
 
 
 ## Paper Timeline ##
-Feb 2018: abstract to JSM (accepted April 2018)
-April 2018: draft program + outline paper
-May 2018: finish program + rough draft of methods section
-June 2018: simulations + draft paper
-July 2018: write paper, write talk, practice talk
-July 28-30: JSM talk
-August 2018: send paper to Ron for final edits, submit
+Feb 2018: abstract to JSM (accepted April 2018)  
+April 2018: draft program + outline paper  
+May 2018: finish program + rough draft of methods section  
+June 2018: simulations + draft paper   
+July 2018: write paper, write talk, practice talk   
+July 28-30: JSM talk  
+August 2018: send paper to Ron for final edits, submit  
 
 ## TODO   
 - fix WeightedLossRanking function when loss = 0

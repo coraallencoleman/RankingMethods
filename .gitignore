@@ -224,3 +224,7 @@ TSWLatexianTemp*
 
 *.xls
 *.jpg
+
+Presentations/
+RankingMethodsoldfolder/
+oldcode/
