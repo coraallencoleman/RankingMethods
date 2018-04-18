@@ -30,15 +30,20 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   } else if (!is.null(model)){ #checks for model
     i <- rstan::extract(model, pars=parameter)[[1]] #extract samples from model
   }
-  rho_i <- apply(i, 1, f) #apply function/scale transformation to matrix i
-  rho_j <- apply(rho_i, 2, sort) #sort transformed samples (matrix j)
+  rho_i <- apply(i, 1, f) #apply function/scale transformation to matrix i. Should this be on cols (2)?
+  rho_j <- apply(rho_i, 2, sort) #sort transformed samples (matrix j) so each column is sorted
   n <- ncol(i) #n = # items to be ranked
 
   if (loss == 0){ #zero one loss case TODO fix this
+    print("loss type 0")
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(isTRUE(all.equal(rho_i[i,],rho_j[j,])))
+        #cat("rho i", rho_i[i,], "posterior") #TODO
+        #cat("rho j", rho_i[j,], "sorted posterior")
+        sapply(m_i[1,], function(x) x==m_rho_j[,1])
+        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(isTRUE(all.equal(rho_i[i,],rho_j[j,]))) 
+        #this is vectors. need to do each one?
         }
     }
     if (lossTotal == TRUE){
@@ -60,7 +65,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
 }
 
 ## Testing Function on Example Data (below) ##
-ranks <- WeightedLossRanking(model = rand_int_model, parameter = "p", f = rank, loss = 0, lossTotal = TRUE); ranks #model case
+ranks <- WeightedLossRanking(model = NJ_rand_int_model, parameter = "p", f = rank, loss = 0, lossTotal = TRUE); ranks #model case
 #ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 0); ranks #sample matrix case
 
 ## Ranked Data Frame Output ##
@@ -70,3 +75,13 @@ rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
 
+# >> x<-c(1,2,3)
+# >> datalist<-list(c(1,2,3),c(2,3,4),c(3,4,5),c(4,5,6))
+# >>
+#   >> result <- sapply(datalist, function(.vec){
+#     > +     all(.vec == x)
+#     > + })
+
+ans <- vapply(x, function(x) x>y, logical(5))
+res <- rowSums(ans)
+[1] 4 1 1 3 3

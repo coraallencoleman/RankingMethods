@@ -102,7 +102,7 @@ data = list(
 ## Create Model with Random Intercepts for Each County ##
 IL_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
 ## sampleMatrix input for County Data model ##
-IL_i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
+IL_i_samples <- rstan::extract(IL_rand_int_model, pars="p")[[1]] 
 
 
 ##Two Level Normal Model n = 5 ##
