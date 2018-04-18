@@ -72,23 +72,3 @@ rankedDataFrame <- as.data.frame(County)
 rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
 rankedDataFrame$rank <- as.integer(ranks)
 library(dplyr); arrange(rankedDataFrame, rank)
-
-# >> x<-c(1,2,3)
-# >> datalist<-list(c(1,2,3),c(2,3,4),c(3,4,5),c(4,5,6))
-# >>
-#   >> result <- sapply(datalist, function(.vec){
-#     > +     all(.vec == x)
-#     > + })
-
-# ans <- vapply(x, function(x) x>y, logical(5))
-# res <- rowSums(ans)
-m_rho_i <- apply(m_i, 1, rank) #apply function/scale transformation to matrix i. Should this be on cols (2)?
-m_rho_j <- apply(m_rho_i, 2, sort) 
-dim(m_rho_i)
-dim(m_rho_j)
-r2 <- m_rho_i[1,]-m_rho_j[1,]
-length(r2)
-r0 <- m_rho_i[1,]==m_rho_j[1,]
-length(r0)
-result <- sapply(m_rho_i[1,], function(x) x==m_rho_j[1,]) #4000 by 4000 matrix
-rowSums(result)
