@@ -35,15 +35,13 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   n <- ncol(i) #n = # items to be ranked
 
   if (loss == 0){ #zero one loss case TODO fix this
+    #Q: this doesn't make sense unless we're on the rank scale, right? 
+    #TODO Should I give an error if user tries to use another scale?
     print("loss type 0")
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        #cat("rho i", rho_i[i,], "posterior") #TODO
-        #cat("rho j", rho_i[j,], "sorted posterior")
-        sapply(m_i[1,], function(x) x==m_rho_j[,1])
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(isTRUE(all.equal(rho_i[i,],rho_j[j,]))) 
-        #this is vectors. need to do each one?
+        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(sapply(rho_i[i,],function(x) x==rho_j[j,]))
         }
     }
     if (lossTotal == TRUE){
@@ -82,6 +80,12 @@ library(dplyr); arrange(rankedDataFrame, rank)
 #     > +     all(.vec == x)
 #     > + })
 
-ans <- vapply(x, function(x) x>y, logical(5))
-res <- rowSums(ans)
-[1] 4 1 1 3 3
+# ans <- vapply(x, function(x) x>y, logical(5))
+# res <- rowSums(ans)
+m_rho_i <- apply(m_i, 1, rank) #apply function/scale transformation to matrix i. Should this be on cols (2)?
+m_rho_j <- apply(m_rho_i, 2, sort) 
+dim(m_rho_i)
+dim(m_rho_j)
+r2 <- m_rho_i-m_rho_j; dim(r2)
+result <- sapply(m_rho_i[1,], function(x) x==m_rho_j[1,]) #4000 by 4000 matrix
+rowSums(result)
