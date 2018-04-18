@@ -10,7 +10,7 @@ set.seed(10)
 ## Binomial Random Intercept n = 10 with conflicts ##
 #simulate county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
-colnames(cafes) <- c("cafe")
+colnames(cafes) <- c("item")
 cafes$p <- rep(c(.6, .7, .8, .9), each = 3) #four levels of true p
 cafes$n <- c(rep(c(10, 100, 1000), times = 4)) #create lots of variation here
 cafes$SuccessfulConnections <- rbinom(n = 12, size = cafes$n, cafes$p)
@@ -21,7 +21,7 @@ sim_data = list(
   J = nrow(cafes), #should be 12
   n = with(cafes, n),
   count = with(cafes, SuccessfulConnections),
-  cafe = with(cafes,as.integer(as.factor(cafe)))
+  item = with(cafes,as.integer(as.factor(item)))
 )
 
 ## Example County Data n = 21 ## 

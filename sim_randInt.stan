@@ -5,7 +5,7 @@ data
   int<lower=1> J; // number of cafes
   int<lower=1> n[J]; // number of ConnectionAttempts
   int<lower=0> count[J]; // number SuccessfulConnections
-  int<lower=1,upper=J> cafe[J]; //all J cafes
+  int<lower=1,upper=J> item[J]; //all J cafes
 }
 
 parameters
