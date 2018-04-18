@@ -41,7 +41,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(sapply(rho_i[i,],function(x) x==rho_j[j,]))
+        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(m_rho_i[i,]!=m_rho_j[j,])
         }
     }
     if (lossTotal == TRUE){
@@ -86,6 +86,9 @@ m_rho_i <- apply(m_i, 1, rank) #apply function/scale transformation to matrix i.
 m_rho_j <- apply(m_rho_i, 2, sort) 
 dim(m_rho_i)
 dim(m_rho_j)
-r2 <- m_rho_i-m_rho_j; dim(r2)
+r2 <- m_rho_i[1,]-m_rho_j[1,]
+length(r2)
+r0 <- m_rho_i[1,]==m_rho_j[1,]
+length(r0)
 result <- sapply(m_rho_i[1,], function(x) x==m_rho_j[1,]) #4000 by 4000 matrix
 rowSums(result)
