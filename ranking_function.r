@@ -34,7 +34,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   rho_j <- apply(rho_i, 2, sort) #sort transformed samples (matrix j) so each column is sorted
   n <- ncol(i) #n = # items to be ranked
 
-  if (loss == 0){ #zero one loss case TODO fix this
+  if (loss == 0){
     #Q: this doesn't make sense unless we're on the rank scale, right? 
     #TODO Should I give an error if user tries to use another scale?
     print("loss type 0")
