@@ -60,7 +60,7 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
 }
 
 ## Testing Function on Example Data (below) ##
-ranks <- WeightedLossRanking(model = rand_int_model, parameter = "p", f = rank, loss = 2, lossTotal = TRUE); ranks #model case
+ranks <- WeightedLossRanking(model = rand_int_model, parameter = "p", f = rank, loss = 0, lossTotal = TRUE); ranks #model case
 #ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 0); ranks #sample matrix case
 
 ## Ranked Data Frame Output ##
