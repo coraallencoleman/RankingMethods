@@ -8,10 +8,16 @@ set.seed(10)
 
 #STEP 1: Read in data + create models 
 ## Binomial Random Intercept n = 10 with conflicts ##
-#simulate county-like data
+#SIMULATED county-like data
 cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
 colnames(cafes) <- c("item")
-cafes$p <- rep(c(.6, .7, .8, .9), each = 3) #four levels of true p
+cafes$p <- seq(from = 0.6, to = 0.72, by = 0.01) # all unique p TODO check this, try with bigger gaps, random unif on a range to have arbitrary gaps
+#increase gaps until trivial. decrease until broken/impossible. 
+#start with equal sample sizes. (vary one thing at a time) Weights may have an impact here.
+#TODO think of this as an experiment. what experimental conditions do we need to run to get a sense of behavior.
+
+#add weights. How does this compare to not weighting at all?
+
 cafes$n <- c(rep(c(10, 100, 1000), times = 4)) #create lots of variation here
 cafes$SuccessfulConnections <- rbinom(n = 12, size = cafes$n, cafes$p)
 ## sim data + model ##
@@ -40,13 +46,13 @@ data = list(
 ## Create Model with Random Intercepts for Each County ##
 NJ_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/randInt.stan",data=data, seed = 10)
 ## sampleMatrix input for County Data model ##
-NJ_i_samples <- rstan::extract(rand_int_model, pars="p")[[1]] 
+NJ_i_samples <- rstan::extract(NJ_rand_int_model, pars="p")[[1]] 
 
 
-## Illinois County Test Data n = 102!
+## Illinois County Test Data n = 102
 #http://www.countyhealthrankings.org/app/illinois/2018/measure/outcomes/1/map
-raw_data_I <- read.csv("/Users/cora/git_repos/RankingMethods/data/Illinois_LBW.csv", header = TRUE)
-raw_data <- raw_data_I[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
+raw_data_IL <- read.csv("/Users/cora/git_repos/RankingMethods/data/Illinois_LBW.csv", header = TRUE)
+raw_data <- raw_data_IL[, c("County", "NumLBW", "NumBirths")]#subset data to only those used by stan
 raw_data$County <- as.integer(as.factor(raw_data$County)) #set County column to numeric
 ## Stan Data + Model ##
 rstan_options(auto_write = TRUE)
@@ -118,3 +124,8 @@ rankedCafes <- as.data.frame(cafes)
 rankedCafes$p <- cafes$p*100
 rankedCafes$rank <- as.integer(sim_ranks) #this ranks lowest to highest
 arrange(rankedCafes, desc(rank))
+
+#cafes <- as.data.frame(matrix((seq(from = 1, to = 12, by = 1)), ncol = 1))
+colnames(cafes) <- c("item")
+cafes$p <- rep(c(.6, .7, .8, .9), each = 3) #four levels of true p
+cafes$n <- c(rep(c(10, 100, 1000), times = 4)) #create lots of variation here

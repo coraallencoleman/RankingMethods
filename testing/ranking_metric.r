@@ -4,20 +4,6 @@ library(dplyr)
 library(clue)
 library(rstan)
 
-## Cafe Ranked Data Frame Output ## (from raking_testing.r)
-
-
-
-sim_ranks <- WeightedLossRanking(model = sim_rand_int_model, parameter = "p", f = rank, loss = 2, lossTotal = TRUE)
-
-rankedCafes <- as.data.frame(cafes)
-rankedCafes$p <- cafes$p*100
-rankedCafes$rank <- as.integer(sim_ranks) #this ranks lowest to highest
-
-cafes <-cafes %>% dplyr::arrange(desc(p), desc(n)) #true top five
-rankedCafes <- rankedCafes %>% dplyr::arrange(rank)
-cafes[1:5,]$item %in% rankedCafes[1:5,]$item
-
 ##function metric to see if rankObject's top ranked items match true top items
 RankMetric <- function(rankObject = NULL, originalDataFrame = NULL, order = largest, topN = 5){
   # function metric to see if our top number matches true top five for Binomial model
@@ -40,7 +26,7 @@ RankMetric <- function(rankObject = NULL, originalDataFrame = NULL, order = larg
     rankedDataFrame <- rankedDataFrame %>% dplyr::arrange(rank)
   } else if (order == "smallest"){
     rankedDataFrame <- rankedDataFrame %>% dplyr::arrange(desc(rank))
-    originalDataFrame <-originalDataFrame %>% dplyr::arrange(p, n) 
+    originalDataFrame <-originalDataFrame %>% dplyr::arrange(p, desc(n)) #TODO assume no ties in p change simulated data
   } else {
     stop("order must be input as either 'largest' or 'smallest'")
   }
@@ -48,4 +34,15 @@ RankMetric <- function(rankObject = NULL, originalDataFrame = NULL, order = larg
   return(originalDataFrame[1:topN,]$item %in% rankedDataFrame[1:topN,]$item )
 }
 
-RankMetric(sim_ranks, cafes, order = "largest", topN = 6)
+RankMetric(sim_ranks, cafes, order = "largest", topN = 5)
+
+#normal (implement this, but do simulation with binomial instead. might be relevant with survey data for counties)
+#we're assuming that these tau^2 are known. If they aren't, the model could be extended to incorporate this uncertainty.
+#true mean, sample means, sample size or variances
+#simulate: fixed var (n), changing sample size. and use sd units. 
+#sigma^2/n = tau. tau is
+
+#TODO is rank one is in top five?
+
+#edge and confounding. able to more accurately identify treatment effects. latin square? 
+

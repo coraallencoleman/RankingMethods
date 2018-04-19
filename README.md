@@ -120,8 +120,6 @@ August 2018: send paper to Ron for final edits, submit
 
 ## TODO   
 - ranking_metric create way to compare rankings (a metric?) could use total loss?
-- ranking_metric create a metric that allows you to test how often you meet your goal
-(% true top 10 in ranking's top 10).
 - make the function faster?
 
 ## Function specific TODOs (older)
@@ -149,4 +147,6 @@ August 2018: send paper to Ron for final edits, submit
 ## TODO create visualizations: D3.js? this could be a good situation to use weights based on people's interests. Show different weight vectors.
 
 ## DONE
-- fix WeightedLossRanking function when loss = 0 DONE
+- fix WeightedLossRanking function when loss = 0
+- ranking_metric create a metric that allows you to test how often you meet your goal
+(e.g. % true top 10 in ranking's top 10)
