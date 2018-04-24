@@ -8,14 +8,17 @@ set.seed(10)
 #STEP 1: Simulate Different Types of Data
 
 ## Binomial Random Intercept n = 100 ## EVEN GAPS change 
-#matrix of dataframes?
-my.names <- c("item", "p", "n")
-replicate(4,data.frame())
+#matrix of dataframes? turn into arrays, matrices?
+#myarr <- array(,dim=c(3,5,10)) #three dim array
+#for (j in 1:3) for (k in 1:N) myarr[,j,k] <- rnorm(3)
 gaps <- c(0.0001, 0.001, 0.01, 0.1)
 for (gapsize in gaps){ #do by powers of ten
-  even[i] <- data.frame(matrix((seq(from = 0, to = 1, by = gapsize))) #p
+  even[[i]]$p <- data.frame(matrix((seq(from = 0, to = 1, by = gapsize)))) #p
+  even[[i]]$n <- rep(100, times = nrow(even[[i]]))
+  even[[i]]$item <- 
 }
-
+foo <- list() 
+for(i in 1:1000)  foo[[i]] <- data.frame(Ce = DATA1.x[,i], Qe=DATA1.y[,i]) 
 #TODO ask Ron if we should/how to vary gap size without varying n
 
 even <- as.data.frame(matrix((seq(from = 1, to = 100, by = gapsize)), ncol = 1))
