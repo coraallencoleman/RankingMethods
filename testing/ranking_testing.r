@@ -2,7 +2,6 @@
 #Step 0: Load
 library(rstan)
 library(dplyr)
-library(dplyr)
 #run entire ranking_function.r file. This puts WeightedLossRanking from ranking_function.r into environment and adds packages
 set.seed(10)
 
