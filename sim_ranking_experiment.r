@@ -9,28 +9,33 @@ set.seed(10)
 
 #STEP 1: Simulate Different Types of Data
 ## Binomial Random Intercept n = 100 ## EVEN GAPS change 
-#3 dim array with 4 gap size matrices, each with 5 columns and N rows (max = 10001)
-even <- array(data = NA, dim=c(4,5,10001))
-gaps <- c(0.0001, 0.001, 0.01, 0.1)
+topN = 5
+even <- array(data = NA, dim=c(4,5,10001)) #3 dim array with 4 matrices, 5 col and N rows (max = 10001) each
+even_ranked <- c() #list of rank objects for each of the 4 matrices
+even_metric_results <- c() #list of rank_metric results for each of the 4 matrices
 
+gaps <- c(0.0001, 0.001, 0.01, 0.1) #gap sizes tested here
 for (i in 1:length(gaps)){
   N = length(seq(from = 0, to = 1, by = gaps[i]))
   even[i, 1, 1:N] <- seq(from = 1, to = N, by = 1) #ITEM
   even[i, 2, 1:N] <- seq(from = 0, to = 1, by = gaps[i]) #P
   even[i, 3, 1:N] <- rep(as.integer(100),times = N) #SIZE
   even[i, 4, 1:N] <- rbinom(n = N, size = even[i, 3, 1:N], even[i, 2, 1:N]) #SIM SUCCESSES
-}
 
-## sim data + model ##
-rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
-sim_data = list(
-  N = N, #N or numRows
-  item = even[1, 1, 1:N], #ITEM ID
-  sizeN = as.integer(even[1, 3, 1:N]), #same as cafes$n #SIZE
-  count = as.integer(even[1, 4, 1:N]) #SIM SUCCESSES
-)
-sim_rand_int_model_1 <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
+  ## DATA FOR STAN##
+  rstan_options(auto_write = TRUE)
+  options(mc.cores = parallel::detectCores())
+  sim_data = list(
+    N = N, #N or numRows
+    item = even[1, 1, 1:N], #ITEM ID
+    sizeN = as.integer(even[1, 3, 1:N]), #same as cafes$n #SIZE
+    count = as.integer(even[1, 4, 1:N]) #SIM SUCCESSES
+  ) #MODEL
+  even_ranked[1] <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
+  
+  #compare using rankMetric
+  even_metric_results[i] <- rankMetric(even_ranked[i], even[i, 1:4, 1:N], order = largest, topN = topN)
+}
 
 #get posterior means from stan model
 #get credible intervals from stan model

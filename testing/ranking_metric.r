@@ -5,11 +5,11 @@ library(clue)
 library(rstan)
 
 ##function metric to see if rankObject's top ranked items match true top items
-RankMetric <- function(rankObject = NULL, originalDataFrame = NULL, order = largest, topN = 5){
+RankMetric <- function(rankObject = NULL, originalData = NULL, order = largest, topN = 5){
   # function metric to see if our top number matches true top five for Binomial model
   #   
   # Args:
-  #   rankObject: an output of WeightedLossRanking. Must include columns items, p, n
+  #   rankObject: an output of WeightedLossRanking. Must include columns item, p, n
   #   originalDataFrame: a data frame with column of true probabilities, true N (column names must match p, n)
   #   order: largest (largest to smallest) or smallest (smallest to largest)
   #   topN: an integer number of top items to compare
@@ -34,7 +34,6 @@ RankMetric <- function(rankObject = NULL, originalDataFrame = NULL, order = larg
   return(originalDataFrame[1:topN,]$item %in% rankedDataFrame[1:topN,]$item )
 }
 
-RankMetric(sim_ranks, cafes, order = "largest", topN = 5)
 
 #normal (implement this, but do simulation with binomial instead. might be relevant with survey data for counties)
 #we're assuming that these tau^2 are known. If they aren't, the model could be extended to incorporate this uncertainty.
@@ -44,5 +43,5 @@ RankMetric(sim_ranks, cafes, order = "largest", topN = 5)
 
 #TODO is rank one is in top five?
 
-#edge and confounding. able to more accurately identify treatment effects. latin square? 
+
 
