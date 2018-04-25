@@ -27,11 +27,11 @@ options(mc.cores = parallel::detectCores())
 sim_data = list(
   N = N, #N or numRows
   item = even[1, 1, 1:N], #ITEM ID
-  size = even[1, 3, 1:N], #same as cafes$n #SIZE
-  count = even[1, 4, 1:N] #SIM SUCCESSES
+  sizeN = as.integer(even[1, 3, 1:N]), #same as cafes$n #SIZE
+  count = as.integer(even[1, 4, 1:N]) #SIM SUCCESSES
 )
+sim_rand_int_model_1 <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
 
-sim_rand_int_model <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
 #get posterior means from stan model
 #get credible intervals from stan model
 ## Cafe Ranked Data Frame Output ##
@@ -46,9 +46,6 @@ arrange(rankedCafes, desc(rank))
 #uneven gap size TODO using unif
 
 #testing over variation in N
-
-
-
 
 
 ## Binomial Random Intercept n = 100 ## RANDOM GAPS
