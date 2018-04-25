@@ -1,6 +1,18 @@
 # Ranking Methods
 Bayesian ranking methods implementation  
 
+# Comparing Ranking Methods
+Compare on:  
+- gap size between true parameters
+- type of gap size (even vs random gap sizes)
+- loss type  
+- weights on ranks  
+- binomial vs normal  
+
+Do this for:    
+- # correct in top 10 (RankMetric function)
+- if top item is in top 5
+
 # Testing  
 ## ranking_testing.r    
 - tests ranking_function.r using a simple normal model, normal two-level data, and simple random intercept model.  

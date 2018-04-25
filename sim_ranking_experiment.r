@@ -15,7 +15,7 @@ set.seed(10)
 ## Binomial Random Intercept n = 100 ## EVEN GAPS
 #increase gaps until trivial. decrease until broken/impossible.
 ## PARAMETERS ##
-gaps <- c(0.01, 0.1) #gap sizes tested here
+gaps <- c(0.005, 0.01, 0.1) #gap sizes tested here
 topN = 10
 
 #initialize arrays and lists
@@ -23,10 +23,10 @@ even <- array(data = NA, dim=c(length(gaps),4,10001)) #3 dim array with 4 matric
 even_model <- vector("list", length(gaps)) #list of rank objects for each of the 4 matrices
 even_rank <- vector("list", length(gaps))
 
-even_metric_results <- #rank_metric results for each of the 4 matrices mr, 
-  data.frame(metric_results = logical(length = 5))
+even_metric_results <- #rank_metric results for each of the matrices
+  data.frame(metric_results = logical(length = topN))
 
-for (i in 1:4){ #length(gaps)
+for (i in 1:length(gaps)){ #length(gaps)
   N = length(seq(from = 0, to = 1, by = gaps[i]))
   even[i, 1, 1:N] <- seq(from = 1, to = N, by = 1) #ITEM
   even[i, 2, 1:N] <- seq(from = 0, to = 1, by = gaps[i]) #P
@@ -49,13 +49,14 @@ for (i in 1:4){ #length(gaps)
   
   #compare using rankMetric, add to dataframe of results
   nam <- paste("gap", i, sep = "")
-  even_metric_results$new <- RankMetric(even_rank[[i]], even[i, 1:4, 1:N], order = "largest", topN = 5)
+  even_metric_results$new <- RankMetric(even_rank[[i]], even[i, 1:4, 1:N], order = "largest", topN = topN)
   colnames(even_metric_results)[i+1] <- nam
 }
 
 #save results to a file
 write.csv(even_metric_results, file = "/Users/cora/git_repos/RankingMethods/results/even_gaps_RankMetric_results.csv")
 
+#TODO DO THIS OVER DIFFERENT LOSSES
 
 #TODO repeat above with uneven gap size
 #try with bigger gaps, random unif on a range to have arbitrary gaps
