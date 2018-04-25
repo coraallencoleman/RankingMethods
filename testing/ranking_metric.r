@@ -35,9 +35,6 @@ RankMetric <- function(rankObject = NULL, originalData = NULL, order = largest, 
   return(originalData[1,1:topN] %in% rankedData[6,1:topN])
 }
 
-od <- even[1, 1:4, 1:N]
-rd <- od
-rd[5,] <- rd[2,]*100
 
 
 ##function metric to see if rankObject's top ranked items match true top items

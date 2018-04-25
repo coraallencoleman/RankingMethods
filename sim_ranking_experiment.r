@@ -21,6 +21,7 @@ even_rank <- vector("list", length(gaps))
 even_metric_results <- vector("list", length(gaps)) #list of rank_metric results for each of the 4 matrices
 
 for (i in 1:1){ #length(gaps)
+  i= 3
   N = length(seq(from = 0, to = 1, by = gaps[i]))
   even[i, 1, 1:N] <- seq(from = 1, to = N, by = 1) #ITEM
   even[i, 2, 1:N] <- seq(from = 0, to = 1, by = gaps[i]) #P
@@ -39,10 +40,12 @@ for (i in 1:1){ #length(gaps)
   #MODEL
   even_model[[i]] <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
   
-  rank[[i]] <- WeightedLossRanking(model = even_model[[i]], parameter = "p", loss = 2, lossTotal = TRUE)
+  even_rank[[i]] <- WeightedLossRanking(model = even_model[[i]], parameter = "p", loss = 2, lossTotal = TRUE)
   #compare using rankMetric
-  even_metric_results[i] <- RankMetric(rank[[i]], even[i, 1:4, 1:N], order = "largest", topN = topN)
+  even_metric_results[[i]] <- RankMetric(even_rank[[i]], even[i, 1:4, 1:N], order = "largest", topN = 5)
 }
+
+#save results to a file
 
 model<- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
 rank <- WeightedLossRanking(model = model, parameter = "p", loss = 2, lossTotal = TRUE)
