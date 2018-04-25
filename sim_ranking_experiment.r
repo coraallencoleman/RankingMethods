@@ -18,7 +18,8 @@ topN = 5
 even <- array(data = NA, dim=c(4,5,10001)) #3 dim array with 4 matrices, 5 col and N rows (max = 10001) each
 even_model <- vector("list", length(gaps)) #list of rank objects for each of the 4 matrices
 even_rank <- vector("list", length(gaps))
-even_metric_results <- vector("list", length(gaps)) #list of rank_metric results for each of the 4 matrices
+
+even_metric_results <- data.frame(metric_results = boolean(), ) #list of rank_metric results for each of the 4 matrices
 
 for (i in 1:1){ #length(gaps)
   i= 3
@@ -41,11 +42,14 @@ for (i in 1:1){ #length(gaps)
   even_model[[i]] <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
   
   even_rank[[i]] <- WeightedLossRanking(model = even_model[[i]], parameter = "p", loss = 2, lossTotal = TRUE)
-  #compare using rankMetric
+  
+  #compare using rankMetric, add to dataframe of results
   even_metric_results[[i]] <- RankMetric(even_rank[[i]], even[i, 1:4, 1:N], order = "largest", topN = 5)
-}
-
+  }
 #save results to a file
+write.csv(even_metric_results[[3]], file = "even_gaps_RankMetric_results.csv", append = T)
+
+
 
 model<- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
 rank <- WeightedLossRanking(model = model, parameter = "p", loss = 2, lossTotal = TRUE)
