@@ -11,6 +11,70 @@ library(dplyr)
 #AND run entire ranking_function.r, ranking_metric.r files. 
 set.seed(10)
 
+SelectNP <- function(N = 25, a_p = 1, b_p = 2, n_min = , n_max = , n_assignment_method = "ascending", n_sim = 1){
+  # function to select n, p from parameters
+  #   
+  # Args:
+  #   N: 
+  #   a_p:
+  #   b_p:
+  #   n_min:
+  #   n_max:
+  #   n_assignment_method. Possibilities: "ascending" for assign in order, 
+  #    "descending" for assign in reverse order, "random" for random assignment
+  #   n_sim: number of simulations needed
+  #
+  # Returns:
+  #   dataframe with 2 columns (n, p) and n_sim rows
+  #
+  # Dependencies: 
+}
+
+SimData <- function(N, n, p, n_sim){
+  #simulates data from a dataframe of n, p with nrow = n_sim
+
+  # Args:
+  #   N: number of items to rank
+  #   n: attempts as in binom(n,p)
+  #   p: true p
+  #   n_sim: number of simulations needed.
+  #
+  # Returns: 
+  #   dataframe of y (in stan format)
+  # 
+  # Dependencies:
+  
+  even[i, 1, 1:N] <- seq(from = 1, to = N, by = 1) #ITEM
+  even[i, 2, 1:N] <- seq(from = 0, to = 1, by = gaps[i]) #P
+  even[i, 3, 1:N] <- rep(as.integer(25),times = N) #SIZE
+  even[i, 4, 1:N] <- rbinom(n = N, size = even[i, 3, 1:N], even[i, 2, 1:N]) #SIM SUCCESSES 
+  
+  sim_data = list(
+    N = N, #N or numRows
+    item = even[i, 1, 1:N], #ITEM ID
+    n = as.integer(even[i, 3, 1:N]), #same as cafes$n #SIZE
+    count = as.integer(even[i, 4, 1:N]) #SIM SUCCESSES
+  ) 
+}
+
+DataToRanking <- function(rankingMethod = 2){
+  #ranks data
+  
+  # Args:
+  #   N: number of items to rank
+  #   n: attempts as in binom(n,p)
+  #   p: true p
+  #   n_sim: number of simulations needed.
+  #
+  # Returns: 
+  #   df with col: rankings, true ranking or true p  (nrow = N)
+  # 
+  # Dependencies: WeightedLossRanking function from ranking_function.r
+  
+}
+
+#RANKING EVALUATION: use RankMetric for now
+
 #STEP 1: Simulate Different Types of Data
 ## Binomial Random Intercept n = 100 ## EVEN GAPS
 #increase gaps until trivial. decrease until broken/impossible.
