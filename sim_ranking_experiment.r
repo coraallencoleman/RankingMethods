@@ -1,5 +1,5 @@
 #Testing for WeightedLossRanking function
-#TODO ask Ron if we should/how to vary gap size without varying n
+#TODO ask Ron if we should/how to vary gap size without varying n. "dont worry about that"
 
 ##IDEA
 ##increase gaps until trivial. decrease until broken/impossible. 
@@ -19,9 +19,11 @@ gaps <- c(0.005, 0.01, 0.1) #gap sizes tested here
 topN = 10
 
 #initialize arrays and lists
-even <- array(data = NA, dim=c(length(gaps),4,10001)) #3 dim array with 4 matrices, 4 col and N rows (max = 10001) each
+even <- array(data = NA, dim=c(length(gaps),4,10001)) #3 dim array with 3 matrices, 4 col and N rows (max = 10001) each
 even_model <- vector("list", length(gaps)) #list of rank objects for each of the 4 matrices
 even_rank <- vector("list", length(gaps))
+
+#do one simulation scenario at a time TODO
 
 even_metric_results <- #rank_metric results for each of the matrices
   data.frame(metric_results = logical(length = topN))
@@ -30,9 +32,15 @@ for (i in 1:length(gaps)){ #length(gaps)
   N = length(seq(from = 0, to = 1, by = gaps[i]))
   even[i, 1, 1:N] <- seq(from = 1, to = N, by = 1) #ITEM
   even[i, 2, 1:N] <- seq(from = 0, to = 1, by = gaps[i]) #P
-  even[i, 3, 1:N] <- rep(as.integer(100),times = N) #SIZE
-  even[i, 4, 1:N] <- rbinom(n = N, size = even[i, 3, 1:N], even[i, 2, 1:N]) #SIM SUCCESSES
-
+  even[i, 3, 1:N] <- rep(as.integer(25),times = N) #SIZE
+  even[i, 4, 1:N] <- rbinom(n = N, size = even[i, 3, 1:N], even[i, 2, 1:N]) #SIM SUCCESSES 
+  #TODO need to do this for n simulation (n_sim = 1) 
+  #do this for each simulation sample data -> rankings one at a time 
+  #so that you dont have to do keep posteriors in memory
+  #TODO set num of posterior samples to smaller
+  #TODO ending array FOR EACH DATA SET is 3D N, nSim nRankingMethods or a list using method as names of the list
+  
+  
   ## DATA FOR STAN##
   rstan_options(auto_write = TRUE)
   options(mc.cores = parallel::detectCores())
@@ -61,6 +69,10 @@ write.csv(even_metric_results, file = "/Users/cora/git_repos/RankingMethods/resu
 #TODO repeat above with uneven gap size
 #try with bigger gaps, random unif on a range to have arbitrary gaps
 #increase gaps until trivial. decrease until broken/impossible. 
+
+#tomake this flexible for nonequal gap size
+qbeta(1:N/(N+1), 1, 1) #but then vary the last two parameters for variable gap size
+#then change N, a, b.
 
 #TODO repeat with testing over variation in N
 

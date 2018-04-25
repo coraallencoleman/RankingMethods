@@ -2,17 +2,47 @@
 Bayesian ranking methods implementation  
 
 # Comparing Ranking Methods
-Compare on:  
-- gap size between true parameters
-- type of gap size (even vs random gap sizes)
+use variables
+For data set, vary on:
+- N, number of objects to be ranked (for now, just pick 25)
+  assigned in qbeta function qbeta(i/N+1, 1, 1)
+- gap size between true parameters and type of gap size (even vs random gap size)
+  this depends on a_n and b_n in the qbeta function
+- n number of sample for each item (varying within each dataset unif)
+choose an n_max, n_min then do qbeta*n for each (goes from n_max to n_min)
+  qbeta(i/N+1, 1, 1)n
+a_n, b_n
+n_max, n_min
+for now, just do a=1, b=1 but leave this open for now.
+  vary n when p is close. given a vector of n for a current problem.
+  come up with various n (from more to less uniform values)
+  1. assign in order ASCENDING
+  2. assign in reverse order DESCENDING
+  3. randomly assign N RANDOM
+
+- binomial vs normal (add later maybe)
+Ranking methods:
 - loss type  
 - weights on ranks  
-- binomial vs normal  
 
 Do this for:    
-- # correct in top 10 (RankMetric function)
+- # correct in top N (RankMetric function)
 - if top item is in top 5
 
+#Functions for Simulation:
+1. create n, p
+2. create data from n, p
+3. create rankings from n, p
+  - posterior from stan
+  - use posterior to get rankings
+4. save rankings matrix in a list by ranking method. each matrix has a cols items, rank. N, n_sim, n_rankingMethod
+
+
+#varying gap width expected order stats from various beta distributions
+standard unif will evenly space from i/N+1
+qbeta(i/N+1, 1, 1) gives 1/N+1
+a_p
+b_p
 # Testing  
 ## ranking_testing.r    
 - tests ranking_function.r using a simple normal model, normal two-level data, and simple random intercept model.  

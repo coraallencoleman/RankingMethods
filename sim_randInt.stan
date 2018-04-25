@@ -1,4 +1,4 @@
-//example rand int model for ranking function n = 12 cafes on internet quality
+//example rand int model for ranking function binomial
   
 data
 {
