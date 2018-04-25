@@ -1,21 +1,25 @@
 #Testing for WeightedLossRanking function
 #TODO ask Ron if we should/how to vary gap size without varying n
 
+##IDEA
+##increase gaps until trivial. decrease until broken/impossible. 
+#think of this as an experiment. what experimental conditions do we need to run to get a sense of behavior.
+
 #Step 0: Load
 library(rstan)
 library(dplyr)
-#AND run entire ranking_function.r file. This puts WeightedLossRanking from ranking_function.r into environment and adds packages
+#AND run entire ranking_function.r, ranking_metric.r files. 
 set.seed(10)
 
 #STEP 1: Simulate Different Types of Data
 ## Binomial Random Intercept n = 100 ## EVEN GAPS
-
+#increase gaps until trivial. decrease until broken/impossible.
 ## PARAMETERS ##
-gaps <- c(0.0001, 0.001, 0.01, 0.1) #gap sizes tested here
+gaps <- c(0.01, 0.1) #gap sizes tested here
 topN = 10
 
 #initialize arrays and lists
-even <- array(data = NA, dim=c(4,4,10001)) #3 dim array with 4 matrices, 4 col and N rows (max = 10001) each
+even <- array(data = NA, dim=c(length(gaps),4,10001)) #3 dim array with 4 matrices, 4 col and N rows (max = 10001) each
 even_model <- vector("list", length(gaps)) #list of rank objects for each of the 4 matrices
 even_rank <- vector("list", length(gaps))
 
@@ -53,31 +57,10 @@ for (i in 1:4){ #length(gaps)
 write.csv(even_metric_results, file = "/Users/cora/git_repos/RankingMethods/results/even_gaps_RankMetric_results.csv")
 
 
-
-model<- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
-rank <- WeightedLossRanking(model = model, parameter = "p", loss = 2, lossTotal = TRUE)
-RankMetric(rank, even[1, 1:4, 1:N], order = "largest", topN = 5)
-
-#get posterior means from stan model
-#get credible intervals from stan model
-## Cafe Ranked Data Frame Output ##
-sim_ranks <- WeightedLossRanking(model = sim_rand_int_model, parameter = "p", f = rank, loss = 2, lossTotal = TRUE)
-rankedCafes <- as.data.frame(cafes)
-rankedCafes$p <- cafes$p*100
-rankedCafes$rank <- as.integer(sim_ranks) #this ranks lowest to highest
-arrange(rankedCafes, desc(rank))
-
-
-
-#uneven gap size TODO using unif
-
-#testing over variation in N
-
-
-## Binomial Random Intercept n = 100 ## RANDOM GAPS
+#TODO repeat above with uneven gap size
 #try with bigger gaps, random unif on a range to have arbitrary gaps
 #increase gaps until trivial. decrease until broken/impossible. 
-#start with equal sample sizes. (vary one thing at a time) Weights may have an impact here.
-#TODO think of this as an experiment. what experimental conditions do we need to run to get a sense of behavior.
+
+#TODO repeat with testing over variation in N
 
 #TODO add weights. How does this compare to not weighting at all?
