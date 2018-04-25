@@ -12,17 +12,17 @@ set.seed(10)
 
 ## PARAMETERS ##
 gaps <- c(0.0001, 0.001, 0.01, 0.1) #gap sizes tested here
-topN = 5
+topN = 10
 
 #initialize arrays and lists
-even <- array(data = NA, dim=c(4,5,10001)) #3 dim array with 4 matrices, 5 col and N rows (max = 10001) each
+even <- array(data = NA, dim=c(4,4,10001)) #3 dim array with 4 matrices, 4 col and N rows (max = 10001) each
 even_model <- vector("list", length(gaps)) #list of rank objects for each of the 4 matrices
 even_rank <- vector("list", length(gaps))
 
-even_metric_results <- data.frame(metric_results = boolean(), ) #list of rank_metric results for each of the 4 matrices
+even_metric_results <- #rank_metric results for each of the 4 matrices mr, 
+  data.frame(metric_results = logical(length = 5))
 
-for (i in 1:1){ #length(gaps)
-  i= 3
+for (i in 1:4){ #length(gaps)
   N = length(seq(from = 0, to = 1, by = gaps[i]))
   even[i, 1, 1:N] <- seq(from = 1, to = N, by = 1) #ITEM
   even[i, 2, 1:N] <- seq(from = 0, to = 1, by = gaps[i]) #P
@@ -34,9 +34,9 @@ for (i in 1:1){ #length(gaps)
   options(mc.cores = parallel::detectCores())
   sim_data = list(
     N = N, #N or numRows
-    item = even[1, 1, 1:N], #ITEM ID
-    sizeN = as.integer(even[1, 3, 1:N]), #same as cafes$n #SIZE
-    count = as.integer(even[1, 4, 1:N]) #SIM SUCCESSES
+    item = even[i, 1, 1:N], #ITEM ID
+    sizeN = as.integer(even[i, 3, 1:N]), #same as cafes$n #SIZE
+    count = as.integer(even[i, 4, 1:N]) #SIM SUCCESSES
   ) 
   #MODEL
   even_model[[i]] <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
@@ -44,10 +44,13 @@ for (i in 1:1){ #length(gaps)
   even_rank[[i]] <- WeightedLossRanking(model = even_model[[i]], parameter = "p", loss = 2, lossTotal = TRUE)
   
   #compare using rankMetric, add to dataframe of results
-  even_metric_results[[i]] <- RankMetric(even_rank[[i]], even[i, 1:4, 1:N], order = "largest", topN = 5)
-  }
+  nam <- paste("gap", i, sep = "")
+  even_metric_results$new <- RankMetric(even_rank[[i]], even[i, 1:4, 1:N], order = "largest", topN = 5)
+  colnames(even_metric_results)[i+1] <- nam
+}
+
 #save results to a file
-write.csv(even_metric_results[[3]], file = "even_gaps_RankMetric_results.csv", append = T)
+write.csv(even_metric_results, file = "/Users/cora/git_repos/RankingMethods/results/even_gaps_RankMetric_results.csv")
 
 
 
