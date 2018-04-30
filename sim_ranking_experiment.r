@@ -10,7 +10,7 @@ library(dplyr)
 #AND run entire ranking_function.r, ranking_metric.r files. 
 set.seed(10)
 
-selectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, 
+SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, 
                      n_assignment_method = "ascending", n_sim = 1){
   # function to simulate n, p from parameters
   #   
@@ -41,7 +41,7 @@ selectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30,
   return(output)
 }
 
-SimData <- function(N = 25, matrixList = , n_sim = 1){
+SimData <- function(matrixList, n_sim = 1){
   #simulates data from a dataframe of n, p with nrow = n_sim
 
   # Args:
@@ -49,24 +49,26 @@ SimData <- function(N = 25, matrixList = , n_sim = 1){
   #   matrixList of n, p: list of matrices containing N rows and 2 columns: n, p. Result of selectNP.
   #      n is the true attempts/tries/counts
   #      p is the true p
-  #   n_sim: number of simulations
+  #   n_sim: number of simulations. Equal to number of matrices?
   #
   # Returns: 
   #   dataframe of y (in stan format)
   # 
   # Dependencies:
   
-  even[i, 1, 1:N] <- seq(from = 1, to = N, by = 1) #ITEM
-  even[i, 2, 1:N] <- seq(from = 0, to = 1, by = gaps[i]) #P
-  even[i, 3, 1:N] <- rep(as.integer(25),times = N) #SIZE
-  even[i, 4, 1:N] <- rbinom(n = N, size = even[i, 3, 1:N], even[i, 2, 1:N]) #SIM SUCCESSES 
+  N <- length(matrixList[[1]][,1])
+  output <- list()
   
-  sim_data = list(
-    N = N, #N or numRows
-    item = even[i, 1, 1:N], #ITEM ID
-    n = as.integer(even[i, 3, 1:N]), #same as cafes$n #SIZE
-    count = as.integer(even[i, 4, 1:N]) #SIM SUCCESSES
-  ) 
+  for (i in 1:length(matrixList)){
+    output[[i]] <- matrix(data = NA, nrow = N, ncol = 2, 
+                          dimnames = list(seq(1:N), c("n", "sim_p")))
+    #n
+    output[[i]][,1] <- matrixList[[i]][,1] #TODO n random too?
+    #p
+    output[[i]][,2] <- rbinom(N, size = matrixList[[i]][,1], prob = matrixList[[i]][,2])/matrixList[[i]][,1]
+    #TODO check
+  }
+  return(output)
 }
 
 DataToRanking <- function(rankingMethod = 2){
