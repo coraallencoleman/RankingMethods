@@ -60,14 +60,3 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
     return(solve_LSAP(LossRnk))
   }
 }
-
-## Testing Function on Example Data (below) ##
-ranks <- WeightedLossRanking(model = NJ_rand_int_model, parameter = "true_p", f = rank, loss = 0, lossTotal = TRUE); ranks #model case
-#ranks <- WeightedLossRanking(sampleMatrix = i_samples, parameter = "p", loss = 0); ranks #sample matrix case
-
-## Ranked Data Frame Output ##
-County <- raw_data0[,c(3)]
-rankedDataFrame <- as.data.frame(County)
-rankedDataFrame$p <- raw_data0[,4]/raw_data0[,5]*100
-rankedDataFrame$rank <- as.integer(ranks)
-library(dplyr); arrange(rankedDataFrame, rank)

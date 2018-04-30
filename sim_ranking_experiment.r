@@ -1,5 +1,4 @@
 #Testing for WeightedLossRanking function
-#TODO ask Ron if we should/how to vary gap size without varying n. "dont worry about that"
 
 ##IDEA
 ##increase gaps until trivial. decrease until broken/impossible. 
@@ -11,33 +10,46 @@ library(dplyr)
 #AND run entire ranking_function.r, ranking_metric.r files. 
 set.seed(10)
 
-SelectNP <- function(N = 25, a_p = 1, b_p = 2, n_min = , n_max = , n_assignment_method = "ascending", n_sim = 1){
-  # function to select n, p from parameters
+selectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, 
+                     n_assignment_method = "ascending", n_sim = 1){
+  # function to simulate n, p from parameters
   #   
   # Args:
-  #   N: 
-  #   a_p:
-  #   b_p:
-  #   n_min:
-  #   n_max:
-  #   n_assignment_method. Possibilities: "ascending" for assign in order, 
-  #    "descending" for assign in reverse order, "random" for random assignment
+  #   N: number of items to rank remove from here?
+  #   a_p: Shape parameter alpha for beta distribution to determine gaps in p. Allows for nonequal gap size.
+  #   b_p: Shape parameter beta for beta distribution to determine gaps in p. Allows for nonequal gap size.
+  #   n_min: minimum number of counts/tries for each binomial variable (TODO evenly spaced n? ask if need a_n, b_n too?)
+  #   n_max: maximum number of counts/tries for each binomial variable
+  #   n_assignment_method. Possibilities: "ascending" for assign in order, "descending" for assign in reverse order, 
+  #   "random" for random assignment
   #   n_sim: number of simulations needed
   #
   # Returns:
-  #   dataframe with 2 columns (n, p) and n_sim rows
+  #   n_sim matrices each with 2 columns (n, p) and N rows (N rows?)
   #
   # Dependencies: 
+  output <- list()
+
+  for (i in 1:n_sim){
+    output[[i]] <- matrix(data = NA, nrow = N, ncol = 2, 
+                          dimnames = list(seq(1:N), c("n", "p")))
+    #n
+    output[[i]][,1] <- round(runif(N, min = n_min, max = n_max), digits = 0) #qbeta(1:N/(N+1), a_n, b_n)?
+    #p
+    output[[i]][,2] <- qbeta((1:N)/(N+1), a_p, b_p)
+  }
+  return(output)
 }
 
-SimData <- function(N, n, p, n_sim){
+SimData <- function(N = 25, matrixList = , n_sim = 1){
   #simulates data from a dataframe of n, p with nrow = n_sim
 
   # Args:
   #   N: number of items to rank
-  #   n: attempts as in binom(n,p)
-  #   p: true p
-  #   n_sim: number of simulations needed.
+  #   matrixList of n, p: list of matrices containing N rows and 2 columns: n, p. Result of selectNP.
+  #      n is the true attempts/tries/counts
+  #      p is the true p
+  #   n_sim: number of simulations
   #
   # Returns: 
   #   dataframe of y (in stan format)
@@ -134,7 +146,7 @@ write.csv(even_metric_results, file = "/Users/cora/git_repos/RankingMethods/resu
 #try with bigger gaps, random unif on a range to have arbitrary gaps
 #increase gaps until trivial. decrease until broken/impossible. 
 
-#tomake this flexible for nonequal gap size
+#to make this flexible for nonequal gap size
 qbeta(1:N/(N+1), 1, 1) #but then vary the last two parameters for variable gap size
 #then change N, a, b.
 

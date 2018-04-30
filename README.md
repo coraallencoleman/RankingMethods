@@ -187,8 +187,3 @@ August 2018: send paper to Ron for final edits, submit
 ##  Smoothness might be desireable in situations where you see the whole list. (college rankings)
 
 ## TODO create visualizations: D3.js? this could be a good situation to use weights based on people's interests. Show different weight vectors.
-
-## DONE
-- fix WeightedLossRanking function when loss = 0
-- ranking_metric create a metric that allows you to test how often you meet your goal
-(e.g. % true top 10 in ranking's top 10)
