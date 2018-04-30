@@ -45,18 +45,17 @@ SimData <- function(matrixList, n_sim = 1){
   #simulates data from a dataframe of n, p with nrow = n_sim
 
   # Args:
-  #   N: number of items to rank
   #   matrixList of n, p: list of matrices containing N rows and 2 columns: n, p. Result of selectNP.
   #      n is the true attempts/tries/counts
   #      p is the true p
-  #   n_sim: number of simulations. Equal to number of matrices?
+  #   n_sim: number of simulations. TODO Equal to number of matrices in matrixList?
   #
   # Returns: 
-  #   dataframe of y (in stan format)
+  #   matrix of n, p
   # 
   # Dependencies:
   
-  N <- length(matrixList[[1]][,1])
+  N <- length(matrixList[[1]][,1]) #number of items to rank
   output <- list()
   
   for (i in 1:length(matrixList)){
@@ -69,6 +68,33 @@ SimData <- function(matrixList, n_sim = 1){
     #TODO check
   }
   return(output)
+}
+
+DatatoStanFormat <- function(matrixList){
+  #formats data for stan
+  
+  # Args:
+  #   matrixList of n, p: list of matrices containing N rows and 2 columns: n, p. Result of selectNP.
+  #      n is the true attempts/tries/counts
+  #      p is the true p
+  #   n_sim: number of simulations. TODO Equal to number of matrices in matrixList?
+  #
+  # Returns: 
+  #   stan_data list of data in stan format
+  # 
+  # Dependencies:
+  N <- length(matrixList[[1]][,1]) #number of items to rank
+  rstan_options(auto_write = TRUE)
+  options(mc.cores = parallel::detectCores())
+  stan_data = list(
+    N = N,
+    item = even[i, 1, 1:N], #ITEM ID
+    sizeN = as.integer(even[i, 3, 1:N]), #same as cafes$n #SIZE
+    count = as.integer(even[i, 4, 1:N]) #SIM SUCCESSES
+  )
+  even_model[[i]] <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
+  return(stan_data)
+    
 }
 
 DataToRanking <- function(rankingMethod = 2){
