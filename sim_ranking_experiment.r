@@ -11,37 +11,40 @@ library(dplyr)
 set.seed(10)
 
 SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, 
-                     n_assignment_method = "ascending", n_sim = 1){
-  # function to simulate n, p from parameters
+                     n_assignment_method = "ascending"){
+  # function to simulate n, p from parameters. Deterministic.
   #   
   # Args:
-  #   N: number of items to rank remove from here?
+  #   N: number of items to rank
   #   a_p: Shape parameter alpha for beta distribution to determine gaps in p. Allows for nonequal gap size.
   #   b_p: Shape parameter beta for beta distribution to determine gaps in p. Allows for nonequal gap size.
-  #   n_min: minimum number of counts/tries for each binomial variable (TODO evenly spaced n? ask if need a_n, b_n too?)
+  #   n_min: minimum number of counts/tries for each binomial variable
   #   n_max: maximum number of counts/tries for each binomial variable
+  #   a_b:
+  #   b_n:
   #   n_assignment_method. Possibilities: "ascending" for assign in order, "descending" for assign in reverse order, 
   #   "random" for random assignment
-  #   n_sim: number of simulations needed
   #
   # Returns:
-  #   n_sim matrices each with 2 columns (n, p) and N rows (N rows?)
+  #   one matrix with 2 columns (n, p) and N rows
   #
   # Dependencies: 
   output <- list()
 
-  for (i in 1:n_sim){
+  #for (i in 1:n_sim){
     output[[i]] <- matrix(data = NA, nrow = N, ncol = 2, 
                           dimnames = list(seq(1:N), c("n", "p")))
+    
     #n
-    output[[i]][,1] <- round(runif(N, min = n_min, max = n_max), digits = 0) #qbeta(1:N/(N+1), a_n, b_n)?
+    output[[i]][,1] <- round((n_min + (m_max-n_min))*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
     #p
     output[[i]][,2] <- qbeta((1:N)/(N+1), a_p, b_p)
-  }
+    
+ # }
   return(output)
 }
 
-SimData <- function(matrixList, n_sim = 1){
+SimData <- function(matrix, n_sim = 1){
   #simulates data from a dataframe of n, p with nrow = n_sim
 
   # Args:
@@ -55,20 +58,24 @@ SimData <- function(matrixList, n_sim = 1){
   # 
   # Dependencies:
   
-  N <- length(matrixList[[1]][,1]) #number of items to rank
+  # then make matrix of N rows and n_sim columns and make ONE deterministic n vector
+  
+  N <- length(matrixList[[1]][,1]) #number of items to rank (from SelectNP)
   output <- list()
   
-  for (i in 1:length(matrixList)){
+  for (i in 1:n_sim){
     output[[i]] <- matrix(data = NA, nrow = N, ncol = 2, 
                           dimnames = list(seq(1:N), c("n", "sim_p")))
-    #n
-    output[[i]][,1] <- matrixList[[i]][,1] #TODO n random too?
-    #p
-    output[[i]][,2] <- rbinom(N, size = matrixList[[i]][,1], prob = matrixList[[i]][,2])/matrixList[[i]][,1]
+    #n (these are deterministic)
+    output[[i]][,1] <- matrixList[[i]][,1] #
+    #y (these vary)
+    output[[i]][,2] <- rbinom(N, size = matrixList[[i]][,1], prob = matrixList[[i]][,2]) #this should be y
     #TODO check
   }
   return(output)
 }
+
+#TODO look into rstan glmer arm.  see if we can get the posterior samples from here
 
 DatatoStanFormat <- function(matrixList){
   #formats data for stan
@@ -87,11 +94,12 @@ DatatoStanFormat <- function(matrixList){
   rstan_options(auto_write = TRUE)
   options(mc.cores = parallel::detectCores())
   stan_data = list(
-    N = N,
-    item = even[i, 1, 1:N], #ITEM ID
-    sizeN = as.integer(even[i, 3, 1:N]), #same as cafes$n #SIZE
+    N = N, #25
+    item = even[i, 1, 1:N], #ITEM ID seq(1:25)
+    sizeN = n_vector, # #SIZE
     count = as.integer(even[i, 4, 1:N]) #SIM SUCCESSES
   )
+  #might be faster to use rstan glmer arm
   even_model[[i]] <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
   return(stan_data)
     
