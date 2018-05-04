@@ -86,51 +86,43 @@ model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = exData,
 print(model1) #TODO is this the correct random intercept model? 
 plot(model1)
 ##Check Model
-plot(model1, "rhat")
-plot(model1, "neff")
+#plot(model1, "rhat")
+#plot(model1, "neff")
 
-DatatoStanFormat <- function(matrixList){ #need this? might use rstan glmer instead
-  #formats data for stan
+##Get Posterior Sample
+
+
+#Get Posterior Samples
+PostSamples <- function(data){  
+  #simulates data from a dataframe of n, p
   
   # Args:
-  #   matrixList of n, p: list of matrices containing N rows and 2 columns: n, p. Result of selectNP.
-  #      n is the true attempts/tries/counts
-  #      p is the true p
-  #   n_sim: number of simulations. TODO Equal to number of matrices in matrixList?
+  #   dataframe of columns named: item, n, p. Output of SimData
+  #   matrix of deterministic n, p: A list of matrices containing N rows and 2 columns (n, p). Result of SelectNP where:
+  #     n is the true attempts/tries/counts
+  #     p is the true p
+  #   n_sim: number of simulations.
   #
   # Returns: 
-  #   stan_data list of data in stan format
+  #   matrix of n_sim rows and 2 columns (n, y) where n is attempts and y is successes
+  #   OR matrix of N rows and n_sim columns and make ONE deterministic n vecto
   # 
-  # Dependencies:
-  N <- length(matrixList[[1]][,1]) #number of items to rank
-  rstan_options(auto_write = TRUE)
+  # Dependencies: rstanarm
+  library(rstanarm)
   options(mc.cores = parallel::detectCores())
-  stan_data = list(
-    N = 25, #25
-    item = exData[,1], #ITEM ID seq(1:25)
-    sizeN = exData[,2], # #SIZE
-    count = exData[,3] #SIM SUCCESSES
-  )
-  #might be faster to use rstan glmer arm
-  stan_model<- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=stan_data, seed = 10)
-  return(stan_data)
+  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = data, 
+                       family = binomial(link=logit), prior_intercept = normal(0, 5),
+                       prior_aux = cauchy(0,1),
+                       seed = 12345)
+  posteriorSample <- as.matrix(model1) 
+  return(posteriorSample)
 }
 
-DataToRanking <- function(rankingMethod = 2){
-  #ranks data
-  
-  # Args:
-  #   N: number of items to rank
-  #   n: attempts as in binom(n,p)
-  #   p: true p
-  #   n_sim: number of simulations needed.
-  #
-  # Returns: 
-  #   df with col: rankings, true ranking or true p  (nrow = N)
-  # 
-  # Dependencies: WeightedLossRanking function from ranking_function.r
-  
-}
+#Ranks using Posterior Samples
+
+WeightedLossRanking 
+
+
 
 #RANKING EVALUATION: use RankMetric for now
 
