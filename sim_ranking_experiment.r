@@ -104,8 +104,7 @@ PostSamples <- function(data){
   #   n_sim: number of simulations.
   #
   # Returns: 
-  #   matrix of n_sim rows and 2 columns (n, y) where n is attempts and y is successes
-  #   OR matrix of N rows and n_sim columns and make ONE deterministic n vecto
+  #   matrix of posterior samples, one column for each item
   # 
   # Dependencies: rstanarm
   library(rstanarm)
@@ -114,14 +113,13 @@ PostSamples <- function(data){
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
-  posteriorSample <- as.matrix(model1) 
+  posteriorSample <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
   return(posteriorSample)
 }
 
 #Ranks using Posterior Samples
 post <- PostSamples(exData)
-WeightedLossRanking(sampleMatrix = post, loss = 2,  f=identity, 
-                    rankweights = rep(1, times = n), itemweights = rep(1, times = n), lossTotal = FALSE)
+WeightedLossRanking(sampleMatrix = post)
 
 
 

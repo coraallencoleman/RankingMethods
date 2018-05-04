@@ -6,14 +6,14 @@ library(clue)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
-WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = NULL, loss = 2,  f=identity, 
+WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = NULL, loss = 2,  f=identity, 
                                 rankweights = rep(1, times = n), itemweights = rep(1, times = n), lossTotal = FALSE){
 # Computes optimal ranking for a list of estimates
 #   
 # Args:
 #   model: a stan model for the estimates
+#   sampleMatrix: a matrix of samples. dim = n samples by n items. Result of PostSamples function
 #   parameter: parameter to rank, as a string. Only necessary if inputting model rather than sampleMatrix.
-#   sampleMatrix: a matrix of samples. dim = n samples by n items
 #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
 #   f: scale for loss calculation. options: identity, rank
 #   rankweights: a vector of length equal to number of items to be ranked. Weights positions.
@@ -27,7 +27,9 @@ WeightedLossRanking <- function(model = NULL, parameter = NULL, sampleMatrix = N
   
   if (!is.null(sampleMatrix)){ #checks for sampleMatrix
     i = sampleMatrix
+    print(dim(i)) #TODO remove
   } else if (!is.null(model)){ #checks for model
+    print("model check") #TODO remove
     i <- rstan::extract(model, pars=parameter)[[1]] #extract samples from model
   }
   rho_i <- apply(i, 1, f) #apply function/scale transformation to matrix i. Should this be on cols (2)?
