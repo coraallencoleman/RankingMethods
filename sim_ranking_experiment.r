@@ -74,22 +74,20 @@ SimData <- function(matrix, n_sim = 1){
 }
 
 ##Get Posterior Distribution
-#TODO look into rstan glmer arm.  see if we can get the posterior samples from here faster
 #uses rstanarm: Bayesian Applied Regression Modeling via Stan
 library(rstanarm)
 options(mc.cores = parallel::detectCores())
-exData <- as.data.frame(SimData(det))
-example_model <- stan_glmer(cbind(y, n - y) ~ n + (1|item), data = exData, 
-                          family = binomial(link=logit), prior_intercept = normal(0, 10),
-                          seed = 12345, iter = 500)
-print(example_model) #TODO is this a random intercept model? 
-plot(example_model)
-pp_check(example_model)
-
+settings <- SelectNP()
+exData <- as.data.frame(SimData(settings))
+model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = exData, 
+                          family = binomial(link=logit), prior_intercept = normal(0, 5),
+                          prior_aux = cauchy(0,1),
+                          seed = 12345)
+print(model1) #TODO is this the correct random intercept model? 
+plot(model1)
 ##Check Model
-plot(example_model, "rhat")
-plot(example_model, "neff")
-posterior_predict.stanreg
+plot(model1, "rhat")
+plot(model1, "neff")
 
 DatatoStanFormat <- function(matrixList){ #need this? might use rstan glmer instead
   #formats data for stan
@@ -108,15 +106,14 @@ DatatoStanFormat <- function(matrixList){ #need this? might use rstan glmer inst
   rstan_options(auto_write = TRUE)
   options(mc.cores = parallel::detectCores())
   stan_data = list(
-    N = N, #25
-    item = even[i, 1, 1:N], #ITEM ID seq(1:25)
-    sizeN = n_vector, # #SIZE
-    count = as.integer(even[i, 4, 1:N]) #SIM SUCCESSES
+    N = 25, #25
+    item = exData[,1], #ITEM ID seq(1:25)
+    sizeN = exData[,2], # #SIZE
+    count = exData[,3] #SIM SUCCESSES
   )
   #might be faster to use rstan glmer arm
-  even_model[[i]] <- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=sim_data, seed = 10)
+  stan_model<- stan(file="/Users/cora/git_repos/RankingMethods/sim_randInt.stan",data=stan_data, seed = 10)
   return(stan_data)
-    
 }
 
 DataToRanking <- function(rankingMethod = 2){
