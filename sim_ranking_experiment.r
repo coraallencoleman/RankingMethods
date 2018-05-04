@@ -1,7 +1,7 @@
 #Testing for WeightedLossRanking function
 
-##IDEA
-##increase gaps until trivial. decrease until broken/impossible. 
+##MAIN GOAL OF THIS EXPERIMENT
+##increase gaps in parameters until they're trivial. decrease until broken/impossible. 
 #think of this as an experiment. what experimental conditions do we need to run to get a sense of behavior.
 
 #Step 0: Load
@@ -10,18 +10,18 @@ library(dplyr)
 #AND run entire ranking_function.r, ranking_metric.r files. 
 set.seed(10)
 
-SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, 
+SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1,
                      n_assignment_method = "ascending"){
   # function to simulate n, p from parameters. Deterministic.
   #   
   # Args:
   #   N: number of items to rank
-  #   a_p: Shape parameter alpha for beta distribution to determine gaps in p. Allows for nonequal gap size.
-  #   b_p: Shape parameter beta for beta distribution to determine gaps in p. Allows for nonequal gap size.
+  #   a_p: Shape parameter alpha for beta distribution to determine gaps in p. Allows for equal or nonequal gap size.
+  #   b_p: Shape parameter beta for beta distribution to determine gaps in p. Allows for equal or nonequal gap size.
   #   n_min: minimum number of counts/tries for each binomial variable
   #   n_max: maximum number of counts/tries for each binomial variable
-  #   a_b:
-  #   b_n:
+  #   a_n: Shape parameter alpha for beta distribution to determine gaps in n. Allows for equal or nonequal gap size.
+  #   b_n: Shape parameter alpha for beta distribution to determine gaps in n. Allows for equal or nonequal gap size.
   #   n_assignment_method. Possibilities: "ascending" for assign in order, "descending" for assign in reverse order, 
   #   "random" for random assignment
   #
@@ -29,23 +29,20 @@ SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30,
   #   one matrix with 2 columns (n, p) and N rows
   #
   # Dependencies: 
-  output <- list()
 
-  #for (i in 1:n_sim){
-    output[[i]] <- matrix(data = NA, nrow = N, ncol = 2, 
-                          dimnames = list(seq(1:N), c("n", "p")))
+  output <- matrix(data = NA, nrow = N, ncol = 2, 
+                          dimnames = list(seq(1:N), c("n", "p"))) #rows 1 to N, columns n, p
     
-    #n
-    output[[i]][,1] <- round((n_min + (m_max-n_min))*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
-    #p
-    output[[i]][,2] <- qbeta((1:N)/(N+1), a_p, b_p)
+  #n
+  output[,1] <- round(n_min + (n_max-n_min)*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
+  #p
+  output[,2] <- qbeta((1:N)/(N+1), a_p, b_p)
     
- # }
   return(output)
 }
 
 SimData <- function(matrix, n_sim = 1){
-  #simulates data from a dataframe of n, p with nrow = n_sim
+  #simulates data from a dataframe of n, p
 
   # Args:
   #   matrixList of n, p: list of matrices containing N rows and 2 columns: n, p. Result of selectNP.
@@ -54,7 +51,7 @@ SimData <- function(matrix, n_sim = 1){
   #   n_sim: number of simulations. TODO Equal to number of matrices in matrixList?
   #
   # Returns: 
-  #   matrix of n, p
+  #   matrix of n, p for n_sim rows
   # 
   # Dependencies:
   
