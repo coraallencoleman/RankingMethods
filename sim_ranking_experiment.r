@@ -45,36 +45,36 @@ SimData <- function(matrix, n_sim = 1){
   #simulates data from a dataframe of n, p
 
   # Args:
-  #   matrixList of n, p: list of matrices containing N rows and 2 columns: n, p. Result of selectNP.
-  #      n is the true attempts/tries/counts
-  #      p is the true p
-  #   n_sim: number of simulations. TODO Equal to number of matrices in matrixList?
+  #   matrix of deterministic n, p: A list of matrices containing N rows and 2 columns (n, p). Result of SelectNP where:
+  #     n is the true attempts/tries/counts
+  #     p is the true p
+  #   n_sim: number of simulations.
   #
   # Returns: 
-  #   matrix of n, p for n_sim rows
+  #   matrix of n_sim rows and 2 columns (n, y) where n is attempts and y is successes
+  #   OR matrix of N rows and n_sim columns and make ONE deterministic n vecto
   # 
   # Dependencies:
   
-  # then make matrix of N rows and n_sim columns and make ONE deterministic n vector
-  
-  N <- length(matrixList[[1]][,1]) #number of items to rank (from SelectNP)
-  output <- list()
+  N <- length(matrix[,1]) #number of items to rank (from SelectNP matrix)
+  output <- list() #list of matrices
   
   for (i in 1:n_sim){
     output[[i]] <- matrix(data = NA, nrow = N, ncol = 2, 
-                          dimnames = list(seq(1:N), c("n", "sim_p")))
-    #n (these are deterministic)
-    output[[i]][,1] <- matrixList[[i]][,1] #
-    #y (these vary)
-    output[[i]][,2] <- rbinom(N, size = matrixList[[i]][,1], prob = matrixList[[i]][,2]) #this should be y
-    #TODO check
+                          dimnames = list(seq(1:N), c("n", "y")))
+    #n (These are deterministic.)
+    output[[i]][,1] <- matrix[,1] #
+    #y counts (These vary randomly.)
+    output[[i]][,2] <- rbinom(N, size = matrix[,1], prob = matrix[,2]) #this should be y
   }
   return(output)
 }
 
+
+
 #TODO look into rstan glmer arm.  see if we can get the posterior samples from here
 
-DatatoStanFormat <- function(matrixList){
+DatatoStanFormat <- function(matrixList){ #need this? might use rstan glmer instead
   #formats data for stan
   
   # Args:
