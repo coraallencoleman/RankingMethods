@@ -75,16 +75,16 @@ SimData <- function(matrix, n_sim = 1){
 
 ##Get Posterior Distribution
 #uses rstanarm: Bayesian Applied Regression Modeling via Stan
-library(rstanarm)
-options(mc.cores = parallel::detectCores())
-settings <- SelectNP()
-exData <- as.data.frame(SimData(settings))
-model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = exData, 
-                          family = binomial(link=logit), prior_intercept = normal(0, 5),
-                          prior_aux = cauchy(0,1),
-                          seed = 12345)
-print(model1) #TODO is this the correct random intercept model? 
-plot(model1)
+# library(rstanarm)
+# options(mc.cores = parallel::detectCores())
+# settings <- SelectNP()
+# exData <- as.data.frame(SimData(settings))
+# model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = exData, 
+#                           family = binomial(link=logit), prior_intercept = normal(0, 5),
+#                           prior_aux = cauchy(0,1),
+#                           seed = 12345)
+#print(model1) #TODO is this the correct random intercept model? 
+#plot(model1)
 ##Check Model
 #plot(model1, "rhat")
 #plot(model1, "neff")
