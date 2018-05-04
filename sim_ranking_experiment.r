@@ -119,8 +119,9 @@ PostSamples <- function(data){
 }
 
 #Ranks using Posterior Samples
-
-WeightedLossRanking 
+post <- PostSamples(exData)
+WeightedLossRanking(sampleMatrix = post, loss = 2,  f=identity, 
+                    rankweights = rep(1, times = n), itemweights = rep(1, times = n), lossTotal = FALSE)
 
 
 
