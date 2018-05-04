@@ -30,13 +30,14 @@ SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, 
   #
   # Dependencies: 
 
-  output <- matrix(data = NA, nrow = N, ncol = 2, 
-                          dimnames = list(seq(1:N), c("n", "p"))) #rows 1 to N, columns n, p
-    
+  output <- matrix(data = NA, nrow = N, ncol = 3, 
+                          dimnames = list(seq(1:N), c("item", "n", "p"))) #rows 1 to N, columns n, p
+  #item (county, etc)
+  output[,1] <- seq(1:N)
   #n
-  output[,1] <- round(n_min + (n_max-n_min)*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
+  output[,2] <- round(n_min + (n_max-n_min)*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
   #p
-  output[,2] <- qbeta((1:N)/(N+1), a_p, b_p)
+  output[,3] <- qbeta((1:N)/(N+1), a_p, b_p)
     
   return(output)
 }
@@ -60,25 +61,35 @@ SimData <- function(matrix, n_sim = 1){
   output <- list() #list of matrices
   
   for (i in 1:n_sim){
-    output[[i]] <- matrix(data = NA, nrow = N, ncol = 2, 
-                          dimnames = list(seq(1:N), c("n", "y")))
+    output[[i]] <- matrix(data = NA, nrow = N, ncol = 3, 
+                          dimnames = list(seq(1:N), c("item","n", "y")))
+    #item
+    output[[i]][,1] <- seq(1:N)
     #n (These are deterministic.)
-    output[[i]][,1] <- matrix[,1] #
+    output[[i]][,2] <- matrix[,2] #
     #y counts (These vary randomly.)
-    output[[i]][,2] <- rbinom(N, size = matrix[,1], prob = matrix[,2]) #this should be y
+    output[[i]][,3] <- rbinom(N, size = matrix[,2], prob = matrix[,3]) 
   }
   return(output)
 }
 
-##Get Posterior
+##Get Posterior Distribution
 #TODO look into rstan glmer arm.  see if we can get the posterior samples from here faster
 #uses rstanarm: Bayesian Applied Regression Modeling via Stan
 library(rstanarm)
 options(mc.cores = parallel::detectCores())
-example_model <- stan_glm(cbind(y, n - y) ~ n, data = exData, 
+exData <- as.data.frame(SimData(det))
+example_model <- stan_glmer(cbind(y, n - y) ~ n + (1|item), data = exData, 
                           family = binomial(link=logit), prior_intercept = normal(0, 10),
                           seed = 12345, iter = 500)
+print(example_model) #TODO is this a random intercept model? 
+plot(example_model)
+pp_check(example_model)
 
+##Check Model
+plot(example_model, "rhat")
+plot(example_model, "neff")
+posterior_predict.stanreg
 
 DatatoStanFormat <- function(matrixList){ #need this? might use rstan glmer instead
   #formats data for stan

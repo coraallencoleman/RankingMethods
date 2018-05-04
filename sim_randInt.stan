@@ -11,7 +11,7 @@ data
 parameters
 {
   real intercept; // intercept
-  vector[N] alpha; // cafe intercept effects
+  vector[N] alpha; // county/item intercept effects
   real<lower=0> sigma; // standard deviation of cafe effect distribution
                        // <lower=0> sets minimum value to zero
 }
