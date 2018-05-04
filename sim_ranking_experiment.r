@@ -7,6 +7,7 @@
 #Step 0: Load
 library(rstan)
 library(dplyr)
+library(rstanarm)
 #AND run entire ranking_function.r, ranking_metric.r files. 
 set.seed(10)
 
@@ -97,29 +98,50 @@ PostSamples <- function(data){
   #simulates data from a dataframe of n, p
   
   # Args:
-  #   dataframe of columns named: item, n, p. Output of SimData
-  #   matrix of deterministic n, p: A list of matrices containing N rows and 2 columns (n, p). Result of SelectNP where:
-  #     n is the true attempts/tries/counts
-  #     p is the true p
+  #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
   #   n_sim: number of simulations.
   #
   # Returns: 
-  #   matrix of posterior samples, one column for each item
+  #   list of matrices of posterior samples, one column for each item
   # 
   # Dependencies: rstanarm
+  output <- list()
   library(rstanarm)
   options(mc.cores = parallel::detectCores())
-  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = data, 
+  for (i in 1:N){
+    model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = data[i], 
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
-  posteriorSample <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
-  return(posteriorSample)
+    output[[i]] <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
+  }
+  return(output)
 }
 
-#Ranks using Posterior Samples
-post <- PostSamples(exData)
-WeightedLossRanking(sampleMatrix = post)
+## RUN EXPERIMENT
+runSimulation <- function(){
+  #combines all the above functions to run a simulation
+  
+  # Args:
+  #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
+  #   n_sim: number of simulations.
+  #
+  # Returns: 
+  #   list of matrices of posterior samples, one column for each item
+  # 
+  # Dependencies: rstanarm
+  settings <- SelectNP()
+  data <- SimData(settings, n_sim = n_sim)
+  
+  #Ranks using Posterior Samples
+  post <- PostSamples(data)
+  ranks <- WeightedLossRanking(sampleMatrix = post)
+  
+  #TEST RANKS, return RESULTS
+  RankMetric(ranks)
+  
+}
+
 
 
 

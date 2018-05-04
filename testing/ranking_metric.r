@@ -38,7 +38,7 @@ RankMetric <- function(rankObject = NULL, originalData = NULL, order = largest, 
 
 
 ##function metric to see if rankObject's top ranked items match true top items
-#WITH DATAFRAME
+#WITH DATAFRAME not done
 RankMetricDF <- function(rankObject = NULL, originalData = NULL, order = largest, topN = 5){
   # function metric to see if our top number matches true top five for Binomial model
   #   
