@@ -70,9 +70,15 @@ SimData <- function(matrix, n_sim = 1){
   return(output)
 }
 
+##Get Posterior
+#TODO look into rstan glmer arm.  see if we can get the posterior samples from here faster
+#uses rstanarm: Bayesian Applied Regression Modeling via Stan
+library(rstanarm)
+options(mc.cores = parallel::detectCores())
+example_model <- stan_glm(cbind(y, n - y) ~ n, data = exData, 
+                          family = binomial(link=logit), prior_intercept = normal(0, 10),
+                          seed = 12345, iter = 500)
 
-
-#TODO look into rstan glmer arm.  see if we can get the posterior samples from here
 
 DatatoStanFormat <- function(matrixList){ #need this? might use rstan glmer instead
   #formats data for stan
