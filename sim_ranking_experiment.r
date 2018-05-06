@@ -119,10 +119,21 @@ PostSamples <- function(data){
 }
 
 ## RUN EXPERIMENT
-runSimulation <- function(){
+runSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1,
+                          n_assignment_method = "ascending"){
   #combines all the above functions to run a simulation
   
   # Args:
+  #   for SelectNP:
+  #   N: number of items to rank
+  #   a_p: Shape parameter alpha for beta distribution to determine gaps in p. Allows for equal or nonequal gap size.
+  #   b_p: Shape parameter beta for beta distribution to determine gaps in p. Allows for equal or nonequal gap size.
+  #   n_min: minimum number of counts/tries for each binomial variable
+  #   n_max: maximum number of counts/tries for each binomial variable
+  #   a_n: Shape parameter alpha for beta distribution to determine gaps in n. Allows for equal or nonequal gap size.
+  #   b_n: Shape parameter alpha for beta distribution to determine gaps in n. Allows for equal or nonequal gap size.
+  #   n_assignment_method. Possibilities: "ascending" for assign in order, "descending" for assign in reverse order, 
+  #   "random" for random assignment
   #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
   #   n_sim: number of simulations.
   #
@@ -130,15 +141,22 @@ runSimulation <- function(){
   #   list of matrices of posterior samples, one column for each item
   # 
   # Dependencies: rstanarm
+  
   settings <- SelectNP()
-  data <- SimData(settings, n_sim = n_sim)
   
-  #Ranks using Posterior Samples
-  post <- PostSamples(data)
-  ranks <- WeightedLossRanking(sampleMatrix = post)
+  results <- list()
   
-  #TEST RANKS, return RESULTS
-  RankMetric(ranks)
+  for (i in 1:n_sim){
+    data <- SimData(settings, n_sim = n_sim)
+    
+    #Ranks using Posterior Samples
+    post <- PostSamples(data)
+    ranks <- WeightedLossRanking(sampleMatrix = post)
+    
+    #TEST RANKS, return RESULTS
+    RankMetric(ranks)
+  }
+  return(results)
   
 }
 
