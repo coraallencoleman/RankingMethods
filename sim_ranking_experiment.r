@@ -43,60 +43,53 @@ SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, 
   return(output)
 }
 
-SimData <- function(matrix, n_sim = 1){
+SimData <- function(matrix){
   #simulates data from a dataframe of n, p
 
   # Args:
   #   matrix of deterministic n, p: A list of matrices containing N rows and 2 columns (n, p). Result of SelectNP where:
   #     n is the true attempts/tries/counts
   #     p is the true p
-  #   n_sim: number of simulations.
   #
   # Returns: 
-  #   matrix of n_sim rows and 2 columns (n, y) where n is attempts and y is successes
-  #   OR matrix of N rows and n_sim columns and make ONE deterministic n vecto
+  #   matrix of N rows and 2 columns (n, y) where n is attempts and y is successes
+  #   alternative formulation (not used here): matrix of N rows and n_sim columns and make ONE deterministic n vector
   # 
   # Dependencies:
   
   N <- length(matrix[,1]) #number of items to rank (from SelectNP matrix)
-  output <- list() #list of matrices
-  
-  for (i in 1:n_sim){
-    output[[i]] <- matrix(data = NA, nrow = N, ncol = 3, 
+
+  output <- matrix(data = NA, nrow = N, ncol = 3, 
                           dimnames = list(seq(1:N), c("item","n", "y")))
-    #item
-    output[[i]][,1] <- seq(1:N)
-    #n (These are deterministic.)
-    output[[i]][,2] <- matrix[,2] #
-    #y counts (These vary randomly.)
-    output[[i]][,3] <- rbinom(N, size = matrix[,2], prob = matrix[,3]) 
-  }
+  #item
+  output[,1] <- seq(1:N)
+  #n (These are deterministic.)
+  output[,2] <- matrix[,2] #
+  #y counts (These vary randomly.)
+  output[,3] <- rbinom(N, size = matrix[,2], prob = matrix[,3]) 
   return(output)
 }
 
 #Get Posterior Samples
-PostSamples <- function(data, n_sim){  
+PostSamples <- function(data){  
   #simulates data from a dataframe of n, p
   
   # Args:
   #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
-  #   n_sim: number of simulations.
   #
   # Returns: 
-  #   list of matrices of posterior samples, Each matrix has a row for each iteration, with one column for each item estimated (ranked)
+  #   one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
   # 
   # Dependencies: rstanarm
+  
   library(rstanarm)
   options(mc.cores = parallel::detectCores())
-  
-  output <- list()
-  for (i in 1:n_sim){ #one set of posterior samples for each simulation
-    model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data[[i]]), 
+
+  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data), 
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
-    output[[i]] <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
-  }
+  output <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
   return(output)
 }
 
@@ -117,34 +110,36 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   n_assignment_method. Possibilities: "ascending" for assign in order, "descending" for assign in reverse order, 
   #   "random" for random assignment
   #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
-  #   n_sim: number of simulations.
+  #   n_sim: number of simulations. (reps)
   #
   # Returns: 
   #   list of matrices of posterior samples, one column for each item
   # 
   # Dependencies: rstanarm
   
-  settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method)
-  data <- SimData(settings, n_sim = n_sim)
-  post <- PostSamples(data, n_sim = n_sim)
-  
+  settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
+
   results <- list() #create list of simulations
   for (i in 1:n_sim){
-    ranks <- WeightedLossRanking(sampleMatrix = post[[i]])
+    data <- SimData(settings)
+    post <- PostSamples(data)
+    ranks <- WeightedLossRanking(sampleMatrix = post)
     results[[i]] <- RankMetric(ranks)
   }
   return(results)
   
 }
 
-settings <- SelectNP()
-data <- SimData(settings)
-post <- PostSamples(data, n_sim = 1)
+RunSimulation()
 
-for (i in 1:n_sim){
-  ranks <- WeightedLossRanking(sampleMatrix = post[[i]]) #TODO problem here. need n_sim
-  results <- RankMetric(ranks, originalData = data) #need to add originalData here
-}
+# settings <- SelectNP()
+# data <- SimData(settings)
+# post <- PostSamples(data, n_sim = 1)
+# 
+# for (i in 1:n_sim){
+#   ranks <- WeightedLossRanking(sampleMatrix = post[[i]]) #TODO problem here. need n_sim
+#   results <- RankMetric(ranks, originalData = data) #need to add originalData here
+# }
 
 
 
