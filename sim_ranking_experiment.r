@@ -142,8 +142,8 @@ data <- SimData(settings)
 post <- PostSamples(data, n_sim = 1)
 
 for (i in 1:n_sim){
-  ranks <- WeightedLossRanking(sampleMatrix = post[[i]]) #TODO problem here. need for n_sim
-  results <- RankMetric(ranks)
+  ranks <- WeightedLossRanking(sampleMatrix = post[[i]]) #TODO problem here. need n_sim
+  results <- RankMetric(ranks, originalData = data) #need to add originalData here
 }
 
 

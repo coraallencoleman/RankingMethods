@@ -20,10 +20,10 @@ RankMetric <- function(rankObject = NULL, originalData = NULL, order = "largest"
   # Dependencies: rstan, clue, dplyr
   rankedData <- array(data = NA, dim=c(6,length(originalData[1,])))
   rankedData[1:4,] <- originalData
-  rankedData[5,] <- rankedData[2,]*100 #p*100 #TODO problem here
+  rankedData[5,] <- rankedData[2,]*100 #p*100 
   rankedData[6,] <- as.integer(rankObject) #rank orders items smallest to highest
   if (order == "largest"){
-    originalData <- originalData[,order(originalData[2,])] #sort by p
+    originalData <- originalData[,order(originalData[2,])] #sort by p #TODO problem here
     rankedData <- rankedData[,order(rankedData[6,])] #sort by rank
   } else if (order == "smallest"){
     originalData <- originalData[,order(-originalData[2,])] #sort by p
