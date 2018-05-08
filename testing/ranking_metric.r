@@ -9,8 +9,8 @@ RankMetric <- function(rankObject = NULL, originalData = NULL, order = "largest"
   # function metric to see if our top number matches true top five for Binomial model
   #   
   # Args:
-  #   rankObject: an output of WeightedLossRanking. Must include columns item, p, n
-  #   originalData: a data frame with column of true probabilities, true N (column names must match p, n)
+  #   rankObject: an output of WeightedLossRanking.
+  #   originalData: a data frame with column of item IDs, n, true probabilities
   #   order: largest (largest to smallest) or smallest (smallest to largest)
   #   topN: an integer number of top items to compare
   #
@@ -18,27 +18,28 @@ RankMetric <- function(rankObject = NULL, originalData = NULL, order = "largest"
   #   logical vector
   #
   # Dependencies: rstan, clue, dplyr
-  rankedData <- array(data = NA, dim=c(6,length(originalData[1,])))
-  rankedData[1:4,] <- originalData
-  rankedData[5,] <- rankedData[2,]*100 #p*100 
-  rankedData[6,] <- as.integer(rankObject) #rank orders items smallest to highest
+  
+  rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
+  rankedData[,1:3] <- settings
+  rankedData[,4] <- as.integer(ranks) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
+  
   if (order == "largest"){
-    originalData <- originalData[,order(originalData[2,])] #sort by p #TODO problem here
-    rankedData <- rankedData[,order(rankedData[6,])] #sort by rank
+    true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
+    rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
   } else if (order == "smallest"){
-    originalData <- originalData[,order(-originalData[2,])] #sort by p
-    rankedData <- rankedData[,order(-rankedData[6,])] #sort by rank
+    true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
+    rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
   } else {
     stop("order must be input as either 'largest' or 'smallest'")
   }
   #check if each item in true top N is in ranking top N, return boolean
-  return(originalData[1,1:topN] %in% rankedData[6,1:topN])
+  return(true[1:10, 1] %in% rankedData[1:10, 1])
 }
 
 
 
 ##function metric to see if rankObject's top ranked items match true top items
-#WITH DATAFRAME not done
+#WITH DATAFRAME not finished
 RankMetricDF <- function(rankObject = NULL, originalData = NULL, order = largest, topN = 5){
   # function metric to see if our top number matches true top five for Binomial model
   #   

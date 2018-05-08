@@ -124,7 +124,7 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     data <- SimData(settings)
     post <- PostSamples(data)
     ranks <- WeightedLossRanking(sampleMatrix = post)
-    results[[i]] <- RankMetric(ranks)
+    results[[i]] <- RankMetric(ranks, originalData = data)
   }
   return(results)
   
@@ -133,17 +133,16 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 RunSimulation()
 
 # settings <- SelectNP()
-# data <- SimData(settings)
-# post <- PostSamples(data, n_sim = 1)
-# 
-# for (i in 1:n_sim){
-#   ranks <- WeightedLossRanking(sampleMatrix = post[[i]]) #TODO problem here. need n_sim
-#   results <- RankMetric(ranks, originalData = data) #need to add originalData here
-# }
-
-
-
-
+data <- SimData(settings)
+# post <- PostSamples(data)
+# ranks <- WeightedLossRanking(sampleMatrix = post)
+results <- RankMetric(ranks, settings) #settings is item, n, p
+rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
+rankedData[,1:3] <- settings
+rankedData[,4] <- as.integer(ranks) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
+true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
+rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
+true[1:10, 1] %in% rankedData[1:10, 1]
 
 #RANKING EVALUATION: use RankMetric for now
 

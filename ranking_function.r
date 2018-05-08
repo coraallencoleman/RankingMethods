@@ -38,7 +38,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
 
   if (loss == 0){
     #Q: this doesn't make sense unless we're on the rank scale, right? 
-    #TODO Should I give an error if user tries to use another scale?
+    #TODO give an error if user tries to use another scale
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
