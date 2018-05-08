@@ -74,27 +74,8 @@ SimData <- function(matrix, n_sim = 1){
   return(output)
 }
 
-##Get Posterior Distribution
-#uses rstanarm: Bayesian Applied Regression Modeling via Stan
-# library(rstanarm)
-# options(mc.cores = parallel::detectCores())
-# settings <- SelectNP()
-# exData <- as.data.frame(SimData(settings))
-# model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = exData, 
-#                           family = binomial(link=logit), prior_intercept = normal(0, 5),
-#                           prior_aux = cauchy(0,1),
-#                           seed = 12345)
-#print(model1) #TODO is this the correct random intercept model? 
-#plot(model1)
-##Check Model
-#plot(model1, "rhat")
-#plot(model1, "neff")
-
-##Get Posterior Sample
-
-
 #Get Posterior Samples
-PostSamples <- function(data){  
+PostSamples <- function(data, n_sim){  
   #simulates data from a dataframe of n, p
   
   # Args:
@@ -102,14 +83,15 @@ PostSamples <- function(data){
   #   n_sim: number of simulations.
   #
   # Returns: 
-  #   list of matrices of posterior samples, one column for each item
+  #   list of matrices of posterior samples, Each matrix has a row for each iteration, with one column for each item estimated (ranked)
   # 
   # Dependencies: rstanarm
-  output <- list()
   library(rstanarm)
   options(mc.cores = parallel::detectCores())
-  for (i in 1:N){
-    model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = data[i], 
+  
+  output <- list()
+  for (i in 1:n_sim){ #one set of posterior samples for each simulation
+    model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data[[i]]), 
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
@@ -119,8 +101,8 @@ PostSamples <- function(data){
 }
 
 ## RUN EXPERIMENT
-runSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1,
-                          n_assignment_method = "ascending"){
+RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1,
+                          n_assignment_method = "ascending", n_sim = 1){
   #combines all the above functions to run a simulation
   
   # Args:
@@ -142,23 +124,28 @@ runSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   # 
   # Dependencies: rstanarm
   
-  settings <- SelectNP()
+  settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method)
+  data <- SimData(settings, n_sim = n_sim)
+  post <- PostSamples(data, n_sim = n_sim)
   
-  results <- list()
-  
+  results <- list() #create list of simulations
   for (i in 1:n_sim){
-    data <- SimData(settings, n_sim = n_sim)
-    
-    #Ranks using Posterior Samples
-    post <- PostSamples(data)
-    ranks <- WeightedLossRanking(sampleMatrix = post)
-    
-    #TEST RANKS, return RESULTS
-    RankMetric(ranks)
+    ranks <- WeightedLossRanking(sampleMatrix = post[[i]])
+    results[[i]] <- RankMetric(ranks)
   }
   return(results)
   
 }
+
+settings <- SelectNP()
+data <- SimData(settings)
+post <- PostSamples(data, n_sim = 1)
+
+for (i in 1:n_sim){
+  ranks <- WeightedLossRanking(sampleMatrix = post[[i]]) #TODO problem here. need for n_sim
+  results <- RankMetric(ranks)
+}
+
 
 
 

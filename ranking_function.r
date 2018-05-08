@@ -27,7 +27,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
   
   if (!is.null(sampleMatrix)){ #checks for sampleMatrix
     i = sampleMatrix
-    print(dim(i)) #TODO remove
+    #print(dim(i)) #TODO remove
   } else if (!is.null(model)){ #checks for model
     print("model check") #TODO remove
     i <- rstan::extract(model, pars=parameter)[[1]] #extract samples from model

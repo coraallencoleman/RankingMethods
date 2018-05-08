@@ -5,7 +5,7 @@ library(clue)
 library(rstan)
 
 ##function metric to see if rankObject's top ranked items match true top items MATRIX
-RankMetric <- function(rankObject = NULL, originalData = NULL, order = largest, topN = 5){
+RankMetric <- function(rankObject = NULL, originalData = NULL, order = "largest", topN = 5){
   # function metric to see if our top number matches true top five for Binomial model
   #   
   # Args:
@@ -20,7 +20,7 @@ RankMetric <- function(rankObject = NULL, originalData = NULL, order = largest, 
   # Dependencies: rstan, clue, dplyr
   rankedData <- array(data = NA, dim=c(6,length(originalData[1,])))
   rankedData[1:4,] <- originalData
-  rankedData[5,] <- rankedData[2,]*100 #p*100
+  rankedData[5,] <- rankedData[2,]*100 #p*100 #TODO problem here
   rankedData[6,] <- as.integer(rankObject) #rank orders items smallest to highest
   if (order == "largest"){
     originalData <- originalData[,order(originalData[2,])] #sort by p
