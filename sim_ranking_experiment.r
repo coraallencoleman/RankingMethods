@@ -95,7 +95,8 @@ PostSamples <- function(data){
 
 ## RUN EXPERIMENT
 RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1,
-                          n_assignment_method = "ascending", n_sim = 1){
+                          n_assignment_method = "ascending", n_sim = 1, 
+                          outFile = "/Users/cora/git_repos/RankingMethods/results/sim_results.csv"){
   #combines all the above functions to run a simulation
   
   # Args:
@@ -111,6 +112,7 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   "random" for random assignment
   #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
   #   n_sim: number of simulations. (reps)
+  #   outFile: file name for results
   #
   # Returns: 
   #   list of matrices of posterior samples, one column for each item
@@ -126,23 +128,13 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     ranks <- WeightedLossRanking(sampleMatrix = post)
     results[[i]] <- RankMetric(ranks, originalData = data)
   }
-  return(results)
   
+  #save results to a file
+  write.csv(results, file = outFile)
+  return(results)
 }
 
 RunSimulation()
-
-# settings <- SelectNP()
-data <- SimData(settings)
-# post <- PostSamples(data)
-# ranks <- WeightedLossRanking(sampleMatrix = post)
-results <- RankMetric(ranks, settings) #settings is item, n, p
-rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
-rankedData[,1:3] <- settings
-rankedData[,4] <- as.integer(ranks) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
-true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
-rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
-true[1:10, 1] %in% rankedData[1:10, 1]
 
 #RANKING EVALUATION: use RankMetric for now
 
@@ -212,3 +204,8 @@ qbeta(1:N/(N+1), 1, 1) #but then vary the last two parameters for variable gap s
 #TODO repeat with testing over variation in N
 
 #TODO add weights. How does this compare to not weighting at all?
+
+### Simulations TODO
+# function to save sim results to file
+# even gaps
+# uneven gaps
