@@ -94,7 +94,7 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           n_assignment_method = "ascending", n_sim = 1, 
                           outFile = "/Users/cora/git_repos/RankingMethods/results/sim_results.csv"){
   #combines all the above functions to run a simulation
-  
+  #TODO ranking options
   # Args:
   #   for SelectNP:
   #   N: number of items to rank
@@ -122,7 +122,7 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     data <- SimData(settings)
     post <- PostSamples(data)
     ranks <- WeightedLossRanking(sampleMatrix = post)
-    results[[i]] <- RankMetric(ranks, originalData = data)
+    results[[i]] <- RankMetric(ranks, settings = data)
   }
   
   #save results to a file
@@ -130,16 +130,30 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   return(results)
 }
 
-RunSimulation()
+RunSimulation(n_sim = 2)
 
 ##Main Questions for this Experiment:
 ##increase gaps in parameters until they're trivial. decrease until broken/impossible. 
 #think of this as an experiment. what experimental conditions do we need to run to get a sense of behavior?
 
 ### Simulations TODO
+# compare different ranking options
 # function to save sim results to file
 # even gaps
 # uneven gaps #qbeta(1:N/(N+1), 1, 1). Vary the last two parameters for variable gap size
 # different losses
-# weights vs no weights
+# weights vs no weights (part of ranking)
 # variation in N
+
+#TODO notes wed may 8
+#write a function to generate weights
+
+#Weights: 
+# w_i = e^(i-1) where i is the rank position (vary e here. e = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
+# reverse version (you care about last only)
+# curve version (care about both ends, dont care about middle). Need to know middle rank. Then 
+  # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
+# we should always make the top weight 1 so that things are comperable (always relative to largest)
+# do this simulation on rank, logit scales
+
+#save all ranks from each simulation. Add whether to save metrics too. Then we'll play around with metrics too.
