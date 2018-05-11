@@ -97,19 +97,17 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
     # curve version (care about both ends, dont care about middle). Need to know middle rank. Then
     # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
 
-    weights = steepness^(items-1) #works
+    weights = steepness^(items-1)
     #use bottom for second half
-    weights[(numItems/2 + 1):numItems] = steepness^(items[(numItems/2):0]-1) #works
-    
-    #weights[(numItems/2):numItems] = steepness^(numItems-items[(numItems/2):numItems]) #TODO not symmetric yet
-    #weights[1:(numItems/2)] = steepness^(items[1:(numItems/2)]-1)
+    weights[(round(numItems/2 + 0.1) + 1):numItems] = steepness^(items[(round(numItems/2)):0]-1)
+    #TODO fix for odd numItems
   } else {
     return("Priority must be given as 'even', 'top', 'bottom', or 'both'.")
   }
   return(weights)
 }
 
-RankingWeights(priority = "both")
+RankingWeights(numItems = 21, priority = "both") #11 should be middle/lowest
 
 #Weights: 
 # w_i = e^(i-1) where i is the rank position (vary e here. w = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
