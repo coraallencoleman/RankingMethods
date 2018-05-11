@@ -69,26 +69,39 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
   }
 }
 
-RankingWeights <- function(priority = "top"){
+  
+RankingWeights <- function(numItems = 25, priority = "top", steepness = .9){
   # Computes optimal ranking for a list of estimates. Largest weight is always 1.
   #   
   # Args:
   #   priority: focus for ranking. "even" to evenly weight, "top" to prioritize top ranked items, "bottom" for bottom ranked items, "both" for both. 
-  #   steepness: size of e
+  #   steepness: size of e between 0 and 1. Smaller e creates steeper weights. Larger e creates more even weights.
   #
   # Returns:
   #   vector of weights
   
-
+  weights <- vector(length = numItems)
+  items <- seq(1:numItems)
   
+  if (priority == "even"){
+    weights = rep(1, times = numItems)
+  } else if (priority == "top"){
+    weights = steepness^(items-1)
+  } else if (priority == "bottom"){
+    # reverse version (you care about last only)
+    weights = steepness^((numItems-items))
+  } else if (priority == "both"){
+    # curve version (care about both ends, dont care about middle). Need to know middle rank. Then
+    # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
+    weights = steepness^((numItems-items)-1) #TODO need to write this
+  } else {
+    return("Priority must be given as 'even', 'top', 'bottom', or 'both'.")
+  }
+  return(weights)
 }
 
-#TODO notes wed may 8
-#write a function to generate weights
+RankingWeights(priority = "bottom")
 
 #Weights: 
-# w_i = e^(i-1) where i is the rank position (vary e here. e = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
-# reverse version (you care about last only)
-# curve version (care about both ends, dont care about middle). Need to know middle rank. Then 
-# weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
-# we should always make the top weight 1 so that things are comperable (always relative to largest)
+# w_i = e^(i-1) where i is the rank position (vary e here. w = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
+# note: we should always make the top weight 1 so that things are comperable (always relative to largest)
