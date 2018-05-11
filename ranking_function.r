@@ -96,11 +96,12 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
     
     # curve version (care about both ends, dont care about middle). Need to know middle rank. Then
     # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
-    #use top for first half 1:numItems/2
-    weights = steepness^(items-1)
+
+    weights = steepness^(items-1) #works
     #use bottom for second half
-    weights[11:20] = steepness^(9:0)
-    weights[(numItems/2):numItems] = steepness^(numItems-items[(numItems/2):numItems]) #TODO not symmetric yet
+    weights[(numItems/2 + 1):numItems] = steepness^(items[(numItems/2):0]-1) #works
+    
+    #weights[(numItems/2):numItems] = steepness^(numItems-items[(numItems/2):numItems]) #TODO not symmetric yet
     #weights[1:(numItems/2)] = steepness^(items[1:(numItems/2)]-1)
   } else {
     return("Priority must be given as 'even', 'top', 'bottom', or 'both'.")
