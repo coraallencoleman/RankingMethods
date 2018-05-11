@@ -70,7 +70,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
 }
 
   
-RankingWeights <- function(numItems = 25, priority = "top", steepness = .9){
+RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
   # Computes optimal ranking for a list of estimates. Largest weight is always 1.
   #   
   # Args:
@@ -91,16 +91,24 @@ RankingWeights <- function(numItems = 25, priority = "top", steepness = .9){
     # reverse version (you care about last only)
     weights = steepness^((numItems-items))
   } else if (priority == "both"){
+    #for even, repeats same weight at bottom (10 and 11 will share a weight)
+    #for odd, one item will have smallest weight.
+    
     # curve version (care about both ends, dont care about middle). Need to know middle rank. Then
     # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
-    weights = steepness^((numItems-items)-1) #TODO need to write this
+    #use top for first half 1:numItems/2
+    weights = steepness^(items-1)
+    #use bottom for second half
+    weights[11:20] = steepness^(9:0)
+    weights[(numItems/2):numItems] = steepness^(numItems-items[(numItems/2):numItems]) #TODO not symmetric yet
+    #weights[1:(numItems/2)] = steepness^(items[1:(numItems/2)]-1)
   } else {
     return("Priority must be given as 'even', 'top', 'bottom', or 'both'.")
   }
   return(weights)
 }
 
-RankingWeights(priority = "bottom")
+RankingWeights(priority = "both")
 
 #Weights: 
 # w_i = e^(i-1) where i is the rank position (vary e here. w = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
