@@ -144,16 +144,6 @@ RunSimulation(n_sim = 2)
 # different losses
 # weights vs no weights (part of ranking)
 # variation in N
-
-#TODO notes wed may 8
-#write a function to generate weights
-
-#Weights: 
-# w_i = e^(i-1) where i is the rank position (vary e here. e = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
-# reverse version (you care about last only)
-# curve version (care about both ends, dont care about middle). Need to know middle rank. Then 
-  # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
-# we should always make the top weight 1 so that things are comperable (always relative to largest)
 # do this simulation on rank, logit scales
 
 #save all ranks from each simulation. Add whether to save metrics too. Then we'll play around with metrics too.

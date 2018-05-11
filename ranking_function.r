@@ -1,5 +1,11 @@
 ### Weighted Loss Function for Ranking by Position ###
+
 ## Cora Allen-Coleman Spring 2018 ##
+
+  # Includes:
+    # Weighted Loss Ranking Function
+    # Weight Creation Function
+
 
 library(rstan)
 library(clue)
@@ -62,3 +68,27 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
     return(solve_LSAP(LossRnk))
   }
 }
+
+RankingWeights <- function(priority = "top"){
+  # Computes optimal ranking for a list of estimates. Largest weight is always 1.
+  #   
+  # Args:
+  #   priority: focus for ranking. "even" to evenly weight, "top" to prioritize top ranked items, "bottom" for bottom ranked items, "both" for both. 
+  #   steepness: size of e
+  #
+  # Returns:
+  #   vector of weights
+  
+
+  
+}
+
+#TODO notes wed may 8
+#write a function to generate weights
+
+#Weights: 
+# w_i = e^(i-1) where i is the rank position (vary e here. e = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
+# reverse version (you care about last only)
+# curve version (care about both ends, dont care about middle). Need to know middle rank. Then 
+# weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
+# we should always make the top weight 1 so that things are comperable (always relative to largest)
