@@ -74,8 +74,9 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
   # Computes optimal ranking for a list of estimates. Largest weight is always 1.
   #   
   # Args:
+  #   numItems: number of items to rank
   #   priority: focus for ranking. "even" to evenly weight, "top" to prioritize top ranked items, "bottom" for bottom ranked items, "both" for both. 
-  #   steepness: size of e between 0 and 1. Smaller e creates steeper weights. Larger e creates more even weights.
+  #   steepness: size of e between 0 and 1. Smaller e creates steeper weights. Larger e creates more even weights. Planning to test 3 (slow, steady, steep)
   #
   # Returns:
   #   vector of weights
@@ -91,24 +92,15 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
     # reverse version (you care about last only)
     weights = steepness^((numItems-items))
   } else if (priority == "both"){
-    #for even, repeats same weight at bottom (10 and 11 will share a weight)
-    #for odd, one item will have smallest weight.
-    
-    # curve version (care about both ends, dont care about middle). Need to know middle rank. Then
     # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
-
-    weights = steepness^(items-1)
-    #use bottom for second half
-    weights[(round(numItems/2 + 0.1) + 1):numItems] = steepness^(items[(round(numItems/2)):0]-1)
-    #TODO fix for odd numItems
+    #for even, repeats same weight at bottom. (if numItems = 20, items 10 and 11 will both have the smallest weight)
+    #for odd, one item will have smallest weight. (if numItems = 21, item 11 will have the smallest weight)
+    weights = steepness^(items-1) #top
+    weights[(round(numItems/2 + 0.1) + 1):numItems] = steepness^(items[(round(numItems/2)):0]-1) #bottom/second half
   } else {
     return("Priority must be given as 'even', 'top', 'bottom', or 'both'.")
   }
   return(weights)
 }
 
-RankingWeights(numItems = 21, priority = "both") #11 should be middle/lowest
-
-#Weights: 
-# w_i = e^(i-1) where i is the rank position (vary e here. w = 1 is unweighted. then decrease e size 3 total e sizes: slow, gradual, steeply)
-# note: we should always make the top weight 1 so that things are comperable (always relative to largest)
+#RankingWeights(numItems = 21, priority = "both") #11 should be middle/lowest
