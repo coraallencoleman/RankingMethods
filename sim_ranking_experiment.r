@@ -94,7 +94,7 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           n_assignment_method = "ascending", n_sim = 1, 
                           loss = 2,  f=identity, rankweights = rep(1, times = n),
                           rankFile = "/Users/cora/git_repos/RankingMethods/results/ranks.csv",
-                          saveMetric = FALSE,
+                          metric = FALSE,
                           metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
   #combines all the above functions to run a simulation
   # Args:
@@ -129,8 +129,7 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     data <- SimData(settings)
     post <- PostSamples(data)
     ranks[[i]] <- as.integer(WeightedLossRanking(sampleMatrix = post))
-    #return(WeightedLossRanking(sampleMatrix = post)) TODO remove
-    if (saveMetric == TRUE){
+    if (metric == TRUE){
       results[[i]] <- RankMetric(ranks, settings = data)
     }
   }
@@ -138,12 +137,13 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   write.csv(ranks, file = rankFile)
   
   #save metric results to a file
-  if (saveMetric == TRUE){
+  if (metric == TRUE){
     write.csv(results, file = metricFile)
   }
+  return(ranks)
 }
 
-RunSimulation(n_sim = 1, rankFile = "/Users/cora/git_repos/RankingMethods/results/ranks.csv")
+ranks <- RunSimulation(n_sim = 2, rankFile = "/Users/cora/git_repos/RankingMethods/results/ranks.csv")
 
 ##Main Questions for this Experiment:
 ##increase gaps in parameters until they're trivial. decrease until broken/impossible. 
