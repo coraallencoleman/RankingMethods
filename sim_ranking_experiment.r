@@ -92,9 +92,11 @@ PostSamples <- function(data){
 ## RUN EXPERIMENT
 RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1,
                           n_assignment_method = "ascending", n_sim = 1, 
-                          outFile = "/Users/cora/git_repos/RankingMethods/results/sim_results.csv"){
+                          loss = 2,  f=identity, rankweights = rep(1, times = n),
+                          rankFile = "/Users/cora/git_repos/RankingMethods/results/ranks.csv",
+                          saveMetric = FALSE,
+                          metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
   #combines all the above functions to run a simulation
-  #TODO ranking options
   # Args:
   #   for SelectNP:
   #   N: number of items to rank
@@ -108,6 +110,9 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   "random" for random assignment
   #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
   #   n_sim: number of simulations. (reps)
+  #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
+  #   f = scale on which to rank
+  #   rankweights: a vector of weights for ranks. Can be result of RankingWeights
   #   outFile: file name for results
   #
   # Returns: 
@@ -117,20 +122,28 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   
   settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
 
-  results <- list() #create list of simulations
+  ranks <- list() #creates list of ranks for each simulation
+  results <- list() #create list of metric results for each simulation
+  
   for (i in 1:n_sim){
     data <- SimData(settings)
     post <- PostSamples(data)
-    ranks <- WeightedLossRanking(sampleMatrix = post)
-    results[[i]] <- RankMetric(ranks, settings = data)
+    ranks[[i]] <- as.integer(WeightedLossRanking(sampleMatrix = post))
+    #return(WeightedLossRanking(sampleMatrix = post)) TODO remove
+    if (saveMetric == TRUE){
+      results[[i]] <- RankMetric(ranks, settings = data)
+    }
   }
   
-  #save results to a file
-  write.csv(results, file = outFile)
-  return(results)
+  write.csv(ranks, file = rankFile)
+  
+  #save metric results to a file
+  if (saveMetric == TRUE){
+    write.csv(results, file = metricFile)
+  }
 }
 
-RunSimulation(n_sim = 2)
+RunSimulation(n_sim = 1, rankFile = "/Users/cora/git_repos/RankingMethods/results/ranks.csv")
 
 ##Main Questions for this Experiment:
 ##increase gaps in parameters until they're trivial. decrease until broken/impossible. 
@@ -146,4 +159,6 @@ RunSimulation(n_sim = 2)
 # variation in N
 # do this simulation on rank, logit scales
 
-#save all ranks from each simulation. Add whether to save metrics too. Then we'll play around with metrics too.
+#TODO
+#experiment function should save all ranks from each simulation. 
+#Add whether to save metrics too. Then we'll play around with metrics too.

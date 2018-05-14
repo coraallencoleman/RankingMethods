@@ -89,7 +89,7 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
   } else if (priority == "top"){
     weights = steepness^(items-1)
   } else if (priority == "bottom"){
-    # reverse version (you care about last only)
+    # reverse version (you care about last items only)
     weights = steepness^((numItems-items))
   } else if (priority == "both"){
     # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
