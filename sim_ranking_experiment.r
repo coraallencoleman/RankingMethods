@@ -90,12 +90,13 @@ PostSamples <- function(data){
 }
 
 ## RUN EXPERIMENT
-RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1,
+RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1, #data
                           n_assignment_method = "ascending", 
-                          loss = 2,  f=identity, rankweights = "", n_sim = 1,
+                          rankPriority = "top", rankSteepness = .9, #rankWeights
+                          parameter = NULL, loss = 2, f=identity, rankweights = "", #ranking settings
+                          n_sim = 1,
                           fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                          metric = FALSE,
-                          metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
+                          metric = FALSE, metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
   #combines all the above functions to run a simulation
   # Args:
   #   for SelectNP:
@@ -125,22 +126,28 @@ RunSimulation <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   
   settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
 
+  # create RankingWeights
+  rankWeights <- RankingWeights(numItems = N, priority = rankPriority, steepness = rankSteepness)
+  
+  
   ranks <- list() #creates list of ranks for each simulation
   results <- list() #create list of metric results for each simulation
-  
+
   for (i in 1:n_sim){
     data <- SimData(settings)
     post <- PostSamples(data)
-    ranks[[i]] <- as.integer(WeightedLossRanking(sampleMatrix = post))
+    ranks[[i]] <- as.integer(WeightedLossRanking(sampleMatrix = post, parameter = NULL, loss = loss, f=f, 
+                                                 rankWeights = rankWeights, lossTotal = FALSE))
+    
     if (metric == TRUE){
       results[[i]] <- RankMetric(ranks, settings = data)
     }
   }
   
   #create rank file containing all info needed for experiment
-  #N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method
-  rankFile = paste0(fileRoot, N, a_p, b_p, n_min, n_max, a_n, b_n,
-                    n_assignment_method, loss, f, rankweights, n_sim, ".csv", sep = "_")
+  #TODO need to include function like identity or rank here. Could use as.character(quote(f)). For now, just assumes identity
+  rankFile = paste(fileRoot, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method,rankPriority, 
+                   rankSteepness, parameter, loss, "identity", rankPriority, rankSteepness, n_sim, ".csv", sep = "_")
   
   #save ranks to a file (one column for each sim)
   write.csv(ranks, file = rankFile)

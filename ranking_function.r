@@ -13,7 +13,7 @@ library(clue)
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
 WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = NULL, loss = 2,  f=identity, 
-                                rankweights = rep(1, times = n), itemweights = rep(1, times = n), lossTotal = FALSE){
+                                rankWeights = rep(1, times = n), itemweights = rep(1, times = n), lossTotal = FALSE){
 # Computes optimal ranking for a list of estimates
 #   
 # Args:
@@ -22,7 +22,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
 #   parameter: parameter to rank, as a string. Only necessary if inputting model rather than sampleMatrix.
 #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
 #   f: scale for loss calculation. options: identity, rank
-#   rankweights: a vector of length equal to number of items to be ranked. Weights positions.
+#   rankWeights: a vector of length equal to number of items to be ranked. Weights positions.
 #   itemweights: a vector of length equal to number of items to be ranked. Weights items.
 #   lossTotal: if TRUE, provides total loss
 #
@@ -48,7 +48,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(m_rho_i[i,]!=m_rho_j[j,])
+        LossRnk[i,j] <- rankWeights[j]*itemweights[i]*mean(m_rho_i[i,]!=m_rho_j[j,])
         }
     }
     if (lossTotal == TRUE){
@@ -59,7 +59,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankweights[j]*itemweights[i]*mean(abs((rho_i[i,]-rho_j[j,]))^loss)
+        LossRnk[i,j] <- rankWeights[j]*itemweights[i]*mean(abs((rho_i[i,]-rho_j[j,]))^loss)
       }
     }
     if (lossTotal == TRUE){
