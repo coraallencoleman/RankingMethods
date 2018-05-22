@@ -16,8 +16,8 @@
 #for below, think about how big average n should be to get p in CI
 #n min: c(50) explore this to see . what differences in p1 and p2 coudl you find with this n? do a power calculation basically
 #n max: se = sqrt(p*q/n). think about how small this would have to be to think about how big n needs to be
+se = sqrt((.1*.9)/20) #graph this out to see. If the ranking is always right, then n is too big. If ranks are uniform/terrible, then n too small.
 # assignment method
-se = sqrt((.1*.9)/20) #graph this out to see. If its always right, then n is too big. If ranks are uniform, then n too small.
 
 for (n in c(25, 50, 100)){ #numItems
   for (l in c(1, 2)){ #loss types
