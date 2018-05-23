@@ -19,14 +19,18 @@
 se = sqrt((.1*.9)/20) #graph this out to see. If the ranking is always right, then n is too big. If ranks are uniform/terrible, then n too small.
 # assignment method
 
-for (n in c(25, 50, 100)){ #numItems
-  for (l in c(1, 2)){ #loss types
-  RunSimulation(N = n, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1, #data
+#for (n in c(25, 50, 100)){ #numItems
+  for (n_min in c(10, 50, 100)){
+    for (n_max in c(30, 100, 200)){
+      #for (l in c(1, 2)){ #loss types
+      RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
-                rankPriority = "top", rankSteepness = .9, #rankWeights
-                parameter = NULL, loss = l, f=identity, rankweights = "", #ranking settings
+                rankPriority = "even", #rankSteepness = .9, #rankWeights
+                parameter = NULL, loss = 2, 
+                f=identity,  #ranking settings
                 n_sim = 1,
                 fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                metric = FALSE, metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv")
+                metric = FALSE)
+    }
   }
-}
+#}

@@ -93,7 +93,7 @@ PostSamples <- function(data){
 RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1, #data
                           n_assignment_method = "ascending", 
                           rankPriority = "top", rankSteepness = .9, #rankWeights
-                          parameter = NULL, loss = 2, f=identity, rankweights = "", #ranking settings
+                          parameter = NULL, loss = 2, f=identity, #ranking settings
                           n_sim = 1,
                           fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                           metric = FALSE, metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
@@ -108,11 +108,10 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   a_n: Shape parameter alpha for beta distribution to determine gaps in n. Allows for equal or nonequal gap size.
   #   b_n: Shape parameter alpha for beta distribution to determine gaps in n. Allows for equal or nonequal gap size.
   #   n_assignment_method. Possibilities: "ascending" for assign in order, "descending" for assign in reverse order, 
-  #   "random" for random assignment
+  #     "random" for random assignment
   #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
   #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
   #   f = scale on which to rank
-  #   rankweights: a vector of weights for ranks. Can be result of RankingWeights
   #   n_sim: number of simulations. (reps)
   #   fileRoot: file path used to create csv file for results
   #   metric: boolean indicating if metric results should be created and saved
