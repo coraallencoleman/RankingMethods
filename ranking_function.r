@@ -13,7 +13,7 @@ library(clue)
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
 WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = NULL, loss = 2,  f=identity, 
-                                rankWeights = rep(1, times = n), itemweights = rep(1, times = n), lossTotal = FALSE){
+                                rankWeights = rep(1, times = n), itemweights = rep(1, times = n)){
 # Computes optimal ranking for a list of estimates
 #   
 # Args:
@@ -24,9 +24,9 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
 #   f: scale for loss calculation. options: identity, rank
 #   rankWeights: a vector of length equal to number of items to be ranked. Weights positions.
 #   itemweights: a vector of length equal to number of items to be ranked. Weights items.
-#   lossTotal: if TRUE, provides total loss
 #
 # Returns:
+#   totalLoss
 #   optimal ranking for a list of estimates
   
 # Dependencies: rstan, clue
@@ -51,9 +51,6 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
         LossRnk[i,j] <- rankWeights[j]*itemweights[i]*mean(m_rho_i[i,]!=m_rho_j[j,])
         }
     }
-    if (lossTotal == TRUE){
-      print(paste("Total Loss: ", sum(LossRnk))) 
-    }
     return(solve_LSAP(LossRnk))
   } else{ #all other loss cases
     LossRnk <- matrix(NA,n,n)
@@ -63,9 +60,6 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
       }
     }
     totalLoss = sum(LossRnk)
-    if (lossTotal == TRUE){
-      print(paste("Total Loss: ", sum(LossRnk)))
-    }
     
     return(c(totalLoss, solve_LSAP(LossRnk)))
   }

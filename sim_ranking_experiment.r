@@ -94,7 +94,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           n_assignment_method = "ascending", 
                           rankPriority = "top", rankSteepness = .9, #rankWeights
                           parameter = NULL, loss = 2, f=identity, #ranking settings
-                          n_sim = 1, lossTotal = FALSE,
+                          n_sim = 1,
                           fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                           metric = FALSE, metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
   #combines all the above functions to run a simulation
@@ -134,7 +134,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     data <- SimData(settings)
     post <- PostSamples(data)
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = NULL, loss = loss, f=f, 
-                                                 rankWeights = rankWeights, lossTotal = lossTotal)
+                                                 rankWeights = rankWeights)
     totalLoss <- rankFunctionResult[1]
     ranks[[i]] <- as.integer(rankFunctionResult[2])
     
@@ -144,10 +144,13 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     #for each simulation, 
     #adds parameters, total loss, and rankings to a data frame as a new row of data
     ranking = list(ranks[[i]])
-    lossDF[nrow(lossDF) + 1,] = list(N, a_p, b_p, n_min, n_max, a_n, b_n,
-                                     n_assignment_method, 
-                                     rankPriority, rankSteepness,
-                                     parameter, loss, f, totalLoss, c(ranks[[i]]))
+    print(paste("ranking", ranking))
+    print(totalLoss)
+    #lossDF$ranking[nrow(lossDF) + 1] <- ranking
+    # lossDF[nrow(lossDF) + 1,] = list(N, a_p, b_p, n_min, n_max, a_n, b_n,
+    #                                  n_assignment_method, 
+    #                                  rankPriority, rankSteepness,
+    #                                  parameter, loss, f, totalLoss, ranking)
   }
   
   #create rank file containing all info needed for experiment
@@ -162,11 +165,11 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   if (metric == TRUE){
     write.csv(results, file = metricFile)
   }
-  #return(ranks)
+  return(ranks)
 }
 
 #test
-ranks <- RunSimulation(n_sim = 1, lossTotal = TRUE)
+ranks <- RunSimulation(n_sim = 1)
 
 
 
