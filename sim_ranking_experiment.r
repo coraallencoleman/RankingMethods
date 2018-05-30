@@ -141,6 +141,9 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     if (metric == TRUE){
       results[[i]] <- RankMetric(ranks, settings = data)
     }
+    #print parameters
+    print(paste("Parameters", N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method,rankPriority, 
+                rankSteepness, parameter, loss, "identity", rankPriority, rankSteepness, n_sim, sep = ", "))
   }
   
   #create rank file containing all info needed for experiment
@@ -159,7 +162,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 }
 
 #test
-ranks <- RunSimulation(n_sim = 1)
+ranks <- RunSimulation(n_sim = 1, lossTotal = TRUE)
 
 
 
