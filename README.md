@@ -1,6 +1,10 @@
 # Ranking Methods
 Bayesian ranking methods implementation  
 
+## Parameters for Simulation
+see lossDF data frame
+
+
 # Comparing Ranking Methods
 use variables
 For data set, vary on:
@@ -152,17 +156,16 @@ see their package (maybe include here)
 
 
 ## Paper Timeline ##
-Feb 2018: abstract to JSM (accepted April 2018)  
-April 2018: draft program + outline paper  
-May 2018: finish program + rough draft of methods section  
-June 2018: simulations + draft paper   
+Feb 2018: abstract to JSM (accepted April 2018)  DONE
+April 2018: draft program DONE
+May 2018: finish program
+June 2018: simulations + outline + draft paper   
 July 2018: write paper, write talk, practice talk   
 July 28-30: JSM talk  
 August 2018: send paper to Ron for final edits, submit  
 
-## TODO   
-- ranking_metric create way to compare rankings (a metric?) could use total loss?
-- make the function faster?
+
+
 
 ## Function specific TODOs (older)
 ## Future Work Notes ##

@@ -62,10 +62,12 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
         LossRnk[i,j] <- rankWeights[j]*itemweights[i]*mean(abs((rho_i[i,]-rho_j[j,]))^loss)
       }
     }
+    totalLoss = sum(LossRnk)
     if (lossTotal == TRUE){
       print(paste("Total Loss: ", sum(LossRnk)))
     }
-    return(solve_LSAP(LossRnk))
+    
+    return(c(totalLoss, solve_LSAP(LossRnk)))
   }
 }
 
