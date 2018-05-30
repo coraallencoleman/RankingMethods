@@ -98,5 +98,3 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
   }
   return(weights)
 }
-
-#RankingWeights(numItems = 21, priority = "both") #11 should be middle/lowest

@@ -135,22 +135,22 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     post <- PostSamples(data)
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = NULL, loss = loss, f=f, 
                                                  rankWeights = rankWeights)
+    print(rankFunctionResult)
     totalLoss <- rankFunctionResult[1]
-    ranks[[i]] <- as.integer(rankFunctionResult[2])
+    ranks[[i]] <- as.integer(rankFunctionResult[-1])
     
     if (metric == TRUE){
       results[[i]] <- RankMetric(ranks, settings = data)
     }
     #for each simulation, 
     #adds parameters, total loss, and rankings to a data frame as a new row of data
-    ranking = list(ranks[[i]])
-    print(paste("ranking", ranking))
-    print(totalLoss)
+    print(ranks[[i]])
+    ranking = toString(ranks[[i]])
+    print(ranking)
+    print(dim(lossDF[1, ]))
     #lossDF$ranking[nrow(lossDF) + 1] <- ranking
-    # lossDF[nrow(lossDF) + 1,] = list(N, a_p, b_p, n_min, n_max, a_n, b_n,
-    #                                  n_assignment_method, 
-    #                                  rankPriority, rankSteepness,
-    #                                  parameter, loss, f, totalLoss, ranking)
+    lossDF[1, ] = as.data.frame(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method, 
+                    rankPriority, rankSteepness, parameter, loss, "identity", totalLoss, ranking)
   }
   
   #create rank file containing all info needed for experiment
@@ -169,6 +169,13 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 }
 
 #test
+lossDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
+dim(lossDF)
+
+, col.names = c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+                                                        "n_assignment_method", 
+                                                        "rankPriority", "rankSteepness", 
+                                                        "parameter", "loss", "f", "totalLoss", "ranking"))
 ranks <- RunSimulation(n_sim = 1)
 
 

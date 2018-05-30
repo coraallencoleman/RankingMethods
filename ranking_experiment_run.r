@@ -20,8 +20,10 @@ se = sqrt((.1*.9)/20) #graph this out to see. If the ranking is always right, th
 # assignment method
 
 #create dataframe for results
-lossDF <- data.frame(col.names = c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", "n_assignment_method", 
-                                   "rankPriority", "rankSteepness", "parameter", "loss", "f", "totalLoss", "rankings"))
+lossDF <- data.frame(nrow = 1, ncol = 15, col.names = c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+                                   "n_assignment_method", 
+                                   "rankPriority", "rankSteepness", 
+                                   "parameter", "loss", "f", "totalLoss", "ranking"))
 
 #for (n in c(25, 50, 100)){ #numItems
 for (n_min in c(5, 200)){
