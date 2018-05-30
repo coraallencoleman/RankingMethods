@@ -94,7 +94,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           n_assignment_method = "ascending", 
                           rankPriority = "top", rankSteepness = .9, #rankWeights
                           parameter = NULL, loss = 2, f=identity, #ranking settings
-                          n_sim = 1,
+                          n_sim = 1, lossTotal = FALSE,
                           fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                           metric = FALSE, metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
   #combines all the above functions to run a simulation
@@ -136,7 +136,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     data <- SimData(settings)
     post <- PostSamples(data)
     ranks[[i]] <- as.integer(WeightedLossRanking(sampleMatrix = post, parameter = NULL, loss = loss, f=f, 
-                                                 rankWeights = rankWeights, lossTotal = FALSE))
+                                                 rankWeights = rankWeights, lossTotal = lossTotal))
     
     if (metric == TRUE){
       results[[i]] <- RankMetric(ranks, settings = data)
