@@ -143,10 +143,11 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     }
     #for each simulation, 
     #adds parameters, total loss, and rankings to a data frame as a new row of data
+    ranking = list(ranks[[i]])
     lossDF[nrow(lossDF) + 1,] = list(N, a_p, b_p, n_min, n_max, a_n, b_n,
                                      n_assignment_method, 
                                      rankPriority, rankSteepness,
-                                     parameter, loss, f, totalLoss, "rankings" = ranks[[i]])
+                                     parameter, loss, f, totalLoss, c(ranks[[i]]))
   }
   
   #create rank file containing all info needed for experiment
