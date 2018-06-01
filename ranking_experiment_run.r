@@ -26,25 +26,23 @@ names(lossDF) <- c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                    "n_assignment_method", 
                    "rankPriority", "rankSteepness", 
                    "parameter", "loss", "f", "totalLoss", "ranking")
-#CAREFUL! THIS OVERWRITES
-write.csv(lossDF, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv")  
-#adds one extra cells at beginning
-#need to add one more cell at beginning of test vector to align
-cat(test, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", append = TRUE, sep = ",")
 
 #for (n in c(25, 50, 100)){ #numItems
 for (n_min in c(5, 200)){
     #for (n_max in c(30, 100, 200)){
       #for (l in c(1, 2)){ #loss types
-    
-    RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = n_min, n_max = 200, a_n = 1, b_n = 1, #data
+    #add results to the df
+    results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = n_min, n_max = 200, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
                 rankPriority = "even", #rankSteepness = .9, #rankWeights
                 parameter = NULL, loss = 2, 
                 f=identity,  #ranking settings
-                n_sim = 1, lossTotal = TRUE,
+                n_sim = 1,
                 fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                metric = FALSE)
+                metric = FALSE))
     #}
 }
 #}
+#write df to csv #CAREFUL! THIS OVERWRITES
+write.table(results, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T)
+
