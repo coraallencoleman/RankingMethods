@@ -148,9 +148,10 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     #ranking = toString(ranks[[i]])
     #print(ranking)
     #lossDF$ranking[nrow(lossDF) + 1] <- ranking
-    results <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method, 
-                    rankPriority, rankSteepness, parameter, loss, "identity", totalLoss, 1, "1 2 3")
-    cat(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", append = TRUE, sep = ",")
+    lossDF$ranking[i] <- list(c(1, 2, 3))
+    lossDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method, 
+                    rankPriority, rankSteepness, parameter, loss, "identity", totalLoss, 1)
+    #cat(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", append = TRUE, sep = ",")
     
                 # ranking) testing without ranking
   }
@@ -176,5 +177,9 @@ names(lossDF) <- c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                            "n_assignment_method", 
                            "rankPriority", "rankSteepness", 
                            "parameter", "loss", "f", "totalLoss", "ranking")
+lossDF$ranking[1] <- list(c(1, 2, 3)) #works!
+lossDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method, 
+                     rankPriority, rankSteepness, parameter, loss, "identity", totalLoss, 1)
+
 write.csv(lossDF, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv")  
 ranks <- RunSimulation(n_sim = 1)
