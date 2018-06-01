@@ -16,14 +16,21 @@
 #for below, think about how big average n should be to get p in CI
 #n min: c(50) explore this to see . what differences in p1 and p2 coudl you find with this n? do a power calculation basically
 #n max: se = sqrt(p*q/n). think about how small this would have to be to think about how big n needs to be
-se = sqrt((.1*.9)/20) #graph this out to see. If the ranking is always right, then n is too big. If ranks are uniform/terrible, then n too small.
+#se = sqrt((.1*.9)/20) #graph this out to see. If the ranking is always right, then n is too big. If ranks are uniform/terrible, then n too small.
 # assignment method
 
-#create dataframe for results
-lossDF <- data.frame(nrow = 1, ncol = 15, col.names = c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
-                                   "n_assignment_method", 
-                                   "rankPriority", "rankSteepness", 
-                                   "parameter", "loss", "f", "totalLoss", "ranking"))
+#create a CSV file for results
+#create dataframe for the csv
+lossDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
+names(lossDF) <- c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+                   "n_assignment_method", 
+                   "rankPriority", "rankSteepness", 
+                   "parameter", "loss", "f", "totalLoss", "ranking")
+#CAREFUL! THIS OVERWRITES
+write.csv(lossDF, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv")  
+#adds one extra cells at beginning
+#need to add one more cell at beginning of test vector to align
+cat(test, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", append = TRUE, sep = ",")
 
 #for (n in c(25, 50, 100)){ #numItems
 for (n_min in c(5, 200)){

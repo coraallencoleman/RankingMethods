@@ -1,6 +1,14 @@
 # Ranking Methods
 Bayesian ranking methods implementation  
 
+## Functions
+WeightedLossRanking (ranking_function.r)
+RankingWeights (ranking_function.r)
+SelectNP (sim_ranking_experiment.r)
+SimData (sim_ranking_experiment.r)
+PostSamples (sim_ranking_experiment.r)
+RunSimulation (sim_ranking_experiment.r)
+
 ## Parameters for Simulation
 see lossDF data frame
 
