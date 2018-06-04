@@ -144,15 +144,18 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     }
     #for each simulation, 
     #adds parameters, total loss, and rankings to a data frame as a new row of data
-    lossDF$ranking[1] <- list(ranks[[i]])
-    lossDF[1, 1:14] <- c(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method, 
-                     rankPriority, rankSteepness, parameter, loss, "identity", totalLoss, 1)
+    lossDF$ranking[i] <- list(ranks[[i]])
+    lossDF[1, 2:13] <- c(N, a_p, b_p, n_min, n_max, a_n, b_n, 
+        n_assignment_method, 
+        rankPriority, rankSteepness, 
+        "identity", totalLoss)
+
   }
   
   #create rank file containing all info needed for experiment
   #TODO need to include function like identity or rank here. Could use as.character(quote(f)). For now, just assumes identity
-  rankFile = paste(fileRoot, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method,rankPriority, 
-                   rankSteepness, parameter, loss, "identity", rankPriority, rankSteepness, n_sim, ".csv", sep = "_")
+  #rankFile = paste(fileRoot, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method,rankPriority, 
+                   #rankSteepness, parameter, loss, "identity", rankPriority, rankSteepness, n_sim, ".csv", sep = "_")
   
   #save ranks to a file (one column for each sim)
   #write.csv(ranks, file = rankFile) TODO
@@ -171,7 +174,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 #                            "n_assignment_method", 
 #                            "rankPriority", "rankSteepness", 
 #                            "parameter", "loss", "f", "totalLoss", "ranking")
-# results <- RunSimulation(n_sim = 1)
+results <- RunSimulation(n_sim = 1)
 # write.table(results, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",")
 # #testing
 # lossDF$ranking[1] <- list(c(1, 2, 3)) #works!

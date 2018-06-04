@@ -21,18 +21,18 @@
 
 #create a CSV file for results
 #create dataframe for the csv
-lossDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
-names(lossDF) <- c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
-                   "n_assignment_method", 
-                   "rankPriority", "rankSteepness", 
-                   "parameter", "loss", "f", "totalLoss", "ranking")
+lossDF <- as.data.frame(matrix(nrow = 1, ncol = 14))
+names(lossDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+                       "n_assignment_method", 
+                       "rankPriority", "rankSteepness", 
+                       "f", "totalLoss", "ranking")
 results <- lossDF
-#for (n in c(25, 50, 100)){ #numItems
-for (n_min in c(15, 50, 100)){
-    for (n_max in c(100, 200, 500)){
+for (n in c(25, 50, 100)){ #numItems
+  for (n_min in c(50, 100, 500)){
+      for (n_max in c(500, 1000)){
       #for (l in c(1, 2)){ #loss types
-    #add results to the results df
-    results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = n_min, n_max = 200, a_n = 1, b_n = 1, #data
+      #add results to the results df
+        results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
                 rankPriority = "even", #rankSteepness = .9, #rankWeights
                 parameter = NULL, loss = 2, 
@@ -40,11 +40,14 @@ for (n_min in c(15, 50, 100)){
                 n_sim = 1,
                 fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                 metric = FALSE))
-    }
+      }
+  }
 }
-#}
+
+
 #AFTER write df to csv 
 #CAREFUL! THIS OVERWRITES
+
 df <- apply(results,2,as.character)
 write.table(df, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T)
 
