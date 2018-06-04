@@ -145,7 +145,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     #for each simulation, 
     #adds parameters, total loss, and rankings to a data frame as a new row of data
     lossDF$ranking[i] <- list(ranks[[i]])
-    lossDF[1, 2:13] <- c(N, a_p, b_p, n_min, n_max, a_n, b_n, 
+    lossDF[1, 1:12] <- c(N, a_p, b_p, n_min, n_max, a_n, b_n, 
         n_assignment_method, 
         rankPriority, rankSteepness, 
         "identity", totalLoss)

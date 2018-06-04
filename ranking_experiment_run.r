@@ -27,9 +27,9 @@ names(lossDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                        "rankPriority", "rankSteepness", 
                        "f", "totalLoss", "ranking")
 results <- lossDF
-for (n in c(25, 50, 100)){ #numItems
-  for (n_min in c(50, 100, 500)){
-      for (n_max in c(500, 1000)){
+for (n in c(25, 50, 75)){ #numItems
+  for (n_min in c(50, 100, 400)){
+      for (n_max in c(500, 600)){
       #for (l in c(1, 2)){ #loss types
       #add results to the results df
         results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
@@ -47,7 +47,6 @@ for (n in c(25, 50, 100)){ #numItems
 
 #AFTER write df to csv 
 #CAREFUL! THIS OVERWRITES
-
 df <- apply(results,2,as.character)
 write.table(df, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T)
 
