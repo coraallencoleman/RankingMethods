@@ -44,5 +44,6 @@ for (n_min in c(5, 200)){
 }
 #}
 #write df to csv #CAREFUL! THIS OVERWRITES
-write.table(results, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T)
+df <- apply(df,2,as.character)
+write.table(df, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T)
 
