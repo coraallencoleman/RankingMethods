@@ -21,25 +21,26 @@
 
 #create a CSV file for results
 #create dataframe for the csv
-lossDF <- as.data.frame(matrix(nrow = 1, ncol = 14))
+lossDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
 names(lossDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
-                       "f", "totalLoss", "ranking")
+                       "f", "loss", "totalLoss", "ranking")
 results <- lossDF
 for (n in c(25, 50, 75)){ #numItems
   for (n_min in c(50, 100, 400)){
       for (n_max in c(500, 600)){
-      #for (l in c(1, 2)){ #loss types
-      #add results to the results df
-        results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
+        for (l in c(1, 2)){ #loss types square and absolute
+          #add results to the results df
+          results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
                 rankPriority = "even", #rankSteepness = .9, #rankWeights
-                parameter = NULL, loss = 2, 
+                parameter = NULL, loss = l, 
                 f=identity,  #ranking settings
                 n_sim = 1,
                 fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                 metric = FALSE))
+        }
       }
   }
 }
