@@ -133,8 +133,8 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   for (i in 1:n_sim){
     data <- SimData(settings)
     post <- PostSamples(data)
-    rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = NULL, loss = loss, f=f,
-                                                 rankWeights = rankWeights)
+    rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = NULL, loss = loss, f=f, 
+                                              rankPriority = rankPriority, rankWeights = rankWeights) #TODO check are all parameters here?
     print(rankFunctionResult)
     totalLoss <- rankFunctionResult[1]
     ranks[[i]] <- as.integer(rankFunctionResult[-1])

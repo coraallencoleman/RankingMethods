@@ -30,10 +30,10 @@ results <- lossDF
 #data characteristics
 for (n in c(25, 50, 100, 200)){ #numItems
   for (n_min in c(50, 100, 400)){ #what really matters here in number of events
-      for (n_max in c(500, 750, 1000)){
-        #ranking. How do data ch. impact performance here?
-        for (l in c(1, 2)){ #loss types square and absolute
-          for (rankPrioriy in )
+    for (n_max in c(500, 750, 1000)){
+      #ranking. How do data ch. impact performance here?
+      for (l in c(1, 2)){ #loss types square and absolute
+        for (rankPrioriy in c( "even", "top", "bottom")){
           #add results to the results df
           results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
@@ -44,17 +44,18 @@ for (n in c(25, 50, 100, 200)){ #numItems
                 fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                 metric = FALSE))
           #try running burn in for longer. if that doesnt help, catch warnings
-        }
-      }
+         }
+       }
+    }
   }
 }
 #think about orders of magnitude to start (want low, medium, high)
 
-#AFTER write df to csv 
+#AFTER save df
 #CAREFUL! THIS OVERWRITES
 df <- apply(results,2,as.character)
-write.table(df, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T)
-
+#write.table(df, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T) #save as csv
+save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #saves as an R object
 
 #data frames of lists
 # have an element of df be a list or matrix. We want rankings to be a matrix within a list, one for each simulation
