@@ -15,6 +15,7 @@ notes/
 
 ##Data
 *.csv
+*.RData
 
 ## Intermediate documents:
 *.dvi
