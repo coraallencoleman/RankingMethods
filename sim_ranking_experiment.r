@@ -81,7 +81,7 @@ PostSamples <- function(data){
   library(rstanarm)
   options(mc.cores = parallel::detectCores())
 
-  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data), 
+  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data), iter = 10000,
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
@@ -137,7 +137,6 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                                               rankWeights = rankWeights)
     totalLoss <- rankFunctionResult[1]
     ranks <- as.integer(rankFunctionResult[-1])
-    print(ranks)
     
     #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
     returnDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, 
@@ -196,6 +195,7 @@ for (rankPriority in c( "even")){
                                                   fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                                                   metric = FALSE))
   #try running burn in for longer. if that doesnt help, catch warnings
+ #https://cran.r-project.org/web/packages/rstanarm/vignettes/rstanarm.html#markov-chains-did-not-converge
 }
 
 #AFTER save df
