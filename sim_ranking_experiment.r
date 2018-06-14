@@ -127,7 +127,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   # create RankingWeights
   rankWeights <- RankingWeights(numItems = N, priority = rankPriority, steepness = rankSteepness)
   
-  ranks <- list() #creates list of ranks for each simulation
+  #ranks <- list() #creates list of ranks for each simulation
   rankMetricResults <- list() #create list of metric results for each simulation
 
   for (i in 1:n_sim){#for each simulation
@@ -136,14 +136,15 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
     totalLoss <- rankFunctionResult[1]
-    ranks[[i]] <- as.integer(rankFunctionResult[-1])
+    ranks <- as.integer(rankFunctionResult[-1])
+    print(ranks)
     
     #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
-    returnDF$ranking[i] <- list(ranks[[i]])
     returnDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, 
         n_assignment_method, 
         rankPriority, rankSteepness, 
         "identity", loss, totalLoss)
+    returnDF$ranking[i] <- list(ranks[[i]])
     
     if (metric == TRUE){ #METRIC FOR RANKING
       rankMetricResults[[i]] <- RankMetric(ranks, settings = data) #create metric
@@ -170,18 +171,25 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 #write.csv(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv")
 
 ## TESTING
-returnDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
-names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
-                     "n_assignment_method", 
-                     "rankPriority", "rankSteepness", 
+
+# returnDF <- data.frame(run=integer(), N=integer(), a_p=double(), b_p=double(), BROKEN
+#                        n_min = integer(), n_max=integer(), 
+#                        a_n=double(), b_n=double(), 
+#                        n_assignment_method=string(), 
+#                        rankPriority=string(), rankSteepness=double(), 
+#                        f=integer(), loss=integer(), totalLoss=double()) #, ranking = list(c()))
+returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
+names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
+                     "n_assignment_method",
+                     "rankPriority", "rankSteepness",
                      "f", "loss", "totalLoss", "ranking")
 results <- returnDF
 
-for (rankPrioriy in c( "even")){
+for (rankPriority in c( "even")){
   #add results to the results df
  results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = 50, n_max = 70, a_n = 1, b_n = 1, #data
                                                   n_assignment_method = "ascending", 
-                                                  rankPriority = "even", #rankSteepness = .9, #rankWeights
+                                                  rankPriority = rankPriority, #rankSteepness = .9, #rankWeights
                                                   parameter = NULL, loss = 2, 
                                                   f=identity,  #ranking settings
                                                   n_sim = 1, #100 or 1000 depending on time
@@ -189,7 +197,6 @@ for (rankPrioriy in c( "even")){
                                                   metric = FALSE))
   #try running burn in for longer. if that doesnt help, catch warnings
 }
-#think about orders of magnitude to start (want low, medium, high)
 
 #AFTER save df
 #CAREFUL! THIS OVERWRITES
