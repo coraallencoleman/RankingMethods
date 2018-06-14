@@ -21,12 +21,12 @@
 
 #create a CSV file for results
 #create dataframe for the csv
-lossDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
-names(lossDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+returnDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
+names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
                        "f", "loss", "totalLoss", "ranking")
-results <- lossDF
+results <- returnDF
 #data characteristics
 for (n in c(25, 50, 100, 200)){ #numItems
   for (n_min in c(50, 100, 400)){ #what really matters here in number of events
@@ -54,7 +54,6 @@ for (n in c(25, 50, 100, 200)){ #numItems
 #AFTER save df
 #CAREFUL! THIS OVERWRITES
 df <- apply(results,2,as.character)
-#write.table(df, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",", col.names = T) #save as csv
 save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #saves as an R object
 
 #data frames of lists
@@ -62,3 +61,6 @@ save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment
 #for every simulation, we need a matrix of ranks
 # save as an R object, not csv.
 #look for this discussion in tidyverse data science R book
+
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") 
+head(df)

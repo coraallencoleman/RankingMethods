@@ -96,7 +96,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           parameter = NULL, loss = 2, f=identity, #ranking settings
                           n_sim = 1,
                           fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                          metric = FALSE, metricFile = "/Users/cora/git_repos/RankingMethods/results/metricResults.csv"){
+                          metric = FALSE){
   #combines all the above functions to run a simulation
   # Args:
   #   for SelectNP:
@@ -113,13 +113,13 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
   #   f = scale on which to rank
   #   n_sim: number of simulations. (reps)
-  #   fileRoot: file path used to create csv file for results
+  #   fileRoot: file path used to create file for ranking results and metric results
   #   metric: boolean indicating if metric results should be created and saved
-  #   metricFile: csv file for metric results
+  #   metricFile: file for RData metric results
   #
   # Returns: 
   #   list of matrices of posterior samples, one column for each item
-  # Saves: csv of ranks (n_sim columns)
+  # Saves: RData of rank Metric (n_sim columns)
   # 
   # Dependencies: rstanarm
   settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
@@ -128,60 +128,71 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   rankWeights <- RankingWeights(numItems = N, priority = rankPriority, steepness = rankSteepness)
   
   ranks <- list() #creates list of ranks for each simulation
-  results <- list() #create list of metric results for each simulation
+  rankMetricResults <- list() #create list of metric results for each simulation
 
-  for (i in 1:n_sim){
+  for (i in 1:n_sim){#for each simulation
     data <- SimData(settings)
     post <- PostSamples(data)
-    # function(sampleMatrix = NULL, parameter = NULL, loss = 2,  f=identity, 
-    #          rankWeights = rep(1, times = n), itemweights = rep(1, times = n))
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
-                                              rankPriority = rankPriority, rankWeights = rankWeights) #TODO check are all parameters here?
-    print(rankFunctionResult)
+                                              rankWeights = rankWeights)
     totalLoss <- rankFunctionResult[1]
     ranks[[i]] <- as.integer(rankFunctionResult[-1])
-    print(ranks[[i]])
-    if (metric == TRUE){
-      results[[i]] <- RankMetric(ranks, settings = data)
-    }
-    #for each simulation, 
-    #adds parameters, total loss, and rankings to a data frame as a new row of data
-    lossDF$ranking[i] <- list(ranks[[i]])
-    lossDF[1, 1:13] <- c(N, a_p, b_p, n_min, n_max, a_n, b_n, 
+    
+    #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
+    returnDF$ranking[i] <- list(ranks[[i]])
+    returnDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, 
         n_assignment_method, 
         rankPriority, rankSteepness, 
         "identity", loss, totalLoss)
-
+    
+    if (metric == TRUE){ #METRIC FOR RANKING
+      rankMetricResults[[i]] <- RankMetric(ranks, settings = data) #create metric
+      #save metric results to an RData file
+      save(rankMetricResults, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_RankMetricresults.RData") #saves as an R object
+    }
   }
   
-  #create rank file containing all info needed for experiment
-  #TODO need to include function like identity or rank here. Could use as.character(quote(f)). For now, just assumes identity
-  #rankFile = paste(fileRoot, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method,rankPriority, 
-                   #rankSteepness, parameter, loss, "identity", rankPriority, rankSteepness, n_sim, ".csv", sep = "_")
-  
-  #save ranks to a file (one column for each sim)
-  #write.csv(ranks, file = rankFile) TODO
-  
-  #save metric results to a file
-  if (metric == TRUE){
-    #write.csv(results, file = metricFile) TODO
-  }
-  #return(ranks)
-  return(lossDF)
+  return(returnDF)
 }
 
 #creates dataframe
-# lossDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
-# names(lossDF) <- c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+# returnDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
+# names(returnDF) <- c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
 #                            "n_assignment_method", 
 #                            "rankPriority", "rankSteepness", 
 #                            "parameter", "loss", "f", "totalLoss", "ranking")
 #results <- RunSimulation(n_sim = 1)
 # write.table(results, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",")
 # #testing
-# lossDF$ranking[1] <- list(c(1, 2, 3)) #works!
-# lossDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method,
+# returnDF$ranking[1] <- list(c(1, 2, 3)) #works!
+# returnDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method,
 #                      rankPriority, rankSteepness, parameter, loss, "identity", totalLoss, 1)
 #write.csv(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv")
 
+## TESTING
+returnDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
+names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+                     "n_assignment_method", 
+                     "rankPriority", "rankSteepness", 
+                     "f", "loss", "totalLoss", "ranking")
+results <- returnDF
+
+for (rankPrioriy in c( "even")){
+  #add results to the results df
+ results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = 50, n_max = 70, a_n = 1, b_n = 1, #data
+                                                  n_assignment_method = "ascending", 
+                                                  rankPriority = "even", #rankSteepness = .9, #rankWeights
+                                                  parameter = NULL, loss = 2, 
+                                                  f=identity,  #ranking settings
+                                                  n_sim = 1, #100 or 1000 depending on time
+                                                  fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
+                                                  metric = FALSE))
+  #try running burn in for longer. if that doesnt help, catch warnings
+}
+#think about orders of magnitude to start (want low, medium, high)
+
+#AFTER save df
+#CAREFUL! THIS OVERWRITES
+df <- apply(results,2,as.character)
+save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_test.RData") #saves as an R object
 
