@@ -81,7 +81,7 @@ PostSamples <- function(data){
   library(rstanarm)
   options(mc.cores = parallel::detectCores())
 
-  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data), iter = 10000,
+  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data), iter = 4000, #default iter = 2000
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
@@ -177,29 +177,29 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 #                        n_assignment_method=string(), 
 #                        rankPriority=string(), rankSteepness=double(), 
 #                        f=integer(), loss=integer(), totalLoss=double()) #, ranking = list(c()))
-returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
-names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
-                     "n_assignment_method",
-                     "rankPriority", "rankSteepness",
-                     "f", "loss", "totalLoss", "ranking")
-results <- returnDF
-
-for (rankPriority in c( "even")){
-  #add results to the results df
- results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = 50, n_max = 70, a_n = 1, b_n = 1, #data
-                                                  n_assignment_method = "ascending", 
-                                                  rankPriority = rankPriority, #rankSteepness = .9, #rankWeights
-                                                  parameter = NULL, loss = 2, 
-                                                  f=identity,  #ranking settings
-                                                  n_sim = 1, #100 or 1000 depending on time
-                                                  fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                                                  metric = FALSE))
-  #try running burn in for longer. if that doesnt help, catch warnings
- #https://cran.r-project.org/web/packages/rstanarm/vignettes/rstanarm.html#markov-chains-did-not-converge
-}
-
-#AFTER save df
-#CAREFUL! THIS OVERWRITES
-df <- apply(results,2,as.character)
-save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_test.RData") #saves as an R object
-
+# returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
+# names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
+#                      "n_assignment_method",
+#                      "rankPriority", "rankSteepness",
+#                      "f", "loss", "totalLoss", "ranking")
+# results <- returnDF
+# 
+# for (rankPriority in c( "even")){
+#   #add results to the results df
+#  results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = 50, n_max = 70, a_n = 1, b_n = 1, #data
+#                                                   n_assignment_method = "ascending", 
+#                                                   rankPriority = rankPriority, #rankSteepness = .9, #rankWeights
+#                                                   parameter = NULL, loss = 2, 
+#                                                   f=identity,  #ranking settings
+#                                                   n_sim = 1, #100 or 1000 depending on time
+#                                                   fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
+#                                                   metric = FALSE))
+#   #try running burn in for longer. if that doesnt help, catch warnings
+#  #https://cran.r-project.org/web/packages/rstanarm/vignettes/rstanarm.html#markov-chains-did-not-converge
+# }
+# 
+# #AFTER save df
+# #CAREFUL! THIS OVERWRITES
+# df <- apply(results,2,as.character)
+# save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_test.RData") #saves as an R object
+# 
