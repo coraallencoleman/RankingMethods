@@ -1,6 +1,11 @@
 #Simulation/Experiments Testing for WeightedLossRanking function
 
 #Step 0: Load
+#update R to most current version (TODO 
+email admins)
+
+install.packages("rstan", "dplyr", "rstanarm") 
+
 library(rstan)
 library(dplyr)
 library(rstanarm)
@@ -81,7 +86,7 @@ PostSamples <- function(data){
   library(rstanarm)
   options(mc.cores = parallel::detectCores())
 
-  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data), iter = 4000, #default iter = 2000
+  model1 <- stan_glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data), iter = 3000, #default iter = 2000
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
@@ -143,7 +148,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
         n_assignment_method, 
         rankPriority, rankSteepness, 
         "identity", loss, totalLoss)
-    returnDF$ranking[i] <- list(ranks[[i]])
+    returnDF$ranking[i] <- list(ranks)
     
     if (metric == TRUE){ #METRIC FOR RANKING
       rankMetricResults[[i]] <- RankMetric(ranks, settings = data) #create metric
@@ -203,3 +208,8 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 # df <- apply(results,2,as.character)
 # save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_test.RData") #saves as an R object
 # 
+
+#TODO keep track of time. can use other strategies to get approx samples
+#function: system time wrap everything in this to see.
+
+
