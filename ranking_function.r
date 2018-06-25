@@ -6,7 +6,7 @@
     # Weighted Loss Ranking Function
     # Weight Creation Function
 
-
+#install.packages("rstan", "clue")
 library(rstan)
 library(clue)
 

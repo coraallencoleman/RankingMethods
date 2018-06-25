@@ -5,8 +5,10 @@
 #to move script to server:
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 #to run:
-#Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run.r
+#Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r
 
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
 
 #creates clean DF
 returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
@@ -18,7 +20,7 @@ results <- returnDF
 #data characteristics
 #for (n in c(25, 50, 100, 200)){ #numItems
   for (n_min in c(50, 100, 400)){ #what really matters here in number of events
-    for (n_max in c(500, 750, 1000)){
+    for (n_max in c(500)){
       #ranking. How do data ch. impact performance here?
       #for (l in c(1, 2)){ #loss types square and absolute
         #for (rankPriority in c( "even", "top", "bottom")){

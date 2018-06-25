@@ -207,9 +207,3 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 # #CAREFUL! THIS OVERWRITES
 # df <- apply(results,2,as.character)
 # save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_test.RData") #saves as an R object
-# 
-
-#TODO keep track of time. can use other strategies to get approx samples
-#function: system time wrap everything in this to see.
-
-
