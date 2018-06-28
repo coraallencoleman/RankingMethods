@@ -1,21 +1,18 @@
 #Simulation/Experiments Testing for WeightedLossRanking function
 
 #Step 0: Load
-#update R to most current version (TODO email admins)
-
-#install.packages("rstan", "dplyr", "rstanarm") 
 
 library(rstan)
 library(dplyr)
 library(rstanarm)
+library(clue)
+library(rstan)
 #AND run ranking_function.r, ranking_metric.r files. 
 set.seed(10)
 
 # A testing metric for use with simulated data
 
-library(dplyr)
-library(clue)
-library(rstan)
+
 
 ##function metric to see if rankObject's top ranked items match true top items MATRIX
 RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", topN = 5){

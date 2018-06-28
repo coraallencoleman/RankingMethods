@@ -5,7 +5,7 @@
 #to move script to server:
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 #to run:
-#system.time(Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r)
+#system.time(/s/pkg/linux64/R/3.4.1/bin/Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r)
 #/s/pkg/linux64/R/3.4.1/bin/Rscript #to use R 3.4 
 
 
@@ -13,11 +13,11 @@ options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
 
 #creates clean DF
-returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
+returnDF <- as.data.frame(matrix(nrow = 0, ncol = 16))
 names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
-                       "f", "loss", "totalLoss", "ranking")
+                       "f", "loss", "totalLoss", "ranking", "metric")
 results <- returnDF
 #data characteristics
 #for (n in c(25, 50, 100, 200)){ #numItems
