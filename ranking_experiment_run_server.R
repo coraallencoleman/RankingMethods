@@ -25,12 +25,12 @@ names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                        "f", "loss", "totalLoss", "ranking", "metric")
 results <- returnDF
 #data characteristics
-for (n in c(25, 50, 100, 200)){ #numItems
-  for (n_min in c(50, 100, 200, 400)){ #what really matters here in number of events
-    for (n_max in c(500, 750, 900)){
-      #ranking. How do data ch. impact performance here?
+for (n in c(25)){ #numItems , 50, 100, 200
+  for (n_min in c(50)){ #what really matters here in number of events , 100, 200, 400
+    for (n_max in c(500)){ #, 750, 900
+      #ranking. How do data characteristics impact performance here?
       for (l in c(1, 2)){ #loss types square and absolute
-        for (rankPriority in c( "even", "top", "bottom")){
+        for (rankPriority in c("even")){ #, "top", "bottom"
           #add results to the results df
           results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
@@ -41,13 +41,11 @@ for (n in c(25, 50, 100, 200)){ #numItems
                 #fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                 fileRoot = "/ua/allencoleman/gangnon/ranking/results/",
                 metric = TRUE))
-          #try running burn in for longer. if that doesnt help, catch warnings
          }
        }
     }
   }
 }
-#think about orders of magnitude to start (want low, medium, high)
 
 #AFTER save df
 #CAREFUL! THIS OVERWRITES
