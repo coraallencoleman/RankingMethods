@@ -232,7 +232,6 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
       
       #save metric results to RData file for easy plotting
       returnDF$metric[i] <- as.numeric(sum(rankMetricResults)/10)
-      print(as.numeric(sum(rankMetricResults)/10))
     }
   }
   
@@ -245,7 +244,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 #                            "n_assignment_method", 
 #                            "rankPriority", "rankSteepness", 
 #                            "parameter", "loss", "f", "totalLoss", "ranking")
-results <- RunSimulation(n_sim = 1, metric = TRUE)
+#results <- RunSimulation(n_sim = 1, metric = TRUE)
 # write.table(results, "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv", sep = ",")
 # #testing
 # returnDF$ranking[1] <- list(c(1, 2, 3)) #works!

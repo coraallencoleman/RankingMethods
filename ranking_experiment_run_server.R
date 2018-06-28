@@ -1,12 +1,15 @@
-## runs experiment using function in ranking_function.r and sim_ranking_experiment.r
-#create an .RData file for with parameters + ranks
+## Runs experiment using function in ranking_function.r and sim_ranking_experiment.r
+#  creates an .RData file for with parameters + ranks
 
-#run in ranking
-#to move script to server:
+# run in gangnon/ranking dir 
+
+# to move script to server:
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
-#to run:
-#system.time(/s/pkg/linux64/R/3.4.1/bin/Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r)
+# to run:
 #/s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server.r
+## to check time:
+#system.time(/s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server.r)
+
 setwd("/ua/allencoleman/gangnon/ranking")
 source("ranking_function.r")
 source("sim_ranking_experiment.r")
@@ -22,14 +25,14 @@ names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                        "f", "loss", "totalLoss", "ranking", "metric")
 results <- returnDF
 #data characteristics
-#for (n in c(25, 50, 100, 200)){ #numItems
+for (n in c(25, 50, 100, 200)){ #numItems
   for (n_min in c(50, 100, 200, 400)){ #what really matters here in number of events
     for (n_max in c(500, 750, 900)){
       #ranking. How do data ch. impact performance here?
-      #for (l in c(1, 2)){ #loss types square and absolute
-        #for (rankPriority in c( "even", "top", "bottom")){
+      for (l in c(1, 2)){ #loss types square and absolute
+        for (rankPriority in c( "even", "top", "bottom")){
           #add results to the results df
-          results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
+          results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
                 rankPriority = rankPriority, #rankSteepness = .9, #rankWeights
                 parameter = NULL, loss = l, 
@@ -39,11 +42,11 @@ results <- returnDF
                 fileRoot = "/ua/allencoleman/gangnon/ranking/results/",
                 metric = TRUE))
           #try running burn in for longer. if that doesnt help, catch warnings
-         #}
-       #}
+         }
+       }
     }
   }
-#}
+}
 #think about orders of magnitude to start (want low, medium, high)
 
 #AFTER save df
