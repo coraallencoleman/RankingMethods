@@ -9,16 +9,16 @@
 
 
 #creates clean returnDF
-returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
+returnDF <- as.data.frame(matrix(nrow = 0, ncol = 16))
 names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
-                       "f", "loss", "totalLoss", "ranking")
+                       "f", "loss", "totalLoss", "ranking", "metric")
 results <- returnDF
 #data characteristics
 #for (n in c(25, 50, 100, 200)){ #numItems
   for (n_min in c(50, 100, 400)){ #what really matters here in number of events
-    for (n_max in c(500, 750, 1000)){
+    for (n_max in c(500, 750, 900)){
       #for (l in c(1, 2)){ #loss types square and absolute
         #for (rankPriority in c( "even", "top", "bottom")){
           #TODO FIX PARAMETERS
@@ -29,7 +29,7 @@ results <- returnDF
                 f=identity,  #ranking settings
                 n_sim = 1, #100 or 1000 depending on time
                 fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                metric = FALSE))
+                metric = TRUE))
           #try running burn in for longer. if that doesnt help, catch warnings
          #}
        #}

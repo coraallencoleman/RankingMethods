@@ -4,11 +4,15 @@
 # could plot total loss or some other kind of metric
 
 require(ggplot2)
-### LOAD IN DATA ##
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #df is called results
 
 ## data cleaning ##
-results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.numeric )
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") 
+#df is called df
+results <- as.data.frame(df)
+typeof(results$n_max) #but not recognized as an integer by ggplot
+results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.character )
+results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.double )
+#TODO ask Ron about this. its removing decimals, transforming oddly
 
 ## TOTAL LOSS ##
 n_min_plot <- ggplot(results, aes(x = n_min, y = totalLoss, colour = factor(n_max))) + geom_point() + 
@@ -25,6 +29,15 @@ losses_plot <- ggplot(results, aes(x = N, y = totalLoss, colour = factor(loss)))
 
 
 ## RANKING QUALITY METRIC ##
-RankMetric(ranks, settings = data)
+n_min_plot <- ggplot(results, aes(x = n_min, y = metric, colour = factor(n_max))) + geom_point() + 
+  geom_line() + ggtitle("Percent Correct Ranking By \nChanges in Binomial n min, max") + 
+  ylab("Percent Correct"); n_min_plot
 
+changes_in_N_plot <- ggplot(results, aes(x = N, y = metric, colour = factor(n_max))) + geom_point() + 
+  geom_line() + ggtitle("Percent Correct Ranking By \nChanges in N") + 
+  ylab("Percent Correct"); changes_in_N_plot
+
+losses_plot <- ggplot(results, aes(x = N, y = metric, colour = factor(loss))) + geom_point() + 
+  geom_line() + ggtitle("Percent Correct Ranking By Changes in N and loss") + 
+  ylab("Percent Correct"); losses_plot
 

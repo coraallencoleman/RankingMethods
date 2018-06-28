@@ -220,7 +220,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     post <- PostSamples(data)
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
-    totalLoss <- rankFunctionResult[1]
+    totalLoss <- as.numeric(rankFunctionResult[1])
     ranks <- as.integer(rankFunctionResult[-1])
     
     #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
@@ -231,11 +231,11 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     returnDF$ranking[i] <- list(ranks)
     
     if (metric == TRUE){ #METRIC FOR RANKING
-      rankMetricResults <- RankMetric(ranks, settings = data, topN = N) #create metric
+      rankMetricResults <- RankMetric(ranks, settings = data, topN = 10) #create metric
       
       #save metric results to RData file for easy plotting
-      returnDF$metric[i] <- as.numeric(sum(rankMetricResults)/N)
-      print(rankMetricResults)
+      returnDF$metric[i] <- as.numeric(sum(rankMetricResults)/10)
+      print(as.numeric(sum(rankMetricResults)/10))
     }
   }
   

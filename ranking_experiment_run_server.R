@@ -6,7 +6,7 @@
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 #to run:
 #system.time(Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r)
-
+#/s/pkg/linux64/R/3.4.1/bin/Rscript #to use R 3.4 
 
 
 options(mc.cores = parallel::detectCores())
@@ -35,7 +35,7 @@ results <- returnDF
                 n_sim = 1, #100 or 1000 depending on time
                 #fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                 fileRoot = "/ua/allencoleman/gangnon/ranking/results/",
-                metric = FALSE))
+                metric = TRUE))
           #try running burn in for longer. if that doesnt help, catch warnings
          #}
        #}

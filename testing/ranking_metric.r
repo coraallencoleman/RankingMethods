@@ -1,4 +1,5 @@
 # A testing metric for use with simulated data
+#MOVED THIS CODE to sim_ranking_experiment.r to simplify
 
 library(dplyr)
 library(clue)
