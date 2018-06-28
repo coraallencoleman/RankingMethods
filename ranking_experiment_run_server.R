@@ -6,8 +6,10 @@
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 #to run:
 #system.time(/s/pkg/linux64/R/3.4.1/bin/Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r)
-#/s/pkg/linux64/R/3.4.1/bin/Rscript #to use R 3.4 
-
+#/s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server.r
+setwd("/ua/allencoleman/gangnon/ranking")
+source("ranking_function.r")
+source("sim_ranking_experiment.r")
 
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
@@ -49,6 +51,7 @@ results <- returnDF
 df <- apply(results,2,as.character)
 #save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #saves as an R object
 save(df, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results.RData")
+print(df)
 
 #data frames of lists
 # have an element of df be a list or matrix. We want rankings to be a matrix within a list, one for each simulation
