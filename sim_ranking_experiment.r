@@ -1,8 +1,7 @@
 #Simulation/Experiments Testing for WeightedLossRanking function
 
 #Step 0: Load
-#update R to most current version (TODO 
-email admins)
+#update R to most current version (TODO email admins)
 
 install.packages("rstan", "dplyr", "rstanarm") 
 
