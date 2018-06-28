@@ -150,9 +150,10 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     returnDF$ranking[i] <- list(ranks)
     
     if (metric == TRUE){ #METRIC FOR RANKING
-      rankMetricResults[[i]] <- RankMetric(ranks, settings = data) #create metric
-      #save metric results to an RData file
-      save(rankMetricResults, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_RankMetricresults.RData") #saves as an R object
+      rankMetricResults <- RankMetric(ranks, settings = data) #create metric
+      return(rankMetricResults)
+      #save metric results to THE SAME RData file for easy plotting
+      #returnDF$metric <- rankMetricResults
     }
   }
   

@@ -5,7 +5,9 @@
 #to move script to server:
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 #to run:
-#Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r
+#system.time(Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run_server.r)
+
+
 
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
@@ -19,13 +21,13 @@ names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
 results <- returnDF
 #data characteristics
 #for (n in c(25, 50, 100, 200)){ #numItems
-  for (n_min in c(50, 100, 400)){ #what really matters here in number of events
-    for (n_max in c(500)){
+  for (n_min in c(50, 100, 200, 400)){ #what really matters here in number of events
+    for (n_max in c(500, 750, 900)){
       #ranking. How do data ch. impact performance here?
       #for (l in c(1, 2)){ #loss types square and absolute
         #for (rankPriority in c( "even", "top", "bottom")){
           #add results to the results df
-          results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
+          results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
                 rankPriority = rankPriority, #rankSteepness = .9, #rankWeights
                 parameter = NULL, loss = l, 
