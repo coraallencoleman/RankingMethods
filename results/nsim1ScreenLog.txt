@@ -1,0 +1,2436 @@
+Loading required package: ggplot2
+Loading required package: StanHeaders
+rstan (Version 2.17.3, GitRev: 2e1f913d3ca3)
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: Rcpp
+Loading required package: methods
+rstanarm (Version 2.17.4, packaged: 2018-04-13 01:51:52 UTC)
+- Do not expect the default priors to remain the same in future rstanarm versions.
+Thus, R scripts should specify priors explicitly, even if they are just the defaults.
+- For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores())
+- Plotting theme set to bayesplot::theme_default().
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.76 seconds (Warm-up)
+               4.17 seconds (Sampling)
+               9.93 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.16 seconds (Warm-up)
+               4.31 seconds (Sampling)
+               9.47 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.44 seconds (Warm-up)
+               5.01 seconds (Sampling)
+               10.45 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.77 seconds (Warm-up)
+               4.99 seconds (Sampling)
+               10.76 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.51 seconds (Warm-up)
+               4.66 seconds (Sampling)
+               10.17 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.03 seconds (Warm-up)
+               5.08 seconds (Sampling)
+               11.11 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.76 seconds (Warm-up)
+               4.52 seconds (Sampling)
+               10.28 seconds (Total)
+
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.39 seconds (Warm-up)
+               8.37 seconds (Sampling)
+               14.76 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.5 seconds (Warm-up)
+               4.34 seconds (Sampling)
+               9.84 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.77 seconds (Warm-up)
+               4.82 seconds (Sampling)
+               10.59 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.61 seconds (Warm-up)
+               4.36 seconds (Sampling)
+               9.97 seconds (Total)
+
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.02 seconds (Warm-up)
+               8.8 seconds (Sampling)
+               14.82 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.88 seconds (Warm-up)
+               4.19 seconds (Sampling)
+               10.07 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.32 seconds (Warm-up)
+               4.46 seconds (Sampling)
+               9.78 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.76 seconds (Warm-up)
+               4.16 seconds (Sampling)
+               9.92 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.8 seconds (Warm-up)
+               4.3 seconds (Sampling)
+               10.1 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.07 seconds (Warm-up)
+               4.57 seconds (Sampling)
+               10.64 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.2 seconds (Warm-up)
+               4.22 seconds (Sampling)
+               9.42 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.46 seconds (Warm-up)
+               4.65 seconds (Sampling)
+               11.11 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.53 seconds (Warm-up)
+               7.74 seconds (Sampling)
+               13.27 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.54 seconds (Warm-up)
+               4.14 seconds (Sampling)
+               9.68 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.35 seconds (Warm-up)
+               5.76 seconds (Sampling)
+               11.11 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.66 seconds (Warm-up)
+               4.13 seconds (Sampling)
+               9.79 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.49 seconds (Warm-up)
+               6.85 seconds (Sampling)
+               12.34 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.55 seconds (Warm-up)
+               4.15 seconds (Sampling)
+               9.7 seconds (Total)
+
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.34 seconds (Warm-up)
+               4.13 seconds (Sampling)
+               10.47 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.54 seconds (Warm-up)
+               6.56 seconds (Sampling)
+               12.1 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.86 seconds (Warm-up)
+               6.53 seconds (Sampling)
+               13.39 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.61 seconds (Warm-up)
+               4.18 seconds (Sampling)
+               9.79 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.1 seconds (Warm-up)
+               4.18 seconds (Sampling)
+               10.28 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.98 seconds (Warm-up)
+               5.3 seconds (Sampling)
+               11.28 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.81 seconds (Warm-up)
+               7.53 seconds (Sampling)
+               13.34 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.8 seconds (Warm-up)
+               4.49 seconds (Sampling)
+               11.29 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.37 seconds (Warm-up)
+               4.54 seconds (Sampling)
+               10.91 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.14 seconds (Warm-up)
+               4.86 seconds (Sampling)
+               11 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.51 seconds (Warm-up)
+               6.57 seconds (Sampling)
+               12.08 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.32 seconds (Warm-up)
+               5.46 seconds (Sampling)
+               11.78 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.82 seconds (Warm-up)
+               4.52 seconds (Sampling)
+               10.34 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.89 seconds (Warm-up)
+               9.09 seconds (Sampling)
+               14.98 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.14 seconds (Warm-up)
+               8.64 seconds (Sampling)
+               14.78 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.78 seconds (Warm-up)
+               4.55 seconds (Sampling)
+               10.33 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.68 seconds (Warm-up)
+               4.54 seconds (Sampling)
+               11.22 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.23 seconds (Warm-up)
+               4.43 seconds (Sampling)
+               10.66 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.11 seconds (Warm-up)
+               5.43 seconds (Sampling)
+               11.54 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0.01 seconds
+1000 transitions using 10 leapfrog steps per transition would take 100 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.64 seconds (Warm-up)
+               4.29 seconds (Sampling)
+               9.93 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.34 seconds (Warm-up)
+               4.37 seconds (Sampling)
+               9.71 seconds (Total)
+
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.68 seconds (Warm-up)
+               6.17 seconds (Sampling)
+               12.85 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 7.08 seconds (Warm-up)
+               5.78 seconds (Sampling)
+               12.86 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.87 seconds (Warm-up)
+               4.56 seconds (Sampling)
+               10.43 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.18 seconds (Warm-up)
+               5 seconds (Sampling)
+               10.18 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.9 seconds (Warm-up)
+               4.43 seconds (Sampling)
+               10.33 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.67 seconds (Warm-up)
+               4.33 seconds (Sampling)
+               10 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.66 seconds (Warm-up)
+               4.65 seconds (Sampling)
+               11.31 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.75 seconds (Warm-up)
+               5.01 seconds (Sampling)
+               10.76 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 7.29 seconds (Warm-up)
+               4.64 seconds (Sampling)
+               11.93 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 7.08 seconds (Warm-up)
+               5.58 seconds (Sampling)
+               12.66 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+
+ Elapsed Time: 5.83 seconds (Warm-up)
+               4.82 seconds (Sampling)
+               10.65 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.92 seconds (Warm-up)
+               4.65 seconds (Sampling)
+               10.57 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.13 seconds (Warm-up)
+               5.99 seconds (Sampling)
+               12.12 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.01 seconds (Warm-up)
+               9.2 seconds (Sampling)
+               15.21 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.24 seconds (Warm-up)
+               5.25 seconds (Sampling)
+               11.49 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.86 seconds (Warm-up)
+               7.49 seconds (Sampling)
+               13.35 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.49 seconds (Warm-up)
+               8.15 seconds (Sampling)
+               14.64 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.34 seconds (Warm-up)
+               8.76 seconds (Sampling)
+               15.1 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.89 seconds (Warm-up)
+               7.69 seconds (Sampling)
+               13.58 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.44 seconds (Warm-up)
+               5.69 seconds (Sampling)
+               12.13 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.51 seconds (Warm-up)
+               7.17 seconds (Sampling)
+               12.68 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.17 seconds (Warm-up)
+               9.16 seconds (Sampling)
+               15.33 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.79 seconds (Warm-up)
+               4.64 seconds (Sampling)
+               10.43 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.83 seconds (Warm-up)
+               4.68 seconds (Sampling)
+               10.51 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.13 seconds (Warm-up)
+               4.77 seconds (Sampling)
+               10.9 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.96 seconds (Warm-up)
+               8.9 seconds (Sampling)
+               14.86 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.66 seconds (Warm-up)
+               4.73 seconds (Sampling)
+               10.39 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.67 seconds (Warm-up)
+               4.61 seconds (Sampling)
+               10.28 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.78 seconds (Warm-up)
+               4.79 seconds (Sampling)
+               10.57 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.19 seconds (Warm-up)
+               5.83 seconds (Sampling)
+               12.02 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.48 seconds (Warm-up)
+               4.83 seconds (Sampling)
+               10.31 seconds (Total)
+
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.56 seconds (Warm-up)
+               4.62 seconds (Sampling)
+               10.18 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.5 seconds (Warm-up)
+               4.46 seconds (Sampling)
+               10.96 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.83 seconds (Warm-up)
+               8.72 seconds (Sampling)
+               14.55 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.09 seconds (Warm-up)
+               5.37 seconds (Sampling)
+               11.46 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.57 seconds (Warm-up)
+               7.05 seconds (Sampling)
+               12.62 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.87 seconds (Warm-up)
+               8.43 seconds (Sampling)
+               14.3 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.98 seconds (Warm-up)
+               8.1 seconds (Sampling)
+               14.08 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.91 seconds (Warm-up)
+               4.43 seconds (Sampling)
+               11.34 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.61 seconds (Warm-up)
+               5.53 seconds (Sampling)
+               11.14 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.76 seconds (Warm-up)
+               4.74 seconds (Sampling)
+               10.5 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.25 seconds (Warm-up)
+               7.55 seconds (Sampling)
+               12.8 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.51 seconds (Warm-up)
+               4.54 seconds (Sampling)
+               11.05 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.08 seconds (Warm-up)
+               4.55 seconds (Sampling)
+               10.63 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.47 seconds (Warm-up)
+               6.73 seconds (Sampling)
+               12.2 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.21 seconds (Warm-up)
+               7.24 seconds (Sampling)
+               13.45 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.04 seconds (Warm-up)
+               4.71 seconds (Sampling)
+               10.75 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.24 seconds (Warm-up)
+               4.77 seconds (Sampling)
+               11.01 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.17 seconds (Warm-up)
+               7.17 seconds (Sampling)
+               13.34 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.34 seconds (Warm-up)
+               9.18 seconds (Sampling)
+               14.52 seconds (Total)
+
+    user   system  elapsed 
+1301.267   12.700  553.453 
+Warning messages:
+1: 'rBind' is deprecated.
+ Since R version 3.2.0, base's rbind() should work fine with S4 objects 
+2: Markov chains did not converge! Do not analyze results! 
+3: Markov chains did not converge! Do not analyze results! 
+4: Markov chains did not converge! Do not analyze results! 
+Error: unexpected string constant in "system(mutt -s "Master, this is an email from HAL 9000, your commands have been completed""
+Execution halted
