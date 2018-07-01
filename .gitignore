@@ -227,6 +227,7 @@ TSWLatexianTemp*
 
 *.xls
 *.jpg
+*.eps
 
 Presentations/
 RankingMethodsoldfolder/

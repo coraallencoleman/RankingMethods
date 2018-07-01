@@ -2,12 +2,9 @@
 #create an .RData file for with parameters + ranks
 
 #run in ranking
-#to move script to server:
-#scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
-#to run:
-#Rscript ranking_function.r sim_ranking_experiment.r ranking_experiment_run.r
-
-
+setwd("/Users/cora/git_repos/RankingMethods")
+source("ranking_function.r")
+source("sim_ranking_experiment.r")
 #creates clean returnDF
 returnDF <- as.data.frame(matrix(nrow = 0, ncol = 16))
 names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
@@ -15,22 +12,23 @@ names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                        "rankPriority", "rankSteepness", 
                        "f", "loss", "totalLoss", "ranking", "metric")
 results <- returnDF
+
 #data characteristics
 for (n in c(100)){ #numItems 
   for (n_min in c(50)){ #what really matters here in number of events 
     for (n_max in c(425)){
       #ranking settings. How do data characteristics impact performance here?
       for (l in c(1, 2)){ #loss types square and absolute
-        for (rankPriority in c("even")){ #, "top", "bottom"
-          for (rankSteepness in c(0.25)){ #, 0.5, 0.75
+        for (rankPriority in c("even", "top", "bottom")){ #
+          for (rankSteepness in c(0.25, 0.5, 0.75)){ #
             #add results to the results df
-            for (sim in c(1:2)){
+            for (sim in c(1:100)){#100 or 1000 depending on time
             results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                                                     n_assignment_method = "ascending", 
                                                     rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
                                                     parameter = NULL, loss = l, 
                                                     f=identity,  #ranking settings
-                                                    n_sim = 1, #100 or 1000 depending on time
+                                                    n_sim = 1, 
                                                     fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                                                     metric = TRUE))
             }
@@ -42,10 +40,10 @@ for (n in c(100)){ #numItems
 }
 
 #saves results. Careful! This overwrites
-save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n40home.RData") #saves as an R object
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n100_home.RData") #saves as an R object
 
 
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n10test.RData") 
+#load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n100_home.RData") 
 # head(results)
 
 #### Main Questions for this Experiment ####
