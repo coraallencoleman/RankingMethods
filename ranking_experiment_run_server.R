@@ -13,9 +13,10 @@
 #scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/* /Users/cora/git_repos/RankingMethods/results/ 
 #scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim1ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
 
-setwd("/ua/allencoleman/gangnon/ranking")
-source("ranking_function.r")
-source("sim_ranking_experiment.r")
+#setwd("/ua/allencoleman/gangnon/ranking")
+setwd("/Users/cora/git_repos/RankingMethods")
+#source("ranking_function.r")
+#source("sim_ranking_experiment.r")
 
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
@@ -28,36 +29,35 @@ names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                        "f", "loss", "totalLoss", "ranking", "metric")
 results <- returnDF
 #data characteristics
-system.time(
+
 for (n in c(100)){ #numItems 
   for (n_min in c(50)){ #what really matters here in number of events 
     for (n_max in c(425)){
       #ranking settings. How do data characteristics impact performance here?
       for (l in c(1, 2)){ #loss types square and absolute
-        for (rankPriority in c("even", "top", "bottom")){
-          for (rankSteepness in c(0.25, 0.5, 0.75)){
+        for (rankPriority in c("even")){ #, "top", "bottom"
+          for (rankSteepness in c(0.25)){ #, 0.5, 0.75
           #add results to the results df
+            for (sim in c(1:2)){
           results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
                 rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
                 parameter = NULL, loss = l, 
                 f=identity,  #ranking settings
-                n_sim = 10, #100 or 1000 depending on time
+                n_sim = 1, #100 or 1000 depending on time
                 #fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                 fileRoot = "/ua/allencoleman/gangnon/ranking/results/",
                 metric = TRUE))
+            }
           }
          }
        }
     }
   }
 }
-)
-#AFTER save df
+
 #CAREFUL! THIS OVERWRITES
-df <- apply(results,2,as.character)
-#save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #saves as an R object
-save(df, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_n10.RData")
+save(results, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_test.RData")
 
 #data frames of lists
 # have an element of df be a list or matrix. We want rankings to be a matrix within a list, one for each simulation

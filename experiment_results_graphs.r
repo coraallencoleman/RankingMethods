@@ -7,8 +7,8 @@ require(ggplot2)
 setwd("/Users/cora/git_repos/RankingMethods/plots/")
 ## data cleaning ##
 #load("~/gangnon/results/ranking_experiment_results.RData")
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #called df
-results <- as.data.frame(df)
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_test.RData") #called results
+results <- as.data.frame(results)
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.character )
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.double )
 

@@ -1,0 +1,235 @@
+Loading required package: ggplot2
+Loading required package: StanHeaders
+rstan (Version 2.17.3, GitRev: 2e1f913d3ca3)
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: Rcpp
+Loading required package: methods
+rstanarm (Version 2.17.4, packaged: 2018-04-13 01:51:52 UTC)
+- Do not expect the default priors to remain the same in future rstanarm versions.
+Thus, R scripts should specify priors explicitly, even if they are just the defaults.
+- For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores())
+- Plotting theme set to bayesplot::theme_default().
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.73 seconds (Warm-up)
+               4.54 seconds (Sampling)
+               10.27 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.54 seconds (Warm-up)
+               4.38 seconds (Sampling)
+               10.92 seconds (Total)
+
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.77 seconds (Warm-up)
+               5.36 seconds (Sampling)
+               11.13 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.94 seconds (Warm-up)
+               5.3 seconds (Sampling)
+               11.24 seconds (Total)
+
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 1).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 2).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 3).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+
+SAMPLING FOR MODEL 'binomial' NOW (CHAIN 4).
+
+Gradient evaluation took 0 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 3000 [  0%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  300 / 3000 [ 10%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  600 / 3000 [ 20%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.19 seconds (Warm-up)
+               4.73 seconds (Sampling)
+               10.92 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.95 seconds (Warm-up)
+               4.61 seconds (Sampling)
+               10.56 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.95 seconds (Warm-up)
+               5.19 seconds (Sampling)
+               12.14 seconds (Total)
+
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 6.43 seconds (Warm-up)
+               8.79 seconds (Sampling)
+               15.22 seconds (Total)
+
+Error in `$<-.data.frame`(`*tmp*`, "ranking", value = list(c(2L, 1L, 4L,  : 
+  replacement has 2 rows, data has 1
+Calls: system.time -> rbind -> RunSimulation -> $<- -> $<-.data.frame
+In addition: Warning messages:
+1: 'rBind' is deprecated.
+ Since R version 3.2.0, base's rbind() should work fine with S4 objects 
+2: Markov chains did not converge! Do not analyze results! 
+Timing stopped at: 101.6 1.253 54.14
+Execution halted

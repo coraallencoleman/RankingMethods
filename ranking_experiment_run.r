@@ -16,35 +16,37 @@ names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
                        "f", "loss", "totalLoss", "ranking", "metric")
 results <- returnDF
 #data characteristics
-#for (n in c(25, 50, 100, 200)){ #numItems
-  for (n_min in c(50, 100, 400)){ #what really matters here in number of events
-    for (n_max in c(500, 750, 900)){
-      #for (l in c(1, 2)){ #loss types square and absolute
-        #for (rankPriority in c( "even", "top", "bottom")){
-          #TODO FIX PARAMETERS
-          results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
-                n_assignment_method = "ascending", 
-                rankPriority = "even", #rankSteepness = .9, #rankWeights
-                parameter = NULL, loss = 2,  
-                f=identity,  #ranking settings
-                n_sim = 1, #100 or 1000 depending on time
-                fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                metric = TRUE))
-          #try running burn in for longer. if that doesnt help, catch warnings
-         #}
-       #}
+for (n in c(100)){ #numItems 
+  for (n_min in c(50)){ #what really matters here in number of events 
+    for (n_max in c(425)){
+      #ranking settings. How do data characteristics impact performance here?
+      for (l in c(1, 2)){ #loss types square and absolute
+        for (rankPriority in c("even")){ #, "top", "bottom"
+          for (rankSteepness in c(0.25)){ #, 0.5, 0.75
+            #add results to the results df
+            for (sim in c(1:2)){
+            results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
+                                                    n_assignment_method = "ascending", 
+                                                    rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
+                                                    parameter = NULL, loss = l, 
+                                                    f=identity,  #ranking settings
+                                                    n_sim = 1, #100 or 1000 depending on time
+                                                    fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
+                                                    metric = TRUE))
+            }
+          }
+        }
+      }
     }
   }
-#}
+}
+
+#saves results. Careful! This overwrites
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n40home.RData") #saves as an R object
 
 
-#saves DF CAREFUL! THIS OVERWRITES
-df <- apply(results,2,as.character)
-save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #saves as an R object
-
-
-# load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") 
-# head(df)
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n10test.RData") 
+# head(results)
 
 #### Main Questions for this Experiment ####
 ##increase gaps in parameters until they're trivial. decrease until broken/impossible. 
