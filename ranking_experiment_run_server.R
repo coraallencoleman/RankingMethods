@@ -10,8 +10,8 @@
 #nohup /s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server.r > nsim100ScreenLog.txt &
 
 # move results back to home computer 
-#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/* /Users/cora/git_repos/RankingMethods/results/ 
-#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim1ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
+#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_n100_0701.RData /Users/cora/git_repos/RankingMethods/results/ 
+#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim100ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
 
 setwd("/ua/allencoleman/gangnon/ranking")
 source("ranking_function.r")
@@ -22,7 +22,7 @@ rstan_options(auto_write = TRUE)
 
 #creates clean DF
 returnDF <- as.data.frame(matrix(nrow = 0, ncol = 16))
-names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
                        "f", "loss", "totalLoss", "ranking", "metric")
