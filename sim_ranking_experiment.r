@@ -150,10 +150,10 @@ SimData <- function(matrix){
 
 #Get Posterior Samples
 PostSamples <- function(data){  
-  #simulates data from a dataframe of n, p
+  #gets posterior samples from data using a dataframe of n, p
   
   # Args:
-  #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
+  #   list of dataframes. Each dataframe has 3 columns named: item, n, y. Output of SimData
   #
   # Returns: 
   #   one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
