@@ -36,15 +36,20 @@ library(xtable)
 
 #unweighted ranking
 idat$unweightedRanks <- unweightedILRanks #add ranks
-t_unweighted_ranking <- idat[order(idat$unweightedRanks),c("County", "item", "n", "y", "p", "unweightedRanks")] #sort by unweighted ranks
-#xtable(t_unweighted_ranking, caption = NULL, include.rownames = FALSE) #use \scalebox{0.7}{before tabular
+t_unweighted_ranking <- idat[order(idat$unweightedRanks),c("County", "n", "p", "unweightedRanks")] #sort by unweighted ranks
+print(xtable(t_unweighted_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
 
 #0-1 weighted ranking
 idat$zero_one_rank <- zero_one_ILRanks #add ranks
-t_zero_one_weighted_ranking <- idat[order(idat$zero_one_rank),c("County", "item", "n", "y", "p", "unweightedRanks", "zero_one_rank")] #sort by unweighted ranks
-#xtable(t_zero_one_weighted_ranking, caption = NULL, include.rownames = FALSE) #use \scalebox{0.7}{before tabular
+t_zero_one_weighted_ranking <- idat[order(idat$zero_one_rank),c("County", "n", "p", "unweightedRanks", "zero_one_rank")] #sort by unweighted ranks
+print(xtable(t_zero_one_weighted_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
 
 #gradual ranking
 idat$grad_rank <- grad_ILRanks #add ranks
-t_grad_ranking <- idat[order(idat$grad_rank),c("County", "item", "n", "y", "p", "unweightedRanks", "zero_one_rank", "grad_rank")] #sort by unweighted ranks
-#xtable(t_grad_rank, caption = NULL, include.rownames = FALSE) #use \scalebox{0.7}{before tabular
+t_grad_ranking <- idat[order(idat$grad_rank),c("County", "n", "p", "unweightedRanks", "zero_one_rank", "grad_rank")] #sort by unweighted ranks
+print(xtable(t_grad_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
+
+
+#graphical display of the posterior distributions 
+#pick conflict area and show posteriors for those counties (maybe 3-5 counties?)
+#Woodford Hancock De Witt Mason
