@@ -167,6 +167,7 @@ PostSamples <- function(data){
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
+  #output <- as.matrix(model1) DEBUG
   output <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
   return(output)
 }
