@@ -14,47 +14,71 @@ post <- PostSamples(idat)
 #convert post to probabilities
 p_post <- exp(-2.492716 + post)/(1 + exp(-2.492716 + post))
 
-##point estimate ranking
+#1 raw rank
+idat<-idat[order(idat$item),] #we needed to reorder bc of alphabetizing differences
+idat$rawRank <- as.integer(rank(idat$p)) #checked
 
+##2. posterior mean point estimate ranking
+raw_estimates_post_means <- apply(p_post, 2, mean)
+idat<-idat[order(idat$item),] #we needed to reorder bc of alphabetizing differences
+idat$postMeans <- raw_estimates_post_means
+idat$PointRank <- as.integer(rank(idat$postMeans)) #checked!
 
-#unweighted ranking
+#3. unweighted ranking
 unweightedILResults <- WeightedLossRanking(sampleMatrix = p_post, loss = 2)
-unweightedILRanks <- as.integer(unweightedILResults[-1])
+unweightedILRanks <- as.integer(unweightedILResults[[2]])
 
-#0-1 weighted ranking
-zero_one_rankWeights <- c(rep(1, times = 10), rep(0, times = 92))
+#4. 0-1 weighted ranking
+zero_one_rankWeights <- c(rep(1, times = 10), rep(0, times = 92)) #weights
 zero_one_ILResults <- WeightedLossRanking(sampleMatrix = p_post, loss = 2,
                                            rankWeights = zero_one_rankWeights)
-zero_one_ILRanks <- as.integer(zero_one_ILResults[-1])
+zero_one_ILRanks <- as.integer(zero_one_ILResults[[2]])
 
-#gradual ranking using our function
-gradWeights <- RankingWeights(numItems = N, priority = "top", steepness = .5)
+#5. gradual ranking using our function
+gradWeights <- RankingWeights(numItems = N, priority = "top", steepness = .5)#weights
 
 grad_ILResults <- WeightedLossRanking(sampleMatrix = p_post, loss = 2,
                                           rankWeights = gradWeights)
 
-grad_ILRanks <- as.integer(grad_ILResults[-1])
+grad_ILRanks <- as.integer(grad_ILResults[[2]])
 
+#tmp<-idat[order(idat$item),] this is a correction from 7/26/18 meeting
+#tmp$unweightedRanks<-unweightedILRanks
+idat<-idat[order(idat$item),] #we needed to reorder bc of alphabetizing differences
+idat$rawRank <- as.integer(rank(idat$p))
+idat$unweightedRanks <- unweightedILRanks #add ranks
+idat$zero_one_rank <- zero_one_ILRanks #add ranks
+idat$grad_rank <- grad_ILRanks #add ranks
 
 ### Create Graphics for Slides ###
 #TODO keep only 1 through 15?
 library(xtable)
 
+
+#raw estimate ranking
+t_rawEst_ranking <- idat[order(idat$pointRank),c("County", "n", "p", "rawRank")] #sort by PE ranks
+print(xtable(t_pointEst_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
+
 #point estimate ranking
+#uses posterior means TODO
 
 #unweighted ranking
-idat$unweightedRanks <- unweightedILRanks #add ranks
-t_unweighted_ranking <- idat[order(idat$unweightedRanks),c("County", "n", "p", "unweightedRanks")] #sort by unweighted ranks
+t_unweighted_ranking <- idat[order(idat$unweightedRanks),c("County", "n", "p", "pointRank", "unweightedRanks")] #sort by unweighted ranks
 print(xtable(t_unweighted_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
 
 #0-1 weighted ranking
-idat$zero_one_rank <- zero_one_ILRanks #add ranks
+
 t_zero_one_weighted_ranking <- idat[order(idat$zero_one_rank),c("County", "n", "p", "unweightedRanks", "zero_one_rank")] #sort by unweighted ranks
 print(xtable(t_zero_one_weighted_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
 
 #gradual ranking
+
+t_grad_ranking <- idat[order(idat$grad_rank),c("County", "n", "p", "pointRank", "unweightedRanks", "grad_rank")] #sort by unweighted ranks
+print(xtable(t_grad_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
+
+#gradual ranking
 idat$grad_rank <- grad_ILRanks #add ranks
-t_grad_ranking <- idat[order(idat$grad_rank),c("County", "n", "p", "unweightedRanks", "zero_one_rank", "grad_rank")] #sort by unweighted ranks
+t_grad_ranking <- idat[order(idat$grad_rank),c("County", "n", "p", "pointRank", "grad_rank")] #sort by unweighted ranks
 print(xtable(t_grad_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
 
 
@@ -62,7 +86,7 @@ print(xtable(t_grad_ranking[1:12,], caption = NULL), include.rownames = FALSE) #
 library(ggplot2);library(reshape2)
 library(RColorBrewer)
 #pick conflict area and show posteriors for those counties Woodford 102 Hancock 34 De Witt 19 Mason 60
-conflict_subset <- as.data.frame(post[, c(102, 34, 19, 60)])
+conflict_subset <- as.data.frame(post[, c(102, 34, 19, 60)]) #TODO need to choose 7,8,9,10 from 0 1
 #p = exp(-1.12546)/(1+exp(-1.12546))
 p_conflict_subset = exp(-2.492716 + conflict_subset)/(1 + exp(-2.492716 + conflict_subset))
 #mean(p_post)

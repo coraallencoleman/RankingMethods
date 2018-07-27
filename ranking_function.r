@@ -61,7 +61,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
     }
     totalLoss = sum(LossRnk)
     
-    return(c(totalLoss, solve_LSAP(LossRnk)))
+    return(list(LossRnk, solve_LSAP(LossRnk)))
   }
 }
 
