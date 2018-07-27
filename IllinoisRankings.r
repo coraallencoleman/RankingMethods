@@ -90,8 +90,8 @@ p_conflict_subset = exp(-2.492716 + conflict_subset)/(1 + exp(-2.492716 + confli
 names(p_conflict_subset) <- c("Woodford", "Mercer", "Jo Daviess", "DeKalb", "McHenry", "Clinton", "Kendall")
 conflict <- melt(p_conflict_subset)
 conflict$County <- conflict$variable
-cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-conflictplot <- ggplot(conflict,aes(x=value, fill=County)) + geom_density(alpha=0.5) + 
+cbPalette <- c("#D55E00","#56B4E9","#009E73",  "#000000","#F0E442", "#0072B2", "#CC79A7")
+conflictplot <- ggplot(conflict,aes(x=value, fill=County)) + geom_density(alpha=0.6) + 
   scale_fill_manual(values=cbPalette) + xlab("Percent Low Birth Weight")
 conflictplot
 ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/conflict_post.png", plot = conflictplot)
@@ -120,5 +120,18 @@ ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (nonco
 #grad weights graph
 idat<-idat[order(idat$item),]
 idat$gradWeights <- gradWeights
-gradWeightGraph <- ggplot(idat,aes(x=item, y=gradWeights)) + geom_point()
+idat$item <- as.numeric(idat$item)
+gradWeightGraph <- ggplot(idat,aes(x=item, y=gradWeights)) + geom_point() +
+  xlab("Rank Position") + ylab("Gradual Weight")
+gradWeightGraph
 ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/gradWeightGraph.png", plot = gradWeightGraph)
+
+
+#0-1 weight graph
+idat<-idat[order(idat$item),]
+idat$zero_one_10 <- zero_one_rankWeights
+idat$item <- as.numeric(idat$item)
+Top10WeightGraph <- ggplot(idat,aes(x=item, y=zero_one_10)) + geom_point() +
+  xlab("Rank Position") + ylab("Top 10 Weights") + ylim(0, 1.4)
+Top10WeightGraph
+ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/Top10WeightGraph.png", plot = Top10WeightGraph)
