@@ -52,6 +52,8 @@ idat$unweightedRanks <- unweightedILRanks
 idat$zero_one_rank <- zero_one_ILRanks
 idat$zero_one_five <- zero_one_five
 idat$grad_rank <- grad_ILRanks
+repeatRanks <- apply(unweightedILResults[[1]],1,which.min) #repRanks
+idat$repRanks <- repeatRanks
 
 ### Create Graphics for Slides ###
 #TODO keep only 1 through 15?
@@ -78,23 +80,48 @@ print(xtable(t_zero_one_weighted_ranking[1:12,], caption = NULL), include.rownam
 t_grad_ranking <- idat[order(idat$grad_rank),c("County", "n", "p", "zero_one_five", "zero_one_rank", "grad_rank")] #sort by unweighted ranks
 print(xtable(t_grad_ranking[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
 
+#repeated ranking
+t_repRanks <- idat[order(idat$repRanks),c("County", "n", "p", "repRanks")] #sort by repRanks
+print(xtable(t_repRanks[1:12,], caption = NULL), include.rownames = FALSE) #use \scalebox{0.7}{before tabular
+
+
 #graphical display of the posterior distributions 
 library(ggplot2);library(reshape2)
 library(RColorBrewer)
 #pick conflict area and show posteriors for those counties
-conflict_subset <- as.data.frame(post[, c(102, 66, 43, 20, 63, 14, 47)])
+conflict_subset <- as.data.frame(post[, c(102, 66, 14, 47)])
 #p = exp(-1.12546)/(1+exp(-1.12546))
 p_conflict_subset = exp(-2.492716 + conflict_subset)/(1 + exp(-2.492716 + conflict_subset))
 #mean(p_post)
 #rename
-names(p_conflict_subset) <- c("Woodford", "Mercer", "Jo Daviess", "DeKalb", "McHenry", "Clinton", "Kendall")
+names(p_conflict_subset) <- c("Woodford", "Mercer", "Clinton", "Kendall")
 conflict <- melt(p_conflict_subset)
 conflict$County <- conflict$variable
-cbPalette <- c("#D55E00","#56B4E9","#009E73",  "#000000","#F0E442", "#0072B2", "#CC79A7")
-conflictplot <- ggplot(conflict,aes(x=value, fill=County)) + geom_density(alpha=0.6) + 
+cbPalette <- c("#0072B2", "#009E73","#D55E00", "#F0E442",  "#CC79A7")
+conflictplot <- ggplot(conflict,aes(x=value, fill=County)) + geom_density(alpha=0.5) + 
   scale_fill_manual(values=cbPalette) + xlab("Percent Low Birth Weight")
 conflictplot
 ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/conflict_post.png", plot = conflictplot)
+
+#graphical display of the posterior distributions 
+library(ggplot2);library(reshape2)
+library(RColorBrewer)
+#pick conflict area and show posteriors for those counties
+conflict_subset <- as.data.frame(post[, c(85, 6, 98)]) #RAW POST
+#p = exp(-1.12546)/(1+exp(-1.12546))
+p_conflict_subset = exp(-2.492716 + conflict_subset)/(1 + exp(-2.492716 + conflict_subset))
+#mean(p_post)
+#rename
+names(p_conflict_subset) <- c("Scott", "Bureau", "Whiteside")
+conflict <- melt(p_conflict_subset)
+conflict$County <- conflict$variable
+cbPalette <- c("#0072B2", "#009E73","#D55E00", "#F0E442",  "#CC79A7")
+conflictplot2 <- ggplot(conflict,aes(x=value, fill=County)) + geom_density(alpha=0.5) + 
+  scale_fill_manual(values=cbPalette) + xlab("Percent Low Birth Weight")
+conflictplot2
+ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/conflict_post2.png", plot = conflictplot2)
+
+
 
 ## example (sim data) ##
 #Equal Variance Example with Graph
@@ -122,7 +149,8 @@ idat<-idat[order(idat$item),]
 idat$gradWeights <- gradWeights
 idat$item <- as.numeric(idat$item)
 gradWeightGraph <- ggplot(idat,aes(x=item, y=gradWeights)) + geom_point() +
-  xlab("Rank Position") + ylab("Gradual Weight")
+  xlab("Rank Position") + ylab("Gradual Weight") + 
+  annotate("text", label = "epsilon = 0.05", x = 75, y = .6, size = 8, colour = "black")
 gradWeightGraph
 ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/gradWeightGraph.png", plot = gradWeightGraph)
 
@@ -135,3 +163,12 @@ Top10WeightGraph <- ggplot(idat,aes(x=item, y=zero_one_10)) + geom_point() +
   xlab("Rank Position") + ylab("Top 10 Weights") + ylim(0, 1.4)
 Top10WeightGraph
 ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/Top10WeightGraph.png", plot = Top10WeightGraph)
+
+
+#repeat Ranks Graphs
+repeatRanks <- sort(apply(unweightedILResults[[1]],1,which.min))
+unique(repeatRanks)
+ranks <- seq(from=1, to = 102, by = 1)
+rep <- as.data.frame(cbind(ranks = ranks, repRanks = repeatRanks))
+repGraph <- g <- ggplot(rep, aes(repRanks)) + geom_bar() + xlab("Ranks")
+repGraph
