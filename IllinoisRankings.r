@@ -4,7 +4,7 @@
 #create an .RData file for with parameters + ranks
 
 library(rstan)
-library(ggplot)
+library(ggplot2)
 
 #import data
 idat <- read.csv("/Users/cora/git_repos/RankingMethods/data/Illinois_LBW_item_n_y.csv")
