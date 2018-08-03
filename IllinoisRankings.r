@@ -4,6 +4,8 @@
 #create an .RData file for with parameters + ranks
 
 library(rstan)
+library(ggplot)
+
 #import data
 idat <- read.csv("/Users/cora/git_repos/RankingMethods/data/Illinois_LBW_item_n_y.csv")
 idat$item <- as.factor(as.numeric(idat$County))
@@ -150,6 +152,7 @@ idat$gradWeights <- gradWeights
 idat$item <- as.numeric(idat$item)
 gradWeightGraph <- ggplot(idat,aes(x=item, y=gradWeights)) + geom_point() +
   xlab("Rank Position") + ylab("Gradual Weight") + 
+  xlim(1, 102) + 
   annotate("text", label = "epsilon = 0.05", x = 75, y = .6, size = 8, colour = "black")
 gradWeightGraph
 ggsave(filename = "/Users/cora/Dropbox/UW-Madison/CurrentResearch/Ranking (noncode)/presentations/JSM/images/gradWeightGraph.png", plot = gradWeightGraph)
@@ -171,4 +174,28 @@ unique(repeatRanks)
 ranks <- seq(from=1, to = 102, by = 1)
 rep <- as.data.frame(cbind(ranks = ranks, repRanks = repeatRanks))
 repGraph <- g <- ggplot(rep, aes(repRanks)) + geom_bar() + xlab("Ranks")
-repGraph
+repGraph]
+
+
+#weights:
+k <- seq(from=1, to = 10, by = 1)
+e = 0.7
+gradual_ex_weights = (1-e)^(k-1)
+gradual_ex_weights
+
+e = 0.5
+gradual_ex_weights = (1-e)^(k-1)
+gradual_ex_weights
+
+e = 0.05
+gradual_ex_weights = (1-e)^(k-1)
+gradual_ex_weights
+
+e = 0.01
+gradual_ex_weights = (1-e)^(k-1)
+gradual_ex_weights
+
+##Bottom ranks
+e = 0.01
+gradual_bottom_ex_weights = (1-e)^(10-k)
+gradual_bottom_ex_weights
