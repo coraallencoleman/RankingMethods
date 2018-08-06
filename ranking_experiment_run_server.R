@@ -7,7 +7,7 @@
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 
 # run:
-#nohup /s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server.r > nsim100ScreenLog.txt &
+#nohup /s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server.r > nsimTESTScreenLog.txt &
 
 # move results back to home computer 
 #scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_n100_0701.RData /Users/cora/git_repos/RankingMethods/results/ 
@@ -15,7 +15,6 @@
 
 setwd("/ua/allencoleman/gangnon/ranking")
 source("ranking_function.r")
-source("sim_ranking_experiment.r")
 
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
@@ -37,7 +36,7 @@ for (n in c(100)){ #numItems
         for (rankPriority in c("even", "top", "bottom")){ #
           for (rankSteepness in c(0.25, 0.5, 0.75)){ #
           #add results to the results df
-            for (sim in c(1:100)){#100 or 1000 depending on time
+            for (sim in c(1:2)){#100 or 1000 depending on time
           results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                 n_assignment_method = "ascending", 
                 rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights

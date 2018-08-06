@@ -10,7 +10,7 @@
     # RunSimulation
     # RankMetric, RankMetricDF(not finished)
 
-#Step 0: Load Packages.        #first time: install.packages("rstan", "clue")
+#Step 0: Load Packages.                 #first time: install.packages("rstan", "clue")
 library(rstan)
 library(dplyr)
 library(rstanarm)
@@ -20,7 +20,8 @@ set.seed(10)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
-WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = NULL, loss = 2,  f=identity, 
+WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = NULL, loss = 2,  
+                                f=identity, 
                                 rankWeights = rep(1, times = n), itemweights = rep(1, times = n)){
 # Computes optimal ranking for a list of estimates
 #   
@@ -140,6 +141,7 @@ SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, 
   return(output)
 }
 
+
 SimData <- function(matrix){
   #simulates data from a dataframe of n, p
   
@@ -167,7 +169,6 @@ SimData <- function(matrix){
   return(output)
 }
 
-#Get Posterior Samples
 PostSamples <- function(data){  
   #gets posterior samples from data using a dataframe of n, p
   
@@ -191,7 +192,6 @@ PostSamples <- function(data){
   return(output)
 }
 
-## RUN EXPERIMENT
 RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1, #data
                           n_assignment_method = "ascending", 
                           rankPriority = "top", rankSteepness = .9, #rankWeights
@@ -199,7 +199,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           n_sim = 1,
                           fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                           metric = FALSE){
-  #combines all the above functions to run a simulation
+  #combines all the above functions to run simulations
   # Args:
   #   for SelectNP:
   #   N: number of items to rank
@@ -232,13 +232,13 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #ranks <- list() #creates list of ranks for each simulation
   rankMetricResults <- list() #create list of metric results for each simulation
   
-  for (i in 1:n_sim){#for each simulation
+  for (i in 1:n_sim){   #for each simulation
     data <- SimData(settings)
     post <- PostSamples(data)
+    
+    #TODO add all kinds of ranking here (do multiple kinds here)
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
-    
-    #TODO add all kinds of ranking here
     totalLoss <- as.numeric(rankFunctionResult[1])
     ranks <- as.integer(rankFunctionResult[-1])
     
