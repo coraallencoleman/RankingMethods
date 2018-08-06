@@ -1,5 +1,5 @@
 #Simulation/Experiments Testing for WeightedLossRanking function
-
+    #includes: SelectNP, SimData, PostSamples, RunSimulation, 
 #Step 0: Load
 
 library(rstan)
@@ -9,75 +9,6 @@ library(clue)
 library(rstan)
 #AND run ranking_function.r, ranking_metric.r files. 
 set.seed(10)
-
-# A testing metric for use with simulated data
-
-
-
-##function metric to see if rankObject's top ranked items match true top items MATRIX
-RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", topN = 5){
-  # function metric to see if our top number matches true top five for Binomial model
-  #   
-  # Args:
-  #   rankObject: an output of WeightedLossRanking.
-  #   originalData: a data frame with column of item IDs, n, true probabilities
-  #   order: largest (largest to smallest) or smallest (smallest to largest)
-  #   topN: an integer number of top items to compare
-  #
-  # Returns:
-  #   logical vector
-  #
-  # Dependencies: rstan, clue, dplyr
-  
-  rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
-  rankedData[,1:3] <- settings
-  rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
-  
-  if (order == "largest"){
-    true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
-    rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
-  } else if (order == "smallest"){
-    true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
-    rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
-  } else {
-    stop("order must be input as either 'largest' or 'smallest'")
-  }
-  #check if each item in true top N is in ranking top N, return boolean
-  return(true[1:10, 1] %in% rankedData[1:10, 1])
-}
-
-
-
-##function metric to see if rankObject's top ranked items match true top items
-#WITH DATAFRAME not finished
-RankMetricDF <- function(rankObject = NULL, originalData = NULL, order = largest, topN = 5){
-  # function metric to see if our top number matches true top five for Binomial model
-  #   
-  # Args:
-  #   rankObject: an output of WeightedLossRanking. Must include columns item, p, n
-  #   originalData: a data frame with column of true probabilities, true N (column names must match p, n)
-  #   order: largest (largest to smallest) or smallest (smallest to largest)
-  #   topN: an integer number of top items to compare
-  #
-  # Returns:
-  #   logical vector
-  #
-  # Dependencies: rstan, clue, dplyr
-  rankedData <- as.data.frame(originalData)
-  rankedData[5,] <- rankedData[2,]*100 #p*100
-  rankedData[6,] <- as.integer(rankObject) #rank orders items smallest to highest
-  if (order == "largest"){
-    originalData <-originalData %>% dplyr::arrange(desc(p), desc(n)) 
-    rankedData <- rankedData %>% dplyr::arrange(rank)
-  } else if (order == "smallest"){
-    rankedData <- rankedData %>% dplyr::arrange(desc(rank))
-    originalData <-originalData %>% dplyr::arrange(p, desc(n)) #TODO assume no ties in p change simulated data
-  } else {
-    stop("order must be input as either 'largest' or 'smallest'")
-  }
-  #check if each item in true top N is in ranking top N, return boolean
-  return(originalData[1:topN,]$item %in% rankedData[1:topN,]$item )
-}
 
 
 #normal (implement this, but do simulation with binomial instead. might be relevant with survey data for counties)
@@ -218,6 +149,8 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     post <- PostSamples(data)
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
+    
+    #TODO add all kinds of ranking here
     totalLoss <- as.numeric(rankFunctionResult[1])
     ranks <- as.integer(rankFunctionResult[-1])
     
@@ -239,6 +172,70 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   return(returnDF)
 }
 
+# A testing metric for use with simulated data
+##function metric to see if rankObject's top ranked items match true top items MATRIX
+RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", topN = 5){
+  # function metric to see if our top number matches true top five for Binomial model
+  #   
+  # Args:
+  #   rankObject: an output of WeightedLossRanking.
+  #   originalData: a data frame with column of item IDs, n, true probabilities
+  #   order: largest (largest to smallest) or smallest (smallest to largest)
+  #   topN: an integer number of top items to compare
+  #
+  # Returns:
+  #   logical vector
+  #
+  # Dependencies: rstan, clue, dplyr
+  
+  rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
+  rankedData[,1:3] <- settings
+  rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
+  
+  if (order == "largest"){
+    true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
+    rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
+  } else if (order == "smallest"){
+    true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
+    rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
+  } else {
+    stop("order must be input as either 'largest' or 'smallest'")
+  }
+  #check if each item in true top N is in ranking top N, return boolean
+  return(true[1:10, 1] %in% rankedData[1:10, 1])
+}
+
+##function metric to see if rankObject's top ranked items match true top items
+#WITH DATAFRAME NOT FINISHED
+RankMetricDF <- function(rankObject = NULL, originalData = NULL, order = largest, topN = 5){
+  # function metric to see if our top number matches true top five for Binomial model
+  #   
+  # Args:
+  #   rankObject: an output of WeightedLossRanking. Must include columns item, p, n
+  #   originalData: a data frame with column of true probabilities, true N (column names must match p, n)
+  #   order: largest (largest to smallest) or smallest (smallest to largest)
+  #   topN: an integer number of top items to compare
+  #
+  # Returns:
+  #   logical vector
+  #
+  # Dependencies: rstan, clue, dplyr
+  rankedData <- as.data.frame(originalData)
+  rankedData[5,] <- rankedData[2,]*100 #p*100
+  rankedData[6,] <- as.integer(rankObject) #rank orders items smallest to highest
+  if (order == "largest"){
+    originalData <-originalData %>% dplyr::arrange(desc(p), desc(n)) 
+    rankedData <- rankedData %>% dplyr::arrange(rank)
+  } else if (order == "smallest"){
+    rankedData <- rankedData %>% dplyr::arrange(desc(rank))
+    originalData <-originalData %>% dplyr::arrange(p, desc(n)) #TODO assume no ties in p change simulated data
+  } else {
+    stop("order must be input as either 'largest' or 'smallest'")
+  }
+  #check if each item in true top N is in ranking top N, return boolean
+  return(originalData[1:topN,]$item %in% rankedData[1:topN,]$item )
+}
+
 #creates dataframe
 # returnDF <- as.data.frame(matrix(nrow = 1, ncol = 15))
 # names(returnDF) <- c("N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
@@ -254,33 +251,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 #write.csv(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.csv")
 
 ## TESTING
-
-# returnDF <- data.frame(run=integer(), N=integer(), a_p=double(), b_p=double(), BROKEN
-#                        n_min = integer(), n_max=integer(), 
-#                        a_n=double(), b_n=double(), 
-#                        n_assignment_method=string(), 
-#                        rankPriority=string(), rankSteepness=double(), 
-#                        f=integer(), loss=integer(), totalLoss=double()) #, ranking = list(c()))
-# returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
-# names(returnDF) <- c("run", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
-#                      "n_assignment_method",
-#                      "rankPriority", "rankSteepness",
-#                      "f", "loss", "totalLoss", "ranking")
-# results <- returnDF
 # 
-# for (rankPriority in c( "even")){
-#   #add results to the results df
-#  results <- rbind(results, RunSimulation(N = 50, a_p = 1, b_p = 1, n_min = 50, n_max = 70, a_n = 1, b_n = 1, #data
-#                                                   n_assignment_method = "ascending", 
-#                                                   rankPriority = rankPriority, #rankSteepness = .9, #rankWeights
-#                                                   parameter = NULL, loss = 2, 
-#                                                   f=identity,  #ranking settings
-#                                                   n_sim = 1, #100 or 1000 depending on time
-#                                                   fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-#                                                   metric = FALSE))
-#   #try running burn in for longer. if that doesnt help, catch warnings
-#  #https://cran.r-project.org/web/packages/rstanarm/vignettes/rstanarm.html#markov-chains-did-not-converge
-# }
 # 
 # #AFTER save df
 # #CAREFUL! THIS OVERWRITES
