@@ -14,31 +14,31 @@ results <- currResults
 
 #data characteristics
 for (n in c(25, 50, 100)){ #numItems 
-  for (n_min in c(50)){ #what really matters here in number of events 
-    for (n_max in c(425)){
-      #add results to the results df
-        results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
+  for (n_min in c(75, 100)){ #what really matters here in number of events 
+    for (n_max in c(200, 400)){
+      for (a_n in c(0.8, 1, 1.2)){
+        for (b_n in c(0.8, 1, 1.2)){
+          for (a_p in c(0.8, 1, 1.2)){
+            for (b_p in c(0.8, 1, 1.2)){
+        #add results to the results df
+        results <- rbind(results, RunSimulation(N = n, a_p = a_p, b_p = b_p, n_min = n_min, n_max = n_max, a_n = a_n, b_n = b_n, #data
                                                  n_assignment_method = "ascending", 
-                                                  rankPriority = c("even", "top", "bottom"), rankSteepness = c(0.01, 0.05), #rankWeights
-                                                  parameter = NULL, loss = c(1,2), 
-                                                  f=identity,  #ranking settings
-                                                  n_sim = 2, 
-                                                  fileRoot = "/Users/cora/git_repos/RankingMethods/results/"))
+                                                #ranking settings
+                                                rankPriority = c("even", "top", "bottom"), rankSteepness = c(0.01, 0.05, 0.1), #rankWeights
+                                                parameter = NULL, loss = c(1,2), 
+                                                f=identity,  
+                                                n_sim = 1, 
+                                                fileRoot = "/Users/cora/git_repos/RankingMethods/results/"))
+            }
+          }
+        }
+      }
     }
   }
 }
 
 #saves results. Careful! This overwrites
-save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n1_home_0807.RData") #saves as an R object
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0807.RData.RData") #saves as an R object
 
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n1_home_0807.RData") 
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0807.RData") 
 head(results)
-
-# #testing
-# df <- RunSimulation(N = 3, a_p = 1, b_p = 1, n_min = 10, n_max = 20, a_n = 1, b_n = 1, #data
-#               n_assignment_method = "ascending", 
-#               rankPriority = c("even", "top", "bottom"), rankSteepness = c(0.01, 0.05), #rankWeights
-#               parameter = NULL, loss = c(1,2), 
-#               f=identity,  #ranking settings
-#               n_sim = 2, 
-#               fileRoot = "/Users/cora/git_repos/RankingMethods/results/")
