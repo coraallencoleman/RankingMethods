@@ -13,7 +13,7 @@ names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n",
 results <- returnDF
 
 #data characteristics
-for (n in c(100)){ #numItems 
+for (n in c(10)){ #numItems 
   for (n_min in c(50)){ #what really matters here in number of events 
     for (n_max in c(425)){
       #add results to the results df
@@ -34,8 +34,7 @@ for (n in c(100)){ #numItems
 #saves results. Careful! This overwrites
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n1_home_0807.RData") #saves as an R object
 
-
-#load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n100_home.RData") 
-# head(results)
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n1_home_0807.RData") 
+head(results)
 
 

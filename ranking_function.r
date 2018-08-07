@@ -197,8 +197,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           rankPriority = "top", rankSteepness = .9, #rankWeights
                           parameter = NULL, loss = 2, f=identity, #ranking settings
                           n_sim = 1,
-                          fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                          metric = FALSE){
+                          fileRoot = "/Users/cora/git_repos/RankingMethods/results/"){
   #combines all the above functions to run simulations
   # Args:
   #   for SelectNP:
@@ -215,10 +214,9 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
           #TODO allow this to be a list
   #   f = scale on which to rank
+          #TODO allow this to be a list
   #   n_sim: number of simulations. (reps)
   #   fileRoot: file path used to create file for ranking results and metric results
-  #   metric: boolean indicating if metric results should be created and saved
-  #   metricFile: file for RData metric results
   #
   # Returns: 
   #   list of matrices of posterior samples, one column for each item
@@ -230,32 +228,26 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   # create RankingWeights
   rankWeights <- RankingWeights(numItems = N, priority = rankPriority, steepness = rankSteepness)
   
-  #ranks <- list() #creates list of ranks for each simulation
-  rankMetricResults <- list() #create list of metric results for each simulation
-  
   for (i in 1:n_sim){   #for each simulation
     data <- SimData(settings)
     post <- PostSamples(data)
-    
-    #TODO add all kinds of ranking here (do multiple kinds here)
-    
-    # for (l in c(1, 2)){ #loss types square and absolute
+
+    #TODO add all kinds of ranking here (for each data type)
+    # for (l in loss){ #loss types square and absolute
     #   for (rankPriority in c("even", "top", "bottom")){ #
     #     for (rankSteepness in c(0.25, 0.5, 0.75)){ #
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
-    totalLoss <- as.numeric(rankFunctionResult[[1]])
-    ranks <- as.integer(unweightedILResults[[2]])
-    
+    totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #10 by 10 this is the rank matrix, so I take the sum
+    ranks <- list(as.integer(rankFunctionResult[[2]]))
     #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
     returnDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, 
                            n_assignment_method, 
                            rankPriority, rankSteepness, 
                            "identity", loss, totalLoss)
-    returnDF$ranking[i] <- list(ranks)
+    returnDF$ranking[i] <- ranks
     
   }
-  
   return(returnDF)
 }
 
