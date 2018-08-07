@@ -213,6 +213,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #     "random" for random assignment
   #   list of dataframes. Each dataframe has 3 columns named: item, n, p. Output of SimData
   #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
+          #TODO allow this to be a list
   #   f = scale on which to rank
   #   n_sim: number of simulations. (reps)
   #   fileRoot: file path used to create file for ranking results and metric results
@@ -243,7 +244,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     #     for (rankSteepness in c(0.25, 0.5, 0.75)){ #
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
-    totalLoss <- as.numeric(rankFunctionResult[1])
+    totalLoss <- as.numeric(rankFunctionResult[[1]])
     ranks <- as.integer(unweightedILResults[[2]])
     
     #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
@@ -253,12 +254,6 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                            "identity", loss, totalLoss)
     returnDF$ranking[i] <- list(ranks)
     
-    if (metric == TRUE){ #METRIC FOR RANKING
-      rankMetricResults <- RankMetric(ranks, settings = data, topN = 10) #create metric
-      
-      #save metric results to RData file for easy plotting
-      returnDF$metric[i] <- as.numeric(sum(rankMetricResults)/10)
-    }
   }
   
   return(returnDF)

@@ -16,16 +16,16 @@ results <- returnDF
 for (n in c(100)){ #numItems 
   for (n_min in c(50)){ #what really matters here in number of events 
     for (n_max in c(425)){
-            #add results to the results df
-            for (sim in c(1:1)){#100 or 1000 depending on time
-            results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
-                                                    n_assignment_method = "ascending", 
-                                                    rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
-                                                    parameter = NULL, loss = l, 
-                                                    f=identity,  #ranking settings
-                                                    n_sim = 1, 
-                                                    fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                                                    metric = TRUE))
+      #add results to the results df
+        for (sim in c(1:1)){#100 or 1000 depending on time
+          results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
+                                                 n_assignment_method = "ascending", 
+                                                  rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
+                                                  parameter = NULL, loss = l, 
+                                                  f=identity,  #ranking settings
+                                                  n_sim = 1, 
+                                                  fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
+                                                  metric = FALSE))
       }
     }
   }
