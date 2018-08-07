@@ -5,11 +5,11 @@
 setwd("/Users/cora/git_repos/RankingMethods")
 source("ranking_function.r")
 #creates clean returnDF
-returnDF <- as.data.frame(matrix(nrow = 0, ncol = 16))
+returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
 names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
-                       "f", "loss", "totalLoss", "ranking", "metric")
+                       "f", "loss", "totalLoss", "ranking")
 results <- returnDF
 
 #data characteristics
