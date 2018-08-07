@@ -13,7 +13,7 @@ names(currResults) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n"
 results <- currResults
 
 #data characteristics
-for (n in c(3)){ #numItems 
+for (n in c(25, 50, 100)){ #numItems 
   for (n_min in c(50)){ #what really matters here in number of events 
     for (n_max in c(425)){
       #add results to the results df
@@ -34,4 +34,11 @@ save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_exper
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n1_home_0807.RData") 
 head(results)
 
-
+# #testing
+# df <- RunSimulation(N = 3, a_p = 1, b_p = 1, n_min = 10, n_max = 20, a_n = 1, b_n = 1, #data
+#               n_assignment_method = "ascending", 
+#               rankPriority = c("even", "top", "bottom"), rankSteepness = c(0.01, 0.05), #rankWeights
+#               parameter = NULL, loss = c(1,2), 
+#               f=identity,  #ranking settings
+#               n_sim = 2, 
+#               fileRoot = "/Users/cora/git_repos/RankingMethods/results/")
