@@ -5,27 +5,25 @@
 setwd("/Users/cora/git_repos/RankingMethods")
 source("ranking_function.r")
 #creates clean returnDF
-returnDF <- as.data.frame(matrix(nrow = 0, ncol = 15))
-names(returnDF) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
+currResults <- as.data.frame(matrix(nrow = 0, ncol = 15))
+names(currResults) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
                        "f", "loss", "totalLoss", "ranking")
-results <- returnDF
+results <- currResults
 
 #data characteristics
-for (n in c(10)){ #numItems 
+for (n in c(3)){ #numItems 
   for (n_min in c(50)){ #what really matters here in number of events 
     for (n_max in c(425)){
       #add results to the results df
-        for (sim in c(1:1)){#100 or 1000 depending on time
-          results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
+        results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                                                  n_assignment_method = "ascending", 
                                                   rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
-                                                  parameter = NULL, loss = l, 
+                                                  parameter = NULL, loss = c(1,2), 
                                                   f=identity,  #ranking settings
-                                                  n_sim = 1, 
+                                                  n_sim = 2, 
                                                   fileRoot = "/Users/cora/git_repos/RankingMethods/results/"))
-      }
     }
   }
 }
