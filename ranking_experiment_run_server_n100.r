@@ -7,11 +7,11 @@
 #scp /Users/cora/git_repos/RankingMethods/ranking_experiment_run_server_n100.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 
 # run:
-#nohup /s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server_n100.r > nsim100ScreenLog.txt &
+#nohup /s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server_n100.r > nsim1ScreenLog.txt &
 
 # move results back to home computer 
 #scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/* /Users/cora/git_repos/RankingMethods/results/ 
-#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim100ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
+#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim1ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
 
 setwd("/ua/allencoleman/gangnon/ranking")
 source("ranking_function.r")
@@ -42,7 +42,7 @@ for (n in c(100)){ #numItems
                 rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
                 parameter = NULL, loss = l, 
                 f=identity,  #ranking settings
-                n_sim = 100, #100 or 1000 depending on time
+                n_sim = 1, #100 or 1000 depending on time
                 #fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
                 fileRoot = "/ua/allencoleman/gangnon/ranking/results/",
                 metric = TRUE))
@@ -57,6 +57,6 @@ for (n in c(100)){ #numItems
 #CAREFUL! THIS OVERWRITES
 df <- apply(results,2,as.character)
 #save(df, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") #saves as an R object
-save(df, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_n100.RData")
+save(df, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_n1.RData")
 
 #system(mutt -s "Master, this is an email from HAL 9000, your commands have been completed" allencoleman@wisc.edu < ~/R/output.txt)

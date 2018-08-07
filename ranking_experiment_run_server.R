@@ -6,12 +6,12 @@
 # move script to server:
 #scp /Users/cora/git_repos/RankingMethods/*.r allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/
 
-# run:
+# run IN RESULTS FOLDER
 #nohup /s/pkg/linux64/R/3.4.1/bin/Rscript ranking_experiment_run_server.r > nsimTESTScreenLog.txt &
 
 # move results back to home computer 
-#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_n100_0701.RData /Users/cora/git_repos/RankingMethods/results/ 
-#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim100ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
+#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_TEST_0807.RData /Users/cora/git_repos/RankingMethods/results/ 
+#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsimTESTScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
 
 setwd("/ua/allencoleman/gangnon/ranking")
 source("ranking_function.r")
@@ -54,7 +54,7 @@ for (n in c(100)){ #numItems
 }
 
 #CAREFUL! THIS OVERWRITES
-save(results, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_n100_0701.RData")
+save(results, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_TEST_0807.RData")
 
 #data frames of lists
 # have an element of df be a list or matrix. We want rankings to be a matrix within a list, one for each simulation

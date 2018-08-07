@@ -237,10 +237,14 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     post <- PostSamples(data)
     
     #TODO add all kinds of ranking here (do multiple kinds here)
+    
+    # for (l in c(1, 2)){ #loss types square and absolute
+    #   for (rankPriority in c("even", "top", "bottom")){ #
+    #     for (rankSteepness in c(0.25, 0.5, 0.75)){ #
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
     totalLoss <- as.numeric(rankFunctionResult[1])
-    ranks <- as.integer(rankFunctionResult[-1])
+    ranks <- as.integer(unweightedILResults[[2]])
     
     #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
     returnDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, 

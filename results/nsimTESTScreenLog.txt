@@ -69,8 +69,8 @@ Iteration:  300 / 3000 [ 10%]  (Warmup)
 Iteration:  600 / 3000 [ 20%]  (Warmup)
 Iteration:  900 / 3000 [ 30%]  (Warmup)
 Iteration:  900 / 3000 [ 30%]  (Warmup)
+Iteration:  900 / 3000 [ 30%]  (Warmup)
 Iteration:  600 / 3000 [ 20%]  (Warmup)
-Iteration:  900 / 3000 [ 30%]  (Warmup)
 Iteration: 1200 / 3000 [ 40%]  (Warmup)
 Iteration: 1200 / 3000 [ 40%]  (Warmup)
 Iteration: 1200 / 3000 [ 40%]  (Warmup)
@@ -79,56 +79,55 @@ Iteration: 1500 / 3000 [ 50%]  (Warmup)
 Iteration: 1501 / 3000 [ 50%]  (Sampling)
 Iteration: 1500 / 3000 [ 50%]  (Warmup)
 Iteration: 1501 / 3000 [ 50%]  (Sampling)
+Iteration: 1500 / 3000 [ 50%]  (Warmup)
+Iteration: 1501 / 3000 [ 50%]  (Sampling)
 Iteration: 1200 / 3000 [ 40%]  (Warmup)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
 Iteration: 1500 / 3000 [ 50%]  (Warmup)
 Iteration: 1501 / 3000 [ 50%]  (Sampling)
-Iteration: 1800 / 3000 [ 60%]  (Sampling)
-Iteration: 1800 / 3000 [ 60%]  (Sampling)
-Iteration: 1500 / 3000 [ 50%]  (Warmup)
-Iteration: 1501 / 3000 [ 50%]  (Sampling)
-Iteration: 1800 / 3000 [ 60%]  (Sampling)
 Iteration: 2100 / 3000 [ 70%]  (Sampling)
-Iteration: 2100 / 3000 [ 70%]  (Sampling)
-Iteration: 1800 / 3000 [ 60%]  (Sampling)
 Iteration: 2100 / 3000 [ 70%]  (Sampling)
 Iteration: 2400 / 3000 [ 80%]  (Sampling)
 Iteration: 2400 / 3000 [ 80%]  (Sampling)
+Iteration: 1800 / 3000 [ 60%]  (Sampling)
 Iteration: 2100 / 3000 [ 70%]  (Sampling)
 Iteration: 2700 / 3000 [ 90%]  (Sampling)
-Iteration: 2400 / 3000 [ 80%]  (Sampling)
 Iteration: 2700 / 3000 [ 90%]  (Sampling)
+Iteration: 2100 / 3000 [ 70%]  (Sampling)
+Iteration: 2400 / 3000 [ 80%]  (Sampling)
 Iteration: 3000 / 3000 [100%]  (Sampling)
 
- Elapsed Time: 5.23 seconds (Warm-up)
+ Elapsed Time: 5.92 seconds (Warm-up)
+               3.98 seconds (Sampling)
+               9.9 seconds (Total)
+
+Iteration: 3000 / 3000 [100%]  (Sampling)
+
+ Elapsed Time: 5.13 seconds (Warm-up)
                4.37 seconds (Sampling)
-               9.6 seconds (Total)
+               9.5 seconds (Total)
 
 Iteration: 2400 / 3000 [ 80%]  (Sampling)
-Iteration: 3000 / 3000 [100%]  (Sampling)
-
- Elapsed Time: 6.07 seconds (Warm-up)
-               4.23 seconds (Sampling)
-               10.3 seconds (Total)
-
 Iteration: 2700 / 3000 [ 90%]  (Sampling)
 Iteration: 2700 / 3000 [ 90%]  (Sampling)
 Iteration: 3000 / 3000 [100%]  (Sampling)
 
- Elapsed Time: 5.29 seconds (Warm-up)
+ Elapsed Time: 5.42 seconds (Warm-up)
                5 seconds (Sampling)
-               10.29 seconds (Total)
+               10.42 seconds (Total)
 
 Iteration: 3000 / 3000 [100%]  (Sampling)
 
- Elapsed Time: 5.65 seconds (Warm-up)
-               4.95 seconds (Sampling)
-               10.6 seconds (Total)
+ Elapsed Time: 5.9 seconds (Warm-up)
+               5.07 seconds (Sampling)
+               10.97 seconds (Total)
 
 Error in RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max,  : 
   (list) object cannot be coerced to type 'double'
-Calls: system.time -> rbind -> RunSimulation
+Calls: rbind -> RunSimulation
 In addition: Warning message:
 'rBind' is deprecated.
  Since R version 3.2.0, base's rbind() should work fine with S4 objects 
-Timing stopped at: 41.35 0.541 23.02
 Execution halted
