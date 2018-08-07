@@ -35,8 +35,8 @@ for (n in c(10)){ #numItems
       for (sim in c(1:1)){#100 or 1000 depending on time
         results <- rbind(results, RunSimulation(N = n, a_p = 1, b_p = 1, n_min = n_min, n_max = n_max, a_n = 1, b_n = 1, #data
                                                 n_assignment_method = "ascending", 
-                                                rankPriority = rankPriority, rankSteepness = rankSteepness, #rankWeights
-                                                parameter = NULL, loss = l, 
+                                                rankPriority = "top", rankSteepness = 0.05, #rankWeights
+                                                parameter = NULL, loss = 2, 
                                                 f=identity,  #ranking settings
                                                 n_sim = 1, 
                                                 fileRoot = "/ua/allencoleman/gangnon/ranking/results/"))
@@ -48,5 +48,5 @@ for (n in c(10)){ #numItems
 #CAREFUL! THIS OVERWRITES
 save(results, file = "/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_TEST_0807.RData")
 
-# load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results.RData") 
+# load("/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_TEST_0807.RData") 
 # head(df)
