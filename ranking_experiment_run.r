@@ -24,8 +24,7 @@ for (n in c(10)){ #numItems
                                                   parameter = NULL, loss = l, 
                                                   f=identity,  #ranking settings
                                                   n_sim = 1, 
-                                                  fileRoot = "/Users/cora/git_repos/RankingMethods/results/",
-                                                  metric = FALSE))
+                                                  fileRoot = "/Users/cora/git_repos/RankingMethods/results/"))
       }
     }
   }

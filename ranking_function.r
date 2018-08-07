@@ -216,13 +216,13 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   f = scale on which to rank
           #TODO allow this to be a list
   #   n_sim: number of simulations. (reps)
-  #   fileRoot: file path used to create file for ranking results and metric results
+  #   fileRoot: file path used to create file for ranking results df
   #
   # Returns: 
   #   list of matrices of posterior samples, one column for each item
-  # Saves: RData of rank Metric (n_sim columns)
+  #   saves .RData of settings, totalLoss, and ranking
   # 
-  # Dependencies: rstanarm
+  # Dependencies: rstanarm, clue
   settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
   
   # create RankingWeights
@@ -238,7 +238,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     #     for (rankSteepness in c(0.25, 0.5, 0.75)){ #
     rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = loss, f=f, 
                                               rankWeights = rankWeights)
-    totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #10 by 10 this is the rank matrix, so I take the sum
+    totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
     ranks <- list(as.integer(rankFunctionResult[[2]]))
     #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
     returnDF[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, 
