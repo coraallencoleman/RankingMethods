@@ -225,8 +225,13 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   # Dependencies: rstanarm, clue
   settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
   
-  # create RankingWeights
-  rankWeights <- RankingWeights(numItems = N, priority = rankPriority, steepness = rankSteepness)
+  # create RankingWeights TODO not done yet
+  for (rp in rankPriority){
+    for (rs in rankSteepness){
+    rankWeights <- RankingWeights(numItems = N, priority = rp, steepness = rs)  #need to identify these by rp and rs somehow
+    }
+  }
+  #TODO allow this to be a list, then iterate over list
   
   for (i in 1:n_sim){   #for each simulation
     data <- SimData(settings)
@@ -234,13 +239,12 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 
     #TODO add all kinds of ranking here (for each data type)
     for (l in loss){ #loss types square and absolute
-    #   for (rankPriority in c("even", "top", "bottom")){ #
-    #     for (rankSteepness in c(0.25, 0.5, 0.75)){ #
-    rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = l, f=f, 
-                                              rankWeights = rankWeights)
+      rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = l, f=f, 
+                                              rankWeights = rw)
+      
     totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
     ranks <- list(as.integer(rankFunctionResult[[2]]))
-    #adds parameters, total loss, and rankings to returnDF data frame as a new row of data (RETURN)
+    #adds parameters, total loss, and rankings to returnDF data frame as a new row of data
     currResults[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, #TODO need to figure out way to save that doesnt overwrite
                            n_assignment_method, 
                            rankPriority, rankSteepness, 
