@@ -187,9 +187,28 @@ PostSamples <- function(data){
                        family = binomial(link=logit), prior_intercept = normal(0, 5),
                        prior_aux = cauchy(0,1),
                        seed = 12345)
-  #output <- as.matrix(model1) DEBUG
   output <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
   return(output)
+}
+
+PostSamplesEB <- function(data){  
+  #gets posterior samples from data using a dataframe of n, p using empirical bayes. Should be more efficient
+  
+  # Args:
+  #   list of dataframes. Each dataframe has 3 columns named: item, n, y. Output of SimData
+  #
+  # Returns: 
+  #   one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
+  # 
+  # Dependencies: lme4
+  
+  library(lme4)
+  
+  model1 <- glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data),
+                       family = binomial(link=logit))
+  output <- ranef(model1) #gives only random effects
+  #output <- as.matrix(model1, regex_pars = "b[(Intercept) item:[0-9]+]") 
+  return(output) 
 }
 
 RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1, #data
@@ -256,6 +275,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
         }
       }
     }
+    }
   }
   return(returnDF)
 }
@@ -291,35 +311,4 @@ RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", to
   }
   #check if each item in true top N is in ranking top N, return boolean
   return(true[1:10, 1] %in% rankedData[1:10, 1])
-}
-
-##function metric to see if rankObject's top ranked items match true top items
-#WITH DATAFRAME NOT FINISHED
-RankMetricDF <- function(rankObject = NULL, originalData = NULL, order = largest, topN = 5){
-  # function metric to see if our top number matches true top five for Binomial model
-  #   
-  # Args:
-  #   rankObject: an output of WeightedLossRanking. Must include columns item, p, n
-  #   originalData: a data frame with column of true probabilities, true N (column names must match p, n)
-  #   order: largest (largest to smallest) or smallest (smallest to largest)
-  #   topN: an integer number of top items to compare
-  #
-  # Returns:
-  #   logical vector
-  #
-  # Dependencies: rstan, clue, dplyr
-  rankedData <- as.data.frame(originalData)
-  rankedData[5,] <- rankedData[2,]*100 #p*100
-  rankedData[6,] <- as.integer(rankObject) #rank orders items smallest to highest
-  if (order == "largest"){
-    originalData <-originalData %>% dplyr::arrange(desc(p), desc(n)) 
-    rankedData <- rankedData %>% dplyr::arrange(rank)
-  } else if (order == "smallest"){
-    rankedData <- rankedData %>% dplyr::arrange(desc(rank))
-    originalData <-originalData %>% dplyr::arrange(p, desc(n)) #TODO assume no ties in p change simulated data
-  } else {
-    stop("order must be input as either 'largest' or 'smallest'")
-  }
-  #check if each item in true top N is in ranking top N, return boolean
-  return(originalData[1:topN,]$item %in% rankedData[1:topN,]$item )
 }

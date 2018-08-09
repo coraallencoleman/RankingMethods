@@ -27,7 +27,7 @@ for (n in c(25, 50, 100)){ #numItems
                                                 rankPriority = c("even", "top", "bottom"), rankSteepness = c(0.01, 0.05, 0.1), #rankWeights
                                                 parameter = NULL, loss = c(1,2), 
                                                 f=identity,  
-                                                n_sim = 1, 
+                                                n_sim = 2, 
                                                 fileRoot = "/Users/cora/git_repos/RankingMethods/results/"))
             }
           }
