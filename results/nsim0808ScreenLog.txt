@@ -1,0 +1,6 @@
+Error in source("ranking_function.r") : 
+  ranking_function.r:326:0: unexpected end of input
+324:   return(originalData[1:topN,]$item %in% rankedData[1:topN,]$item )
+325: }
+    ^
+Execution halted
