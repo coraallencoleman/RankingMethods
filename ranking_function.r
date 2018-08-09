@@ -173,7 +173,7 @@ PostSamples <- function(data){
   #gets posterior samples from data using a dataframe of n, p
   
   # Args:
-  #   list of dataframes. Each dataframe has 3 columns named: item, n, y. Output of SimData
+  #   matrix of N rows and 2 columns (n, y) where n is attempts and y is successes. Output of SimData
   #
   # Returns: 
   #   one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
@@ -195,10 +195,10 @@ PostSamplesEB <- function(data){
   #gets posterior samples from data using a dataframe of n, p using empirical bayes. Should be more efficient
   
   # Args:
-  #   list of dataframes. Each dataframe has 3 columns named: item, n, y. Output of SimData
+  #   matrix of N rows and 2 columns (n, y) where n is attempts and y is successes. Output of SimData
   #
   # Returns: 
-  #   one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
+  #   (not yet doing this) one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
   # 
   # Dependencies: lme4
   
