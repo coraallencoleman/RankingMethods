@@ -198,26 +198,21 @@ PostSamplesEB <- function(data){
   #   matrix of N rows and 2 columns (n, y) where n is attempts and y is successes. Output of SimData
   #
   # Returns: 
-  #   (not yet doing this) one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
+  #   one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
   # 
   # Dependencies: lme4, mgcv
-  
   library(mgcv)
   library(lme4)
   
   model1 <- glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data),
                        family = binomial(link=logit))
   coef <- ranef(model1) #gives only random effects
-  #need to get varcov matrix of ranef
-  pv <- attr(ranef(post, condVar=TRUE)[[1]], "postVar")
-  #convert to var-cov matrix
-  library(Matrix)
-  vc <- bdiag(  ## make a block-diagonal matrix
-    lapply(
-      split(pv,slice.index(pv,3)), ## split 3d array into a list of sub-matrices
-      matrix,2)) ## ... put them back into 2x2 matrices
-  output <- rmvn(10000, coef, vc) #creates posterior
-  return(output) 
+  #varcov of random effects
+  vc <- matrix(nrow = nrow(coef$item), ncol = nrow(coef$item), 0)
+  vars <- attr(ranef(model1, condVar=TRUE)[[1]], "postVar")
+  diag(vc) <- vars
+  output <- rmvn(1000, coef$item[,1], vc) #creates posterior
+  return(output)
 }
 
 RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1, #data
