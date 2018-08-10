@@ -200,24 +200,24 @@ PostSamplesEB <- function(data){
   # Returns: 
   #   (not yet doing this) one matrix of posterior samples. The matrix has one row for each iteration, one column for each item parameter estimated
   # 
-  # Dependencies: lme4
+  # Dependencies: lme4, mgcv
   
+  library(mgcv)
   library(lme4)
   
   model1 <- glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data),
                        family = binomial(link=logit))
   coef <- ranef(model1) #gives only random effects
-  #need to get var of ranef
-  Vp <- model1
-  output <- rmvn(10000, coef, Vp)
+  #need to get varcov matrix of ranef
+  pv <- attr(ranef(post, condVar=TRUE)[[1]], "postVar")
+  #convert to var-cov matrix
+  library(Matrix)
+  vc <- bdiag(  ## make a block-diagonal matrix
+    lapply(
+      split(pv,slice.index(pv,3)), ## split 3d array into a list of sub-matrices
+      matrix,2)) ## ... put them back into 2x2 matrices
+  output <- rmvn(10000, coef, vc) #creates posterior
   return(output) 
-  
-  # library(mgcv) from Ron's notes. do something like this to get posterior
-  # 
-  # lbw_fit1 <- gam(cbind(lbw_births,nbw_births)~fips,family=binomial,data=lbw_analysis)
-  # Xp <- predict(lbw_fit1,lbw_midwest2,type='lpmatrix')
-  # br <- rmvn(10000,coef(lbw_fit1),lbw_fit1$Vp)
-  # lbw_fit1_samples <- Xp%*%t(br)  
 }
 
 RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, b_n = 1, #data
