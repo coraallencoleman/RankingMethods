@@ -1,4 +1,4 @@
-#testing PostSamplesEM
+#testing PostSamplesEB
   #should be more efficient than stan version
 
 setwd("/Users/cora/git_repos/RankingMethods")
