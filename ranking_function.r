@@ -206,12 +206,13 @@ PostSamplesEB <- function(data){
   
   model1 <- glmer(cbind(y, n - y) ~ (1|item), data = as.data.frame(data),
                        family = binomial(link=logit))
-  coef <- ranef(model1) #gives only random effects
-  #varcov of random effects
-  vc <- matrix(nrow = nrow(coef$item), ncol = nrow(coef$item), 0)
-  vars <- attr(ranef(model1, condVar=TRUE)[[1]], "postVar")
-  diag(vc) <- vars
-  output <- rmvn(1000, coef$item[,1], vc) #creates posterior
+  coef <- fixef(model1)[1] + ranef(model1)$item #gives only random effects, need to add fix effects
+  #varcov of fixed and random effects
+  fix_var <- vcov(model1)[1]
+  vc <- matrix(nrow = nrow(coef), ncol = nrow(coef), 0)
+  ran_vars <- attr(ranef(model1, condVar=TRUE)[[1]], "postVar") 
+  diag(vc) <- fix_var + ran_vars #bc var(sum) = sum(vars)
+  output <- rmvn(1000, coef$'(Intercept)', vc) #creates posterior
   return(output)
 }
 
