@@ -4,7 +4,7 @@
 #run in ranking
 setwd("/Users/cora/git_repos/RankingMethods")
 source("ranking_function.r")
-#creates clean returnDF
+#creates clean results
 currResults <- as.data.frame(matrix(nrow = 0, ncol = 15))
 names(currResults) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
@@ -27,8 +27,7 @@ for (n in c(25, 50, 100)){ #numItems
                                                 rankPriority = c("even", "top", "bottom"), rankSteepness = c(0.01, 0.05, 0.1), #rankWeights
                                                 parameter = NULL, loss = c(1,2), 
                                                 f=identity,  
-                                                n_sim = 2, 
-                                                fileRoot = "/Users/cora/git_repos/RankingMethods/results/"))
+                                                n_sim = 1))
             }
           }
         }
@@ -38,7 +37,7 @@ for (n in c(25, 50, 100)){ #numItems
 }
 
 #saves results. Careful! This overwrites
-save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0808.RData.RData") #saves as an R object
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0813.RData.RData") #saves as an R object
 
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0808.RData") 
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0813.RData") 
 head(results)

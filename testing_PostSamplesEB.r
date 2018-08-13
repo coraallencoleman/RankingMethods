@@ -39,8 +39,7 @@ for (n in c(25)){ #numItems
                                                       rankPriority = c("even"), rankSteepness = c(0.01), #rankWeights
                                                       parameter = NULL, loss = c(2), 
                                                       f=identity,  
-                                                      n_sim = 1, 
-                                                      fileRoot = "/Users/cora/git_repos/RankingMethods/results/"))
+                                                      n_sim = 2))
             }
           }
         }

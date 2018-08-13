@@ -260,24 +260,24 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     post <- PostSamplesEB(data)
 
     for (l in loss){ #loss types square and absolute
-      for (iden in f){
+      #for (iden in f){
         for (rp in rankPriority){
           for (rs in rankSteepness){
-            rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = l, f=iden,
+            rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = l, #f=iden,
                                 rankWeights = filter(rankWeights, rankPriority == rp, rankSteepness == rs)$rw[[1]])
 
             totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
             ranks <- list(as.integer(rankFunctionResult[[2]]))
             #adds parameters, total loss, and rankings to returnDF data frame as a new row of data
-            currResults[1, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, #TODO need to figure out way to save that doesnt overwrite
+            currResults[i, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, #TODO need to figure out way to save that doesnt overwrite
                            n_assignment_method,
                            rp, rs,
-                           iden, l, totalLoss)
+                           "identity", l, totalLoss)
             currResults$ranking[1] <- ranks
-          returnDF <- rbind(returnDF, currResults)
+          returnDF <- rbind(results, currResults)
         }
+    #  }
       }
-    }
     }
   }
   return(returnDF)
