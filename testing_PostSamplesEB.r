@@ -25,7 +25,7 @@ names(currResults) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n"
 results <- currResults
 
 #data characteristics
-for (n in c(25)){ #numItems 
+for (n in c(30)){ #numItems 
   for (n_min in c(75)){ #what really matters here in number of events 
     for (n_max in c(200)){
       for (a_n in c(0.8)){
@@ -37,9 +37,9 @@ for (n in c(25)){ #numItems
                                                       n_assignment_method = "ascending", 
                                                       #ranking settings
                                                       rankPriority = c("even"), rankSteepness = c(0.01), #rankWeights
-                                                      parameter = NULL, loss = c(2), 
+                                                      parameter = NULL, loss = c(1, 2), 
                                                       f=identity,  
-                                                      n_sim = 2))
+                                                      n_sim = 1))
             }
           }
         }
