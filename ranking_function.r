@@ -220,8 +220,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                           n_assignment_method = "ascending", 
                           rankPriority = "top", rankSteepness = .9, #rankWeights
                           parameter = NULL, loss = 2, f=identity, #ranking settings
-                          n_sim = 1,
-                          fileRoot = "/Users/cora/git_repos/RankingMethods/results/"){
+                          n_sim = 1){
   #combines all the above functions to run simulations
   # Args:
   #   for SelectNP:
@@ -239,7 +238,6 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero can be a list
   #   f = scale on which to rank. can be a list
   #   n_sim: number of simulations. (reps)
-  #   fileRoot: file path used to create file for ranking results df
   #
   # Returns: 
   #   list of matrices of posterior samples, one column for each item
@@ -259,7 +257,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 
   for (i in 1:n_sim){   #for each simulation
     data <- SimData(settings)
-    post <- PostSamples(data)
+    post <- PostSamplesEB(data)
 
     for (l in loss){ #loss types square and absolute
       for (iden in f){
