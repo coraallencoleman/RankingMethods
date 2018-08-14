@@ -37,7 +37,7 @@ for (n in c(25, 50, 100)){ #numItems
 }
 
 #saves results. Careful! This overwrites
-save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0813.RData.RData") #saves as an R object
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0814.RData") #saves as an R object
 
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0813.RData") 
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0814.RData") 
 head(results)
