@@ -17,7 +17,7 @@ post <- PostSamplesEB(data)
 setwd("/Users/cora/git_repos/RankingMethods")
 source("ranking_function.r")
 #creates clean returnDF
-currResults <- as.data.frame(matrix(nrow = 0, ncol = 15))
+currResults <- as.data.frame(matrix(nrow = 0, ncol = 15), stringsAsFactors = FALSE)
 names(currResults) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                         "n_assignment_method", 
                         "rankPriority", "rankSteepness", 

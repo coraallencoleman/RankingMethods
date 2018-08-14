@@ -258,7 +258,6 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   for (i in 1:n_sim){   #for each simulation
     data <- SimData(settings)
     post <- PostSamplesEB(data)
-    print(loss)
     for (l in loss){ #loss types square and absolute
       #for (iden in f){
         for (rp in rankPriority){
@@ -268,13 +267,16 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 
             totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
             ranks <- list(as.integer(rankFunctionResult[[2]]))
-            #adds parameters, total loss, and rankings to returnDF data frame as a new row of data
-            #use cbind here?
-            currResults[i, 1:14] <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n, #TODO need to figure out way to save that doesnt overwrite
-                           n_assignment_method,
-                           rp, rs,
-                           "identity", l, totalLoss)
-            currResults$ranking[i] <- ranks
+            
+            row <- as.data.frame(matrix(data = c(i, N, a_p, b_p, n_min, n_max, a_n, b_n,
+                                          n_assignment_method,
+                                          rp, rs,"identity", l, totalLoss, "placeholder"), byrow=FALSE))
+            print(dim(row))
+            # print(row)
+            print(dim(currResults))
+            currResults <- rbind(currResults, row)
+           currResults$ranking[nrow(currResults)] <- ranks
+
           returnDF <- rbind(results, currResults)
         }
     #  }
