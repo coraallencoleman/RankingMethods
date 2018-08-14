@@ -268,22 +268,17 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
             totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
             ranks <- list(as.integer(rankFunctionResult[[2]]))
             
-            row <- as.data.frame(matrix(data = c(i, N, a_p, b_p, n_min, n_max, a_n, b_n,
+            row <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n,
                                           n_assignment_method,
-                                          rp, rs,"identity", l, totalLoss, "placeholder"), byrow=FALSE))
-            print(dim(row))
-            # print(row)
-            print(dim(currResults))
-            currResults <- rbind(currResults, row)
-           currResults$ranking[nrow(currResults)] <- ranks
-
-          returnDF <- rbind(results, currResults)
+                                          rp, rs,"identity", l, totalLoss, "placeholder")
+            currResults[nrow(currResults) + 1, ] <- row
+            currResults$ranking[nrow(currResults)] <- ranks
         }
     #  }
       }
     }
   }
-  return(returnDF)
+  return(currResults)
 }
 
 # A testing metric for use with simulated data
