@@ -24,7 +24,7 @@ for (n in c(50, 200, 400)){ #numItems
         results <- rbind(results, RunSimulation(N = n, a_p = a_p, b_p = b_p, n_min = n_min, n_max = n_max, a_n = a_n, b_n = b_n, #data
                                                  n_assignment_method = "random", 
                                                 #ranking settings
-                                                rankPriority = c("even", "top", "bottom"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5), #rankWeights
+                                                rankPriority = c("top", "bottom", "both"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5), #rankWeights
                                                 parameter = NULL, loss = c(1,2), 
                                                 f=identity,  
                                                 n_sim = 5))
@@ -45,7 +45,7 @@ head(results)
 test <- RunSimulation(N = 100, a_p = 2, b_p = 2, n_min = 20, n_max = 50, a_n = 1, b_n = 5, #data
               n_assignment_method = "random", 
               #ranking settings
-              rankPriority = c("even"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9), #rankWeights
-              parameter = NULL, loss = c(2), 
+              rankPriority = c("top"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9), #rankWeights
+              parameter = NULL, loss = c(1,2), 
               f=identity,  
-              n_sim = 2)
+              n_sim = 1)

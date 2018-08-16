@@ -42,9 +42,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
   
   if (!is.null(sampleMatrix)){ #checks for sampleMatrix
     i = sampleMatrix
-    #print(dim(i)) #TODO remove
   } else if (!is.null(model)){ #checks for model
-    print("model check") #TODO remove
     i <- rstan::extract(model, pars=parameter)[[1]] #extract samples from model
   }
   rho_i <- apply(i, 1, f) #apply function/scale transformation to matrix i. Should this be on cols (2)?
@@ -252,6 +250,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
     for (rs in rankSteepness){
       rw <- list(as.double(RankingWeights(numItems = N, priority = rp, steepness = rs)))
       rankWeights[nrow(rankWeights) + 1,] <- list(I(rw), rp, rs)
+      
     }
   }
 
@@ -263,7 +262,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
         for (rp in rankPriority){
           for (rs in rankSteepness){
             ranks <- list()
-            print(cat("rank weights", filter(rankWeights, rankPriority == rp, rankSteepness == rs)$rw[[1]]))
+            
             rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = l, #f=iden,
                                 rankWeights = filter(rankWeights, rankPriority == rp, rankSteepness == rs)$rw[[1]])
 
@@ -276,6 +275,9 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
             currResults[nrow(currResults) + 1, ] <- row
             currResults$ranking[nrow(currResults)] <- ranks
             
+            ##save true parameters (SimData)
+            currResults$data <- I(list())
+            currResults$data <- data
             
         }
     #  }
