@@ -274,7 +274,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
                                           rp, rs,"identity", l, totalLoss, "placeholder", "placeholder")
             currResults[nrow(currResults) + 1, ] <- row
             currResults$ranking[nrow(currResults)] <- ranks
-            currResults[[nrow(currResults), 16]] <- testdata ##save true data (SimData)
+            currResults[[nrow(currResults), 16]] <- data ##save true data (SimData)
         }
     #  }
       }

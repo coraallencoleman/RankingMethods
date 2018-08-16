@@ -27,30 +27,21 @@ results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 #TODO fix metric so it runs on real data, not resim data
 ## Run Metric ##
 for (i in 1:nrow(results)){
-    metric5 <- list(I(RankMetric(results$ranking[[i]], settings = SimData((SelectNP(results$N[i], results$a_p[i], 
-                                                                                    results$b_p[i], results$n_min[i], 
-                                                           results$n_max[i], results$a_n[i], results$b_n[i], 
-                                                           results$n_assignment_method[i]))),
+    metric5 <- list(I(RankMetric(results$ranking[[i]], settings = results$data[i][[1]],
                               order = "largest", topN = 5)))
     results$metric5[i] <- metric5
 }
 
 # Metric 10
 for (i in 1:nrow(results)){
-  metric10 <- list(I(RankMetric(results$ranking[[i]], settings = SimData((SelectNP(results$N[i], results$a_p[i], 
-                                                                                  results$b_p[i], results$n_min[i], 
-                                                                                  results$n_max[i], results$a_n[i], results$b_n[i], 
-                                                                                  results$n_assignment_method[i]))),
+  metric10 <- list(I(RankMetric(results$ranking[[i]], settings = results$data[i][[1]],
                                order = "largest", topN = 10)))
   results$metric10[i] <- metric10
 }
 
 # Metric 15
 for (i in 1:nrow(results)){
-  metric15 <- list(I(RankMetric(results$ranking[[i]], settings = SimData((SelectNP(results$N[i], results$a_p[i], 
-                                                                                   results$b_p[i], results$n_min[i], 
-                                                                                   results$n_max[i], results$a_n[i], results$b_n[i], 
-                                                                                   results$n_assignment_method[i]))),
+  metric15 <- list(I(RankMetric(results$ranking[[i]], settings = results$data[i][[1]],
                                 order = "largest", topN = 15)))
   results$metric15[i] <- metric15
 }
