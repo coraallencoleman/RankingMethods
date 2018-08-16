@@ -44,8 +44,18 @@ for (i in 1:nrow(results)){
   results$metric10[i] <- metric10
 }
 
-save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0816.RData") #saves as an R object
+# Metric 15
+for (i in 1:nrow(results)){
+  metric15 <- list(I(RankMetric(results$ranking[[i]], settings = SimData((SelectNP(results$N[i], results$a_p[i], 
+                                                                                   results$b_p[i], results$n_min[i], 
+                                                                                   results$n_max[i], results$a_n[i], results$b_n[i], 
+                                                                                   results$n_assignment_method[i]))),
+                                order = "largest", topN = 15)))
+  results$metric15[i] <- metric15
+}
 
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0816.RData") #saves as an R object
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0816.RData")
 
 ## PLOTS ##
 
@@ -75,6 +85,19 @@ postscript("bar_metric10_loss.eps", fonts=c("serif", "Palatino"))
 metric10_loss <- ggplot(results) + 
   geom_bar(aes(as.factor(loss), mean(metric10[[1]])), stat = "summary", fun.y = "mean")
 dev.off()
+
+#metric 15
+ps.options(fonts=c("serif"), width = 3, height = 5)
+postscript("bar_metric15_e.eps")
+metric15_e <- ggplot(results) + 
+  geom_bar(aes(as.factor(rankSteepness), mean(metric15[[1]])), stat = "summary", fun.y = "mean")
+dev.off()
+
+postscript("bar_metric15_loss.eps", fonts=c("serif", "Palatino"))
+metric15_loss <- ggplot(results) + 
+  geom_bar(aes(as.factor(loss), mean(metric15[[1]])), stat = "summary", fun.y = "mean")
+dev.off()
+
 
 ## TOTAL LOSS ##
 
