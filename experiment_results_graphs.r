@@ -6,21 +6,41 @@
 require(ggplot2)
 
 ## data cleaning ##
+# OLD setwd("/Users/cora/git_repos/RankingMethods/results")
+# 
+# n100_200 <- read.csv(file = "_100_1_1_100_200_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
+# n100_200 <- read.csv(file = "_100_1_1_100_100_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
+# n100_200 <- read.csv(file = "_100_1_1_100_30_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
+# n100_200 <- read.csv(file = "_100_1_1_50_200_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
+# n100_200 <- read.csv(file = "_100_1_1_50_100_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
 #load("~/gangnon/results/ranking_experiment_results.RData")
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n100_home.RData") #called results
-results_home <- as.data.frame(results)
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0814.RData") #EB. df called results
+results_0814 <- as.data.frame(results)
 
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_n100_0701.RData") #server. called results
-results_server <- as.data.frame(results)
-colnames(results_server)[1] <- "sim"
-#combine data
-full_results <- rbind(results_home, results_server) #3600 simulations now
-results <- full_results
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0807.RData") #not EB. df called results
+results_0807 <- as.data.frame(results)
+#combine data for 33840 rows
+results <- rbind(results_0814, results_0807)
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.character )
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.double )
 
+## Run Metric ##
+results$metric5 <- RankMetric(results$ranking, settings = NULL, order = "largest", topN = 5)
+
+rankObject = NULL, settings = NULL, order = "largest", topN = 5
+
 ## PLOTS ##
 setwd("/Users/cora/git_repos/RankingMethods/plots/")
+
+
+
+## Bar Graphs ##
+
+
+
+
+
+
 
 ## TOTAL LOSS ##
 
@@ -105,3 +125,5 @@ lossrankSteepness_plot <- ggplot(results, aes(x = factor(loss), y = metric, colo
   ggtitle("Percent Top 10 Correct Ranking by Changes in Loss and Rank Steepness") +
   ylab("Percent Top 10 Correct") + xlab("Loss"); lossrankSteepness_plot
 dev.off()
+
+
