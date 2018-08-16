@@ -5,11 +5,12 @@
 setwd("/Users/cora/git_repos/RankingMethods")
 source("ranking_function.r")
 #creates clean results
-currResults <- as.data.frame(matrix(nrow = 0, ncol = 15))
+currResults <- as.data.frame(matrix(nrow = 0, ncol = 16))
 names(currResults) <- c("sim", "N", "a_p", "b_p", "n_min", "n_max", "a_n", "b_n", 
                        "n_assignment_method", 
                        "rankPriority", "rankSteepness", 
-                       "f", "loss", "totalLoss", "ranking")
+                       "f", "loss", "totalLoss", "ranking", "data")
+currResults$data <- I(list())
 results <- currResults
 
 #data characteristics
@@ -46,6 +47,6 @@ test <- RunSimulation(N = 100, a_p = 2, b_p = 2, n_min = 20, n_max = 50, a_n = 1
               n_assignment_method = "random", 
               #ranking settings
               rankPriority = c("top"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9), #rankWeights
-              parameter = NULL, loss = c(1,2), 
+              parameter = NULL, loss = c(2), 
               f=identity,  
               n_sim = 1)

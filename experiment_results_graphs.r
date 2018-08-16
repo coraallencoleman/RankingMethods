@@ -24,6 +24,7 @@ results <- rbind(results_0814, results_0807)
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
+#TODO fix metric so it runs on real data, not resim data
 ## Run Metric ##
 for (i in 1:nrow(results)){
     metric5 <- list(I(RankMetric(results$ranking[[i]], settings = SimData((SelectNP(results$N[i], results$a_p[i], 

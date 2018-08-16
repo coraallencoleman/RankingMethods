@@ -271,14 +271,10 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
             
             row <- c(i, N, a_p, b_p, n_min, n_max, a_n, b_n,
                                           n_assignment_method,
-                                          rp, rs,"identity", l, totalLoss, "placeholder")
+                                          rp, rs,"identity", l, totalLoss, "placeholder", "placeholder")
             currResults[nrow(currResults) + 1, ] <- row
             currResults$ranking[nrow(currResults)] <- ranks
-            
-            ##save true parameters (SimData)
-            currResults$data <- I(list())
-            currResults$data <- data
-            
+            currResults[[nrow(currResults), 16]] <- testdata ##save true data (SimData)
         }
     #  }
       }
