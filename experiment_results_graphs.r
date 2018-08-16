@@ -21,26 +21,60 @@ load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_08
 results_0807 <- as.data.frame(results)
 #combine data for 33840 rows
 results <- rbind(results_0814, results_0807)
-results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.character )
-results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 14)], as.double )
+results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
+results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
 ## Run Metric ##
-results$metric5 <- RankMetric(results$ranking, settings = NULL, order = "largest", topN = 5)
+for (i in 1:nrow(results)){
+    metric5 <- list(I(RankMetric(results$ranking[[i]], settings = SimData((SelectNP(results$N[i], results$a_p[i], 
+                                                                                    results$b_p[i], results$n_min[i], 
+                                                           results$n_max[i], results$a_n[i], results$b_n[i], 
+                                                           results$n_assignment_method[i]))),
+                              order = "largest", topN = 5)))
+    results$metric5[i] <- metric5
+}
 
-rankObject = NULL, settings = NULL, order = "largest", topN = 5
+# Metric 10
+for (i in 1:nrow(results)){
+  metric10 <- list(I(RankMetric(results$ranking[[i]], settings = SimData((SelectNP(results$N[i], results$a_p[i], 
+                                                                                  results$b_p[i], results$n_min[i], 
+                                                                                  results$n_max[i], results$a_n[i], results$b_n[i], 
+                                                                                  results$n_assignment_method[i]))),
+                               order = "largest", topN = 10)))
+  results$metric10[i] <- metric10
+}
+
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0816.RData") #saves as an R object
+
 
 ## PLOTS ##
-setwd("/Users/cora/git_repos/RankingMethods/plots/")
-
-
 
 ## Bar Graphs ##
+setwd("/Users/cora/git_repos/RankingMethods/plots/")
+ps.options(fonts=c("serif"), width = 3, height = 5)
+postscript("bar_metric5_e.eps")
+metric5_e <- ggplot(results) + 
+  geom_bar(aes(as.factor(rankSteepness), mean(metric5[[1]])), stat = "summary", fun.y = "mean")
+metric5_e
+dev.off()
 
+postscript("bar_metric5_loss.eps", fonts=c("serif", "Palatino"))
+metric5_loss <- ggplot(results) + 
+  geom_bar(aes(as.factor(loss), mean(metric5[[1]])), stat = "summary", fun.y = "mean")
+metric5_loss
+dev.off()
 
+#metric 10
+ps.options(fonts=c("serif"), width = 3, height = 5)
+postscript("bar_metric10_e.eps")
+metric10_e <- ggplot(results) + 
+  geom_bar(aes(as.factor(rankSteepness), mean(metric10[[1]])), stat = "summary", fun.y = "mean")
+dev.off()
 
-
-
-
+postscript("bar_metric10_loss.eps", fonts=c("serif", "Palatino"))
+metric10_loss <- ggplot(results) + 
+  geom_bar(aes(as.factor(loss), mean(metric10[[1]])), stat = "summary", fun.y = "mean")
+dev.off()
 
 ## TOTAL LOSS ##
 
