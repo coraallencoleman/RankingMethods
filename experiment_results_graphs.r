@@ -19,8 +19,11 @@ results_0814 <- as.data.frame(results)
 
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0807.RData") #not EB. df called results
 results_0807 <- as.data.frame(results)
-#combine data for 33840 rows
-results <- rbind(results_0814, results_0807)
+
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") 
+results_0816 <- as.data.frame(results)
+
+#results <- rbind(results_0814, results_0807, results_0816)
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
@@ -46,8 +49,8 @@ for (i in 1:nrow(results)){
   results$metric15[i] <- metric15
 }
 
-save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0816.RData") #saves as an R object
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0816.RData")
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0818.RData") #saves as an R object
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0818.RData")
 
 ## PLOTS ##
 
@@ -56,7 +59,7 @@ setwd("/Users/cora/git_repos/RankingMethods/plots/")
 ps.options(fonts=c("serif"), width = 3, height = 5)
 postscript("bar_metric5_e.eps")
 metric5_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), mean(metric5[[1]])), stat = "summary", fun.y = "mean")
+  geom_bar(aes(as.factor(rankSteepness), mean(metric5)), stat = "summary", fun.y = "mean")
 metric5_e
 dev.off()
 

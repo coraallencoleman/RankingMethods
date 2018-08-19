@@ -28,7 +28,7 @@ for (n in c(50, 200, 400)){ #numItems
                                                 rankPriority = c("top", "bottom", "both"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5), #rankWeights
                                                 parameter = NULL, loss = c(1,2), 
                                                 f=identity,  
-                                                n_sim = 5))
+                                                n_sim = 1))
             }
           }
         }
@@ -43,10 +43,10 @@ save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_exper
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") 
 head(results)
 
-test <- RunSimulation(N = 100, a_p = 2, b_p = 2, n_min = 20, n_max = 50, a_n = 1, b_n = 5, #data
-              n_assignment_method = "random", 
-              #ranking settings
-              rankPriority = c("top"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9), #rankWeights
-              parameter = NULL, loss = c(2), 
-              f=identity,  
-              n_sim = 1)
+# test <- RunSimulation(N = 100, a_p = 2, b_p = 2, n_min = 20, n_max = 50, a_n = 1, b_n = 5, #data
+#               n_assignment_method = "random", 
+#               #ranking settings
+#               rankPriority = c("top"), rankSteepness = c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9), #rankWeights
+#               parameter = NULL, loss = c(2), 
+#               f=identity,  
+#               n_sim = 1)
