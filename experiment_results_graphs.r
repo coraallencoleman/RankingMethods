@@ -33,6 +33,7 @@ for (i in 1:nrow(results)){ #TODO this is created a list of 10 logicals NOT five
                               order = "largest", topN = 5)))
     results$metric5[i] <- metric5
 }
+results$metric5mean <- lapply(results$metric5, mean)
 
 # Metric 10
 for (i in 1:nrow(results)){
