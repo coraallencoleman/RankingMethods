@@ -27,9 +27,8 @@ results_0816 <- as.data.frame(results)
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
 results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
-#TODO fix metric so it runs on real data, not resim data
 ## Run Metric ##
-for (i in 1:nrow(results)){
+for (i in 1:nrow(results)){ #TODO this is created a list of 10 logicals NOT five.
     metric5 <- list(I(RankMetric(results$ranking[[i]], settings = results$data[i][[1]],
                               order = "largest", topN = 5)))
     results$metric5[i] <- metric5
@@ -55,6 +54,7 @@ load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_me
 ## PLOTS ##
 
 ## Bar Graphs ##
+results$metric5mean <- lapply(results$metric5, mean)
 setwd("/Users/cora/git_repos/RankingMethods/plots/")
 ps.options(fonts=c("serif"), width = 3, height = 5)
 postscript("bar_metric5_e.eps")
