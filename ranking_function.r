@@ -313,5 +313,5 @@ RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", to
     stop("order must be input as either 'largest' or 'smallest'")
   }
   #check if each item in true top N is in ranking top N, return boolean
-  return(true[1:10, 1] %in% rankedData[1:10, 1])
+  return(true[1:topN, 1] %in% rankedData[1:topN, 1])
 }

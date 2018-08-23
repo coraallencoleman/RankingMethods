@@ -33,7 +33,6 @@ for (i in 1:nrow(results)){ #TODO this is created a list of 10 logicals NOT five
                               order = "largest", topN = 5)))
     results$metric5[i] <- metric5
 }
-results$metric5mean <- lapply(results$metric5, mean)
 
 # Metric 10
 for (i in 1:nrow(results)){
@@ -55,43 +54,49 @@ load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_me
 ## PLOTS ##
 
 ## Bar Graphs ##
-results$metric5mean <- lapply(results$metric5, mean)
+results$metric5percent <- lapply(results$metric5, mean)
 setwd("/Users/cora/git_repos/RankingMethods/plots/")
 ps.options(fonts=c("serif"), width = 3, height = 5)
 postscript("bar_metric5_e.eps")
 metric5_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), mean(metric5)), stat = "summary", fun.y = "mean")
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metric5mean)), stat="summary", fun.y=mean)
 metric5_e
 dev.off()
 
 postscript("bar_metric5_loss.eps", fonts=c("serif", "Palatino"))
 metric5_loss <- ggplot(results) + 
-  geom_bar(aes(as.factor(loss), mean(metric5[[1]])), stat = "summary", fun.y = "mean")
+  geom_bar(aes(as.factor(loss), as.numeric(metric5mean)), stat="summary", fun.y=mean)
 metric5_loss
 dev.off()
 
 #metric 10
+results$metric10percent <- lapply(results$metric10, mean)
 ps.options(fonts=c("serif"), width = 3, height = 5)
 postscript("bar_metric10_e.eps")
 metric10_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), mean(metric10[[1]])), stat = "summary", fun.y = "mean")
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(results$metric10percent)), stat = "summary", fun.y = "mean")
+metric10_e
 dev.off()
 
 postscript("bar_metric10_loss.eps", fonts=c("serif", "Palatino"))
 metric10_loss <- ggplot(results) + 
-  geom_bar(aes(as.factor(loss), mean(metric10[[1]])), stat = "summary", fun.y = "mean")
+  geom_bar(aes(as.factor(loss), as.numeric(results$metric10percent)), stat = "summary", fun.y = "mean")
+metric10_loss
 dev.off()
 
 #metric 15
+results$metric15percent <- lapply(results$metric15, mean)
 ps.options(fonts=c("serif"), width = 3, height = 5)
 postscript("bar_metric15_e.eps")
 metric15_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), mean(metric15[[1]])), stat = "summary", fun.y = "mean")
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(results$metric15percent)), stat = "summary", fun.y = "mean")
+metric15_e
 dev.off()
 
 postscript("bar_metric15_loss.eps", fonts=c("serif", "Palatino"))
 metric15_loss <- ggplot(results) + 
-  geom_bar(aes(as.factor(loss), mean(metric15[[1]])), stat = "summary", fun.y = "mean")
+  geom_bar(aes(as.factor(loss), as.numeric(results$metric15percent)), stat = "summary", fun.y = "mean")
+metric15_loss
 dev.off()
 
 
