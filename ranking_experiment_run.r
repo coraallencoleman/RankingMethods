@@ -40,7 +40,7 @@ for (n in c(50, 200, 400)){ #numItems
 #saves results. Careful! This overwrites
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") #saves as an R object
 
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") 
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_TEST_0824.RData") 
 head(results)
 
 # test <- RunSimulation(N = 100, a_p = 2, b_p = 2, n_min = 20, n_max = 50, a_n = 1, b_n = 5, #data
