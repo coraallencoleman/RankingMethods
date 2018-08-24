@@ -90,16 +90,16 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
   if (priority == "even"){
     weights = rep(1, times = numItems)
   } else if (priority == "top"){
-    weights = steepness^(items-1)
+    weights = (1-steepness)^(items-1)
   } else if (priority == "bottom"){
     # reverse version (you care about last items only)
-    weights = steepness^((numItems-items))
+    weights = (1-steepness)^((numItems-items))
   } else if (priority == "both"){
     # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
     #for even, repeats same weight at bottom. (if numItems = 20, items 10 and 11 will both have the smallest weight)
     #for odd, one item will have smallest weight. (if numItems = 21, item 11 will have the smallest weight)
-    weights = steepness^(items-1) #top
-    weights[(round(numItems/2 + 0.1) + 1):numItems] = steepness^(items[(round(numItems/2)):0]-1) #bottom/second half
+    weights = (1-steepness)^(items-1) #top
+    weights[(round(numItems/2 + 0.1) + 1):numItems] = (1-steepness)^(items[(round(numItems/2)):0]-1) #bottom/second half
   } else {
     return("Priority must be given as 'even', 'top', 'bottom', or 'both'.")
   }
