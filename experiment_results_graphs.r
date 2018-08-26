@@ -4,6 +4,8 @@
 # could plot total loss or some other kind of metric
 
 require(ggplot2)
+setwd("/ua/allencoleman/gangnon/ranking")
+source("ranking_function.r")
 
 ## data cleaning ##
 # OLD setwd("/Users/cora/git_repos/RankingMethods/results")
@@ -14,19 +16,19 @@ require(ggplot2)
 # n100_200 <- read.csv(file = "_100_1_1_50_200_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
 # n100_200 <- read.csv(file = "_100_1_1_50_100_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
 #load("~/gangnon/results/ranking_experiment_results.RData")
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0814.RData") #EB. df called results
-results_0814 <- as.data.frame(results)
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0824.RData") #EB. df called results
+results_0824 <- as.data.frame(results)
 
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0807.RData") #not EB. df called results
-results_0807 <- as.data.frame(results)
-
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") 
-results_0816 <- as.data.frame(results)
+# load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0807.RData") #not EB. df called results
+# results_0807 <- as.data.frame(results)
+# 
+# load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") 
+# results_0816 <- as.data.frame(results)
 
 
 #results <- rbind(results_0814, results_0807, results_0816)
-results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
-results[, c(1:8, 11, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
+results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
+results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
 ## Run Metric ##
 for (i in 1:nrow(results)){ #TODO this is created a list of 10 logicals NOT five.
@@ -49,8 +51,8 @@ for (i in 1:nrow(results)){
   results$metric15[i] <- metric15
 }
 
-save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0818.RData") #saves as an R object
-load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0818.RData")
+save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
+load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData")
 
 ## PLOTS ##
 #reduce to include only priority = top

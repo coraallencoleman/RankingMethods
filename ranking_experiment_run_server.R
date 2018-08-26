@@ -11,7 +11,7 @@
 
 # move results back to home computer 
 #scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/results/ranking_experiment_results_0824.RData /Users/cora/git_repos/RankingMethods/results/ 
-#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim0809ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
+#scp allencoleman@adhara.biostat.wisc.edu:/ua/allencoleman/gangnon/ranking/nsim0824ScreenLog.txt /Users/cora/git_repos/RankingMethods/results/ 
 
 setwd("/ua/allencoleman/gangnon/ranking")
 source("ranking_function.r")
