@@ -51,6 +51,13 @@ for (i in 1:nrow(results)){
   results$metric15[i] <- metric15
 }
 
+# Strict Metric 5
+for (i in 1:15){
+  metricStrict5 <- list(I(RankMetricStrict(results$ranking[[i]], data = results$data[i][[1]],
+                                order = "largest", topN = 5)))
+  results$metricStrict5[i] <- metricStrict5
+}
+
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData")
 
@@ -59,6 +66,18 @@ load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_me
 results_top <- results[results$rankPriority == "top",]
 results <- results_top
 
+#Stricter Metric
+#Top 5
+results$metric5Strictpercent <- lapply(results$metricStrict5, mean)
+setwd("/Users/cora/git_repos/RankingMethods/plots/")
+ps.options(fonts=c("serif"), width = 7, height = 7)
+postscript("bar_metric5_e.eps")
+metric5_e <- ggplot(results) + 
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metric5percent)), stat="summary", fun.y=mean) + 
+  ggtitle("Percent Top 5 Correct Ranking by e") +
+  ylab("Percent Top 5 Correct") + xlab("Rank Weight Steepness (epsilon)")
+metric5_e
+dev.off()
 ## Bar Graphs ##
 results$metric5percent <- lapply(results$metric5, mean)
 setwd("/Users/cora/git_repos/RankingMethods/plots/")
