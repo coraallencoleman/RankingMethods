@@ -286,7 +286,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 # A testing metric for use with simulated data
 ##function metric to see if rankObject's top ranked items match true top items MATRIX
 RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", topN = 5){
-  # function metric to see if our top number matches true top five for Binomial model
+  # function metric to see how much of our top N includes true top N
   #   
   # Args:
   #   rankObject: an output of WeightedLossRanking.
@@ -312,6 +312,43 @@ RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", to
   } else {
     stop("order must be input as either 'largest' or 'smallest'")
   }
-  #check if each item in true top N is in ranking top N, return boolean
+  #check if each item in true top N is in ranking top N, return boolean vector
   return(true[1:topN, 1] %in% rankedData[1:topN, 1])
 }
+
+# A testing metric for use with simulated data
+##function metric to see if rankObject's top ranked items match true top items MATRIX
+RankMetricStrict <- function(rankObject = NULL, settings = NULL, order = "largest", topN = 5){
+  # function metric to see how often top N is FULLY correctly ranked by our top N 
+  # (more strict metric than RankMetric)
+
+  #   
+  # Args:
+  #   rankObject: an output of WeightedLossRanking.
+  #   originalData: a data frame with column of item IDs, n, true probabilities
+  #   order: largest (largest to smallest) or smallest (smallest to largest)
+  #   topN: an integer number of top items to compare
+  #
+  # Returns:
+  #   logical
+  #
+  # Dependencies: rstan, clue, dplyr
+  
+  rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
+  rankedData[,1:3] <- settings
+  rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
+  
+  if (order == "largest"){
+    true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
+    rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
+  } else if (order == "smallest"){
+    true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
+    rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
+  } else {
+    stop("order must be input as either 'largest' or 'smallest'")
+  }
+  #check if true top N == our ranked top N. Returns boolean
+  return(true[1:topN, 1] == rankedData[1:topN, 1])
+}
+
+# TODO How often is #1 ranked as #1? How often is #1 and #2 ranked
