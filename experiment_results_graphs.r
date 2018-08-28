@@ -51,11 +51,12 @@ for (i in 1:nrow(results)){
   results$metric15[i] <- metric15
 }
 
-# Strict Metric 5
-for (i in 1:15){
-  metricStrict5 <- list(I(RankMetricStrict(results$ranking[[i]], data = results$data[i][[1]],
-                                order = "largest", topN = 5)))
-  results$metricStrict5[i] <- metricStrict5
+# Strict Metric from 1 to 15
+for (t in 1:15){
+  for (i in 1:15){
+    results[[paste0("metricStrict", t)]] <- list(I(RankMetricStrict(results$ranking[[i]], data = results$data[i][[1]],
+                                                                    order = "largest", topN = t)))
+  }
 }
 
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
