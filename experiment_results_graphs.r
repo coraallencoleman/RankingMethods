@@ -56,16 +56,31 @@ for (t in 1:15){
   for (i in 1:15){
     results[[paste0("metricStrict", t)]] <- list(I(RankMetricStrict(results$ranking[[i]], data = results$data[i][[1]],
                                                                     order = "largest", topN = t)))
+    results[[paste0("metricStrictPercent", t)]] <- 
+    #results$metric5Strictpercent <- lapply(results$metricStrict5, mean) #TODO add this part
   }
 }
 
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData")
 
-## PLOTS ##
-#reduce to include only priority = top
+#include only priority = top (or, alternatively only bottom) to keep results coherant
 results_top <- results[results$rankPriority == "top",]
 results <- results_top
+
+## PLOTS ##
+#strict metric from 1 to 15 (rainbow for 1 to 15?)
+
+ps.options(fonts=c("serif"), width = 7, height = 7)
+postscript("bar_StrictMetric_e.eps")
+StrictMetric_e <- ggplot(results) + 
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metric5percent)), stat="summary", fun.y=mean) + 
+  ggtitle("% of Time Rank of Each Element Correct by e (Strict)") +
+  ylab("Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
+StrictMetric_e
+dev.off()
+
+
 
 #Stricter Metric
 #Top 5

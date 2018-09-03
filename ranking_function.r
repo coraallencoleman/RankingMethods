@@ -334,7 +334,7 @@ RankMetricStrict <- function(rankObject = NULL, data = NULL, order = "largest", 
   # Dependencies: rstan, clue, dplyr
   
   ranking <- as.integer(rankObject)
-  return(1:topN == ranking)
+  return(1:topN == ranking[1:topN])
   # rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
   # rankedData[,1:3] <- settings
   # rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
