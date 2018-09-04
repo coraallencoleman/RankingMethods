@@ -302,23 +302,6 @@ RankMetric <- function(rankObject = NULL, order = "largest", topN = 5){
   # Dependencies: rstan, clue, dplyr
   ranking <- as.integer(rankObject[[1]][1:topN])
   return(1:topN %in% ranking)
-  #this works: 1:10 %in% results$ranking[109][[1]][1:10]
-  
-  # rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
-  # rankedData[,1:3] <- settings
-  # rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
-  # 
-  # if (order == "largest"){
-  #   true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
-  #   rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
-  # } else if (order == "smallest"){
-  #   true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
-  #   rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
-  # } else {
-  #   stop("order must be input as either 'largest' or 'smallest'")
-  # }
-  # #check if each item in true top N is in ranking top N, return boolean vector
-  # return(1:topN %in% rankedData[1:topN, 1]) #TODO this isn't right. need to fix
 }
 
 RankMetricStrict <- function(rankObject = NULL, order = "largest", topN = 5){
@@ -338,24 +321,7 @@ RankMetricStrict <- function(rankObject = NULL, order = "largest", topN = 5){
   # Dependencies: rstan, clue, dplyr
   
   ranking <- as.integer(rankObject[[1]][1:topN])
-  return(1:topN == ranking) #TODO is this working right? 
-  #this works results$ranking[5][[1]][1:5] == 1:5
-  
-  # rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
-  # rankedData[,1:3] <- settings
-  # rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
-  # 
-  # if (order == "largest"){
-  #   true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
-  #   rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
-  # # } else if (order == "smallest"){
-  # #   true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
-  # #   rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
-  # # } 
-  # else {
-  #   stop("order must be input as either 'largest' or 'smallest'")
-  # }
-  #check how much of true top N == our ranked top N. Returns boolean vector
+  return(1:topN == ranking)
 }
 
 # TODO How often is #1 ranked as #1? How often is #1 and #2 ranked

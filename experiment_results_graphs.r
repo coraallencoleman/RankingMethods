@@ -30,33 +30,42 @@ results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.charac
 results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
 ## Run Metric ##
+results$metric5percent <- rep(0, times = nrow(results))
 for (i in 1:nrow(results)){
   results$metric5[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 5)))
-  results$metric5percent[i] <- mean(results$metric5[i][[1]])
+  results$metric5percent[i] <- as.double(mean(results$metric5[i][[1]]))[[1]]
 }
 
 
 # Metric 10
+results$metric10percent <- rep(0, times = nrow(results))
 for (i in 1:nrow(results)){
-  metric10 <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 10)))
-  results$metric10[i] <- metric10
+  results$metric10[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 10)))
+  results$metric10percent[i] <- as.double(mean(results$metric10[i][[1]]))[[1]]
 }
 
 # Metric 15
+results$metric15percent <- rep(0, times = nrow(results))
 for (i in 1:nrow(results)){
-  metric15 <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 15)))
-  results$metric15[i] <- metric15
+  results$metric15[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 15)))
+  results$metric15percent[i] <- as.double(mean(results$metric15[i][[1]]))[[1]]
 }
 
 # Strict Metric from 1 to 15
 for (t in 1:15){
-  for (i in 1:length(results)){
-    results[[paste0("metricStrict", t)]][i] <- list(I(RankMetricStrict(results$ranking[i], 
-                                                      order = "largest", topN = t))) #something wrong with subsetting here
-  }
-  #this might not be right
-  results[[paste0("metricStrictPercent", t)]] <- lapply(results[[paste0("metricStrict", t)]], mean)
+results$metric15percent <- rep(0, times = nrow(results))
+for (i in 1:nrow(results)){
+  results$metric15[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 15)))
+  results$metric15percent[i] <- as.double(mean(results$metric15[i][[1]]))[[1]]
 }
+# for (t in 1:15){
+#   for (i in 1:length(results)){
+#     results[[paste0("metricStrict", t)]][i] <- list(I(RankMetricStrict(results$ranking[i], 
+#                                                       order = "largest", topN = t))) #something wrong with subsetting here
+#   }
+#   #this might not be right
+#   results[[paste0("metricStrictPercent", t)]] <- lapply(results[[paste0("metricStrict", t)]], mean)
+# }
 #results[[paste0("metricStrict", 5)]] <- list(I(RankMetricStrict(results$ranking[[3]], order = "largest", topN = 5)))
 
 #need to get all percents in long format with column?
@@ -122,7 +131,6 @@ metric5_loss
 dev.off()
 
 #metric 10
-results$metric10percent <- lapply(results$metric10, mean)
 postscript("bar_metric10_e.eps")
 metric10_e <- ggplot(results) + 
   geom_bar(aes(as.factor(rankSteepness), as.numeric(results$metric10percent)), stat = "summary", fun.y = "mean") +
@@ -140,7 +148,6 @@ metric10_loss
 dev.off()
 
 #metric 15
-results$metric15percent <- lapply(results$metric15, mean)
 postscript("bar_metric15_e.eps")
 metric15_e <- ggplot(results) + 
   geom_bar(aes(as.factor(rankSteepness), as.numeric(results$metric15percent)), stat = "summary", fun.y = "mean") + 
