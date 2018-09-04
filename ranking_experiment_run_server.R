@@ -40,6 +40,7 @@ for (n in c(100, 200)){ #numItems
                                                       parameter = NULL, loss = c(1,2), 
                                                       f=identity,  
                                                       n_sim = 2))
+              #TODO add zero one weighting ranks for topN = 1 to 15
             }
           }
         }

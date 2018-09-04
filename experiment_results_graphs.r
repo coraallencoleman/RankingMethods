@@ -39,26 +39,17 @@ for (i in 1:nrow(results)){
 
 # Strict Metric from 1 to 15
 for (t in 1:15){
-  results[[paste0("metricStrict", t)]] <- rep(0, times = nrow(results))
+  results[[paste0("metricStrictPercent", t)]] <- rep(0, times = nrow(results))
   for (i in 1:nrow(results)){
     results[[paste0("metricStrict", t)]][i] <- list(I(RankMetricStrict(results$ranking[i], 
-                                              order = "largest", topN = t)))
-    results[[paste0("metricStrictPercent", t)]][i] <- as.double(mean(results[[paste0("metricStrict", t)]][i][[1]]))[[1]]
+                                                                       order = "largest", topN = t)))
+    results[[paste0("metricStrictPercent", t)]][i] <- as.double(mean(results[[paste0("metricStrict", t)]][i][[1]])[[1]])
   }
 }
-results[[paste0("metricStrictPercent", 3)]] <- rep(0, times = nrow(results))
-results[[paste0("metricStrict", 3)]][1] <- list(I(RankMetricStrict(results$ranking[1], 
-                                                                   order = "largest", topN = 3)))
-results[[paste0("metricStrictPercent", 3)]][1] <- as.double(mean(results[[paste0("metricStrict", 3)]][1][[1]])[[1]])
-# for (t in 1:15){
-#   for (i in 1:length(results)){
-#     results[[paste0("metricStrict", t)]][i] <- list(I(RankMetricStrict(results$ranking[i], 
-#                                                       order = "largest", topN = t))) #something wrong with subsetting here
-#   }
-#   #this might not be right
-#   results[[paste0("metricStrictPercent", t)]] <- lapply(results[[paste0("metricStrict", t)]], mean)
-# }
-#results[[paste0("metricStrict", 5)]] <- list(I(RankMetricStrict(results$ranking[[3]], order = "largest", topN = 5)))
+# WORKS results[[paste0("metricStrictPercent", 3)]] <- rep(0, times = nrow(results))
+# results[[paste0("metricStrict", 3)]][1] <- list(I(RankMetricStrict(results$ranking[1], 
+#                                                                    order = "largest", topN = 3)))
+# results[[paste0("metricStrictPercent", 3)]][1] <- as.double(mean(results[[paste0("metricStrict", 3)]][1][[1]])[[1]])
 
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData")
