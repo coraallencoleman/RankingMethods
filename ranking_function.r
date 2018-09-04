@@ -285,7 +285,8 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
 
 # A testing metric for use with simulated data
 ##function metric to see if rankObject's top ranked items match true top items MATRIX
-RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", topN = 5){
+#TODO FIX this is created a list of 10 logicals NOT five or fifteen
+RankMetric <- function(rankObject = NULL, order = "largest", topN = 5){
   # function metric to see how much of our top N includes true top N
   # note: correct order is always item number because SelectNP assigns true p in order
   #
@@ -299,25 +300,28 @@ RankMetric <- function(rankObject = NULL, settings = NULL, order = "largest", to
   #   logical vector
   #
   # Dependencies: rstan, clue, dplyr
+  ranking <- as.integer(rankObject[[1]][1:topN])
+  return(1:topN %in% ranking)
+  #this works: 1:10 %in% results$ranking[109][[1]][1:10]
   
-  rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
-  rankedData[,1:3] <- settings
-  rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
-  
-  if (order == "largest"){
-    true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
-    rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
-  } else if (order == "smallest"){
-    true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
-    rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
-  } else {
-    stop("order must be input as either 'largest' or 'smallest'")
-  }
-  #check if each item in true top N is in ranking top N, return boolean vector
-  return(true[1:topN, 1] %in% rankedData[1:topN, 1])
+  # rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
+  # rankedData[,1:3] <- settings
+  # rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)
+  # 
+  # if (order == "largest"){
+  #   true <- rankedData[order(rankedData[,3]),] #sort by TRUE p
+  #   rankedData <- rankedData[order(rankedData[,4]),] #sort by calculated rank (col 4)
+  # } else if (order == "smallest"){
+  #   true <- rankedData[order(-rankedData[,3]),] #sort by TRUE p #TODO need to reverse
+  #   rankedData <- rankedData[order(-rankedData[,4]),] #sort by calculated rank (col 4)
+  # } else {
+  #   stop("order must be input as either 'largest' or 'smallest'")
+  # }
+  # #check if each item in true top N is in ranking top N, return boolean vector
+  # return(1:topN %in% rankedData[1:topN, 1]) #TODO this isn't right. need to fix
 }
 
-RankMetricStrict <- function(rankObject = NULL, data = NULL, order = "largest", topN = 5){
+RankMetricStrict <- function(rankObject = NULL, order = "largest", topN = 5){
   # function metric to see how much of top N is correctly ranked (order matters here) 
   # (more strict metric than RankMetric)
   # note: correct order is always item number because SelectNP assigns true p in order
@@ -333,8 +337,10 @@ RankMetricStrict <- function(rankObject = NULL, data = NULL, order = "largest", 
   #
   # Dependencies: rstan, clue, dplyr
   
-  ranking <- as.integer(rankObject)
-  return(1:topN == ranking[1:topN])
+  ranking <- as.integer(rankObject[[1]][1:topN])
+  return(1:topN == ranking) #TODO is this working right? 
+  #this works results$ranking[5][[1]][1:5] == 1:5
+  
   # rankedData <- array(data = NA, dim=c(length(settings[,1]), 4))
   # rankedData[,1:3] <- settings
   # rankedData[,4] <- as.integer(rankObject) #adds rank order from WeightedLossRanking (rank orders items from smallest to highest)

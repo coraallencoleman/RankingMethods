@@ -25,41 +25,41 @@ results_0824 <- as.data.frame(results)
 # load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") 
 # results_0816 <- as.data.frame(results)
 
-
 #results <- rbind(results_0814, results_0807, results_0816)
 results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
 results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
 ## Run Metric ##
-for (i in 1:nrow(results)){ #TODO this is created a list of 10 logicals NOT five.
-    metric5 <- list(I(RankMetric(results$ranking[[i]], settings = results$data[i][[1]],
-                              order = "largest", topN = 5)))
-    results$metric5[i] <- metric5
+for (i in 1:nrow(results)){
+  results$metric5[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 5)))
+  results$metric5percent[i] <- mean(results$metric5[i][[1]])
 }
+
 
 # Metric 10
 for (i in 1:nrow(results)){
-  metric10 <- list(I(RankMetric(results$ranking[[i]], settings = results$data[i][[1]],
-                               order = "largest", topN = 10)))
+  metric10 <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 10)))
   results$metric10[i] <- metric10
 }
 
 # Metric 15
 for (i in 1:nrow(results)){
-  metric15 <- list(I(RankMetric(results$ranking[[i]], settings = results$data[i][[1]],
-                                order = "largest", topN = 15)))
+  metric15 <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 15)))
   results$metric15[i] <- metric15
 }
 
 # Strict Metric from 1 to 15
 for (t in 1:15){
-  for (i in 1:15){
-    results[[paste0("metricStrict", t)]] <- list(I(RankMetricStrict(results$ranking[[i]], data = results$data[i][[1]],
-                                                                    order = "largest", topN = t)))
-    results[[paste0("metricStrictPercent", t)]] <- 
-    #results$metric5Strictpercent <- lapply(results$metricStrict5, mean) #TODO add this part
+  for (i in 1:length(results)){
+    results[[paste0("metricStrict", t)]][i] <- list(I(RankMetricStrict(results$ranking[i], 
+                                                      order = "largest", topN = t))) #something wrong with subsetting here
   }
+  #this might not be right
+  results[[paste0("metricStrictPercent", t)]] <- lapply(results[[paste0("metricStrict", t)]], mean)
 }
+#results[[paste0("metricStrict", 5)]] <- list(I(RankMetricStrict(results$ranking[[3]], order = "largest", topN = 5)))
+
+#need to get all percents in long format with column?
 
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData")
@@ -69,33 +69,40 @@ results_top <- results[results$rankPriority == "top",]
 results <- results_top
 
 ## PLOTS ##
-#strict metric from 1 to 15 (rainbow for 1 to 15?)
+#How often is #1 ranked as #1?
+ps.options(fonts=c("serif"), width = 7, height = 7)
+postscript("bar_StrictMetric_e.eps")
+StrictMetric1_e <- ggplot(results) + 
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent1)), stat="summary", fun.y=mean) + 
+  ggtitle("How Often is Item 1 Ranked First?") +
+  ylab("Mean Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
+StrictMetric1_e
+dev.off()
 
+#Strict Metric from 1 to 15 (rainbow for 1 to 15?)
 ps.options(fonts=c("serif"), width = 7, height = 7)
 postscript("bar_StrictMetric_e.eps")
 StrictMetric_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), as.numeric(metric5percent)), stat="summary", fun.y=mean) + 
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent5)), stat="summary", fun.y=mean, fill = "red", alpha = "0.4") + 
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent10)), stat="summary", fun.y=mean, fill = "orange", alpha = "0.4") +
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent15)), stat="summary", fun.y=mean, fill = "yellow", alpha = "0.4") +
   ggtitle("% of Time Rank of Each Element Correct by e (Strict)") +
-  ylab("Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
+  ylab("Mean Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
 StrictMetric_e
 dev.off()
 
-
-
-#Stricter Metric
-#Top 5
-results$metric5Strictpercent <- lapply(results$metricStrict5, mean)
-setwd("/Users/cora/git_repos/RankingMethods/plots/")
 ps.options(fonts=c("serif"), width = 7, height = 7)
-postscript("bar_metric5_e.eps")
-metric5_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), as.numeric(metric5percent)), stat="summary", fun.y=mean) + 
-  ggtitle("Percent Top 5 Correct Ranking by e") +
-  ylab("Percent Top 5 Correct") + xlab("Rank Weight Steepness (epsilon)")
-metric5_e
-dev.off()
+postscript("point_StrictMetric_e.eps")
+pointStrictMetric_e <- ggplot(results) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent5)), color = "red", stat="summary", fun.y=mean) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent10)), color = "orange", stat="summary", fun.y=mean) +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent15)), color = "yellow", stat="summary", fun.y=mean) +
+  ggtitle("% of Time Rank of Each Element Correct by e (Strict)") +
+  ylab("Mean Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
+pointStrictMetric_e
+dev.off() 
+
 ## Bar Graphs ##
-results$metric5percent <- lapply(results$metric5, mean)
 setwd("/Users/cora/git_repos/RankingMethods/plots/")
 ps.options(fonts=c("serif"), width = 7, height = 7)
 postscript("bar_metric5_e.eps")
