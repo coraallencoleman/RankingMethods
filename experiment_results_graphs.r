@@ -8,24 +8,10 @@ setwd("/ua/allencoleman/gangnon/ranking")
 source("ranking_function.r")
 
 ## data cleaning ##
-# OLD setwd("/Users/cora/git_repos/RankingMethods/results")
-# 
-# n100_200 <- read.csv(file = "_100_1_1_100_200_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
-# n100_200 <- read.csv(file = "_100_1_1_100_100_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
-# n100_200 <- read.csv(file = "_100_1_1_100_30_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
-# n100_200 <- read.csv(file = "_100_1_1_50_200_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
-# n100_200 <- read.csv(file = "_100_1_1_50_100_1_1_ascending_even_0.9__2_identity_even_0.9_1_.csv")
-#load("~/gangnon/results/ranking_experiment_results.RData")
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0824.RData") #EB. df called results
 results_0824 <- as.data.frame(results)
-
-# load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0807.RData") #not EB. df called results
-# results_0807 <- as.data.frame(results)
-# 
-# load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_0816.RData") 
-# results_0816 <- as.data.frame(results)
-
 #results <- rbind(results_0814, results_0807, results_0816)
+
 results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
 results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
@@ -60,7 +46,7 @@ for (t in 1:15){
     results[[paste0("metricStrictPercent", t)]][i] <- as.double(mean(results[[paste0("metricStrict", t)]][i][[1]]))[[1]]
   }
 }
-results[[paste0("metricStrict", 3)]] <- rep(0, times = nrow(results))
+results[[paste0("metricStrictPercent", 3)]] <- rep(0, times = nrow(results))
 results[[paste0("metricStrict", 3)]][1] <- list(I(RankMetricStrict(results$ranking[1], 
                                                                    order = "largest", topN = 3)))
 results[[paste0("metricStrictPercent", 3)]][1] <- as.double(mean(results[[paste0("metricStrict", 3)]][1][[1]])[[1]])
@@ -74,8 +60,6 @@ results[[paste0("metricStrictPercent", 3)]][1] <- as.double(mean(results[[paste0
 # }
 #results[[paste0("metricStrict", 5)]] <- list(I(RankMetricStrict(results$ranking[[3]], order = "largest", topN = 5)))
 
-#need to get all percents in long format with column?
-
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData")
 
@@ -88,7 +72,7 @@ results <- results_top
 ps.options(fonts=c("serif"), width = 7, height = 7)
 postscript("bar_StrictMetric_e.eps")
 StrictMetric1_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent1)), stat="summary", fun.y=mean) + 
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metric1percent)), stat="summary", fun.y=mean) + 
   ggtitle("How Often is Item 1 Ranked First?") +
   ylab("Mean Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
 StrictMetric1_e
