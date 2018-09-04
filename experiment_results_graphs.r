@@ -53,11 +53,17 @@ for (i in 1:nrow(results)){
 
 # Strict Metric from 1 to 15
 for (t in 1:15){
-results$metric15percent <- rep(0, times = nrow(results))
-for (i in 1:nrow(results)){
-  results$metric15[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 15)))
-  results$metric15percent[i] <- as.double(mean(results$metric15[i][[1]]))[[1]]
+  results[[paste0("metricStrict", t)]] <- rep(0, times = nrow(results))
+  for (i in 1:nrow(results)){
+    results[[paste0("metricStrict", t)]][i] <- list(I(RankMetricStrict(results$ranking[i], 
+                                              order = "largest", topN = t)))
+    results[[paste0("metricStrictPercent", t)]][i] <- as.double(mean(results[[paste0("metricStrict", t)]][i][[1]]))[[1]]
+  }
 }
+results[[paste0("metricStrict", 3)]] <- rep(0, times = nrow(results))
+results[[paste0("metricStrict", 3)]][1] <- list(I(RankMetricStrict(results$ranking[1], 
+                                                                   order = "largest", topN = 3)))
+results[[paste0("metricStrictPercent", 3)]][1] <- as.double(mean(results[[paste0("metricStrict", 3)]][1][[1]])[[1]])
 # for (t in 1:15){
 #   for (i in 1:length(results)){
 #     results[[paste0("metricStrict", t)]][i] <- list(I(RankMetricStrict(results$ranking[i], 

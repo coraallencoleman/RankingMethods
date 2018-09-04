@@ -36,7 +36,7 @@ for (n in c(100, 200)){ #numItems
               results <- rbind(results, RunSimulation(N = n, a_p = a_p, b_p = b_p, n_min = n_min, n_max = n_max, a_n = a_n, b_n = b_n, #data
                                                       n_assignment_method = "random", 
                                                       #ranking settings
-                                                      rankPriority = c("top"), rankSteepness = c(0.005, 0.01, 0.025, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5), #rankWeights
+                                                      rankPriority = c("top"), rankSteepness = c(0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5), #rankWeights
                                                       parameter = NULL, loss = c(1,2), 
                                                       f=identity,  
                                                       n_sim = 2))
