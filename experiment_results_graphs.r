@@ -46,25 +46,21 @@ for (t in 1:15){
     results[[paste0("metricStrictPercent", t)]][i] <- as.double(mean(results[[paste0("metricStrict", t)]][i][[1]])[[1]])
   }
 }
-# WORKS results[[paste0("metricStrictPercent", 3)]] <- rep(0, times = nrow(results))
-# results[[paste0("metricStrict", 3)]][1] <- list(I(RankMetricStrict(results$ranking[1], 
-#                                                                    order = "largest", topN = 3)))
-# results[[paste0("metricStrictPercent", 3)]][1] <- as.double(mean(results[[paste0("metricStrict", 3)]][1][[1]])[[1]])
 
 save(results, file = "/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData") #saves as an R object
 load("/Users/cora/git_repos/RankingMethods/results/ranking_experiment_results_metric_0824.RData")
 
 #include only priority = top (or, alternatively only bottom) to keep results coherant
-results_top <- results[results$rankPriority == "top",]
+results_top <- results[results$rankPriority == "top",] #need to check after i add zero one weights
 results <- results_top
 
 ## PLOTS ##
 #How often is #1 ranked as #1?
 ps.options(fonts=c("serif"), width = 7, height = 7)
-postscript("bar_StrictMetric_e.eps")
+postscript("bar_StrictMetricTop1_e.eps")
 StrictMetric1_e <- ggplot(results) + 
-  geom_bar(aes(as.factor(rankSteepness), as.numeric(metric1percent)), stat="summary", fun.y=mean) + 
-  ggtitle("How Often is Item 1 Ranked First?") +
+  geom_bar(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent1)), stat="summary", fun.y=mean) + 
+  ggtitle("How Often is Item 1 Ranked First?") + #ylim(0, 0.5) + 
   ylab("Mean Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
 StrictMetric1_e
 dev.off()
@@ -84,10 +80,15 @@ dev.off()
 ps.options(fonts=c("serif"), width = 7, height = 7)
 postscript("point_StrictMetric_e.eps")
 pointStrictMetric_e <- ggplot(results) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent1)), color = "gray", stat="summary", fun.y=mean) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent2)), color = "black", stat="summary", fun.y=mean) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent3)), color = "pink", stat="summary", fun.y=mean) + 
   geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent5)), color = "red", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent10)), color = "orange", stat="summary", fun.y=mean) +
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent15)), color = "yellow", stat="summary", fun.y=mean) +
-  ggtitle("% of Time Rank of Each Element Correct by e (Strict)") +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent7)), color = "orange", stat="summary", fun.y=mean) +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent10)), color = "yellow", stat="summary", fun.y=mean) +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent12)), color = "green", stat="summary", fun.y=mean) +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent15)), color = "blue", stat="summary", fun.y=mean) +
+  ggtitle("% Element Ranked Correctly (Strict Metric) by e") +
   ylab("Mean Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
 pointStrictMetric_e
 dev.off() 

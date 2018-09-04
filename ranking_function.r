@@ -74,7 +74,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
 
   
 RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
-  # Computes optimal ranking for a list of estimates. Largest weight is always 1.
+  # Computes optimal ranking for a list of estimates. Largest weight is always 1. TODO: add ability to use 0 1 weights for topN
   #   
   # Args:
   #   numItems: number of items to rank
