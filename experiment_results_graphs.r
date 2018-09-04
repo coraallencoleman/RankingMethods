@@ -15,26 +15,36 @@ results_0824 <- as.data.frame(results)
 results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.character )
 results[, c(1:8, 11, 13, 14)] <- sapply( results[,c(1:8, 11, 13, 14)], as.double )
 
-## Run Metric ##
-results$metric5percent <- rep(0, times = nrow(results))
-for (i in 1:nrow(results)){
-  results$metric5[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 5)))
-  results$metric5percent[i] <- as.double(mean(results$metric5[i][[1]]))[[1]]
-}
+# ## Run Metric ##
+# results$metric5percent <- rep(0, times = nrow(results))
+# for (i in 1:nrow(results)){
+#   results$metric5[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 5)))
+#   results$metric5percent[i] <- as.double(mean(results$metric5[i][[1]]))[[1]]
+# }
+# 
+# 
+# # Metric 10
+# results$metric10percent <- rep(0, times = nrow(results))
+# for (i in 1:nrow(results)){
+#   results$metric10[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 10)))
+#   results$metric10percent[i] <- as.double(mean(results$metric10[i][[1]]))[[1]]
+# }
+# 
+# # Metric 15
+# results$metric15percent <- rep(0, times = nrow(results))
+# for (i in 1:nrow(results)){
+#   results$metric15[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 15)))
+#   results$metric15percent[i] <- as.double(mean(results$metric15[i][[1]]))[[1]]
+# }
 
-
-# Metric 10
-results$metric10percent <- rep(0, times = nrow(results))
-for (i in 1:nrow(results)){
-  results$metric10[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 10)))
-  results$metric10percent[i] <- as.double(mean(results$metric10[i][[1]]))[[1]]
-}
-
-# Metric 15
-results$metric15percent <- rep(0, times = nrow(results))
-for (i in 1:nrow(results)){
-  results$metric15[i] <- list(I(RankMetric(results$ranking[i], order = "largest", topN = 15)))
-  results$metric15percent[i] <- as.double(mean(results$metric15[i][[1]]))[[1]]
+# Metric from 1 to 15
+for (t in 1:15){
+  results[[paste0("metricPercent", t)]] <- rep(0, times = nrow(results))
+  for (i in 1:nrow(results)){
+    results[[paste0("metric", t)]][i] <- list(I(RankMetric(results$ranking[i], 
+                                                                       order = "largest", topN = t)))
+    results[[paste0("metricPercent", t)]][i] <- as.double(mean(results[[paste0("metric", t)]][i][[1]])[[1]])
+  }
 }
 
 # Strict Metric from 1 to 15
@@ -91,6 +101,22 @@ pointStrictMetric_e <- ggplot(results) +
   ggtitle("% Element Ranked Correctly (Strict Metric) by e") +
   ylab("Mean Percent Top Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
 pointStrictMetric_e
+dev.off() 
+
+ps.options(fonts=c("serif"), width = 7, height = 7)
+postscript("point_Metric_e.eps")
+pointMetric_e <- ggplot(results) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent1)), color = "gray", stat="summary", fun.y=mean) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent2)), color = "black", stat="summary", fun.y=mean) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent3)), color = "pink", stat="summary", fun.y=mean) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent5)), color = "red", stat="summary", fun.y=mean) + 
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent7)), color = "orange", stat="summary", fun.y=mean) +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent10)), color = "yellow", stat="summary", fun.y=mean) +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent12)), color = "green", stat="summary", fun.y=mean) +
+  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent15)), color = "blue", stat="summary", fun.y=mean) +
+  ggtitle("% True Top N Ranked in Top N by e") +
+  ylab("Mean True Top N Ranked in Top N") + xlab("Rank Weight Steepness (epsilon)")
+pointMetric_e
 dev.off() 
 
 ## Bar Graphs ##
