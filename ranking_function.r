@@ -126,13 +126,20 @@ SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, 
   #   one matrix with 2 columns (n, p) and N rows
   #
   # Dependencies: 
+
   
   output <- matrix(data = NA, nrow = N, ncol = 3, 
                    dimnames = list(seq(1:N), c("item", "n", "p"))) #rows 1 to N, columns n, p
   #item (county, etc)
   output[,1] <- seq(1:N)
   #n
-  output[,2] <- round(n_min + (n_max-n_min)*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
+  if (n_assignment_method == "ascending"){
+    output[,2] <- round(n_min + (n_max-n_min)*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
+  } else if (n_assignment_method == "descending"){
+    output[,2] <- rev(output[,2])
+  } else if (n_assignment_method == "random")
+    output[,2] <- sample(output[,2])
+  }
   #p
   output[,3] <- qbeta((1:N)/(N+1), a_p, b_p)
   
