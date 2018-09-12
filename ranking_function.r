@@ -133,12 +133,15 @@ SelectNP <- function(N = 25, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n = 1, 
   #item (county, etc)
   output[,1] <- seq(1:N)
   #n
+  n_vec <- round(n_min + (n_max-n_min)*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
   if (n_assignment_method == "ascending"){
-    output[,2] <- round(n_min + (n_max-n_min)*qbeta(1:N/(N+1), a_n, b_n), digits=0) #quantiles
+    output[,2] <- n_vec
   } else if (n_assignment_method == "descending"){
-    output[,2] <- rev(output[,2])
-  } else if (n_assignment_method == "random")
-    output[,2] <- sample(output[,2])
+    output[,2] <- rev(n_vec)
+  } else if (n_assignment_method == "random"){
+    output[,2] <- sample(n_vec)
+  } else{
+    return("n_assignment_method must equal ascending, descending or random.")
   }
   #p
   output[,3] <- qbeta((1:N)/(N+1), a_p, b_p)
