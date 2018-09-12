@@ -173,7 +173,7 @@ SimData <- function(matrix){
   #n (These are deterministic.)
   output[,2] <- matrix[,2] #
   #y counts (These vary randomly.)
-  output[,3] <- rbinom(N, size = matrix[,2], prob = matrix[,3]) 
+  output[,3] <- rbinom(N, size = matrix[,2], prob = matrix[,3]) #TODO check this matrix[,3]
   return(output)
 }
 
@@ -252,8 +252,6 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #   saves .RData of settings, totalLoss, and ranking
   # 
   # Dependencies: rstanarm, clue
-  settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
-  
   rankWeights <- as.data.frame(matrix(nrow = 0, ncol = 3))
   names(rankWeights) <- c("rw", "rankPriority", "rankSteepness")
   for (rp in rankPriority){
@@ -263,7 +261,14 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
       
     }
   }
-
+  
+  #push ps closer in debugging or make n small enough (keep making smaller)
+  # as we increase sample size, it'll become clearer
+  
+  #TODO dont worry about random for now. THe sampel size being fixed is of interest. What happens when tail has lots of small samples,
+  #lots of big samples. Eventually, some scenarios where its mixed, but we'll mostly make this fixed later
+  
+  settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
   for (i in 1:n_sim){   #for each simulation
     data <- SimData(settings)
     post <- PostSamplesEB(data)
@@ -272,7 +277,6 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
         for (rp in rankPriority){
           for (rs in rankSteepness){
             ranks <- list()
-            
             rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = l, #f=iden,
                                 rankWeights = filter(rankWeights, rankPriority == rp, rankSteepness == rs)$rw[[1]])
 
