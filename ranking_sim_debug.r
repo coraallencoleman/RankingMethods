@@ -5,11 +5,24 @@
 ## runs experiment using function in ranking_function.r and sim_ranking_experiment.r
 #create an .RData file for with parameters + ranks
 
-#TODO make data by hand to see if anything behaves at all sensibly. Easy to print out loss function matrix.
-#eventually they'll be similar enough to make it a hard problem. see what happens with simple problem. if not working well, 
+#make data by hand to see if anything behaves at all sensibly. done 
+#Easy to print out loss function matrix.
+#eventually they'll be similar enough to make it a hard problem. 
+#see what happens with simple problem. if not working well, 
 #look at loss function matrix. is it doing what seems sensible? Is something off there?
 
+# #run in ranking
+setwd("/Users/cora/git_repos/RankingMethods")
+source("ranking_function.r")
+#creates clean results
+currResults <- as.data.frame(matrix(nrow = 0, ncol = 7))
+names(currResults) <- c("rankPriority", "rankSteepness",
+                        "f", "loss", "totalLoss", "ranking", "data")
+currResults$data <- I(list())
+results <- currResults
+
 #create dataframe by hand
+#i = 1; a_p = NA; b_p = NA; n_min = NA; n_max = NA; a_n = NA; b_n = NA; n_assignment_method = NA
 N = 10
 data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
@@ -18,8 +31,37 @@ data$item <- seq(1:N)
 data$n <- rep(10, times = N)
 data$y <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
-# ranking
+#posterior
+post <- PostSamplesEB(data)
+#rank weights
+rankWeights <- as.data.frame(matrix(nrow = 0, ncol = 3))
+names(rankWeights) <- c("rw", "rankPriority", "rankSteepness")
+for (rp in c("top")){
+  for (rs in c(0.001, 0.01, 0.1)){
+    rw <- list(as.double(RankingWeights(numItems = N, priority = rp, steepness = rs)))
+    rankWeights[nrow(rankWeights) + 1,] <- list(I(rw), rp, rs)
+    
+  }
+}
 
+for (l in c(2)){
+  for (rp in c("top")){
+    for (rs in c(0.001, 0.01, 0.1)){
+      ranks <- list()
+      rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, loss = l,
+                              rankWeights = filter(rankWeights, rankPriority == rp, rankSteepness == rs)$rw[[1]])
+      
+      totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
+      ranks <- list(as.integer(rankFunctionResult[[2]]))
+      
+      row <- c(rp, rs,"identity", l, totalLoss, "placeholder", "placeholder")
+      currResults[nrow(currResults) + 1, ] <- row
+      currResults$ranking[nrow(currResults)] <- ranks
+      #currResults[[nrow(currResults), 16]] <- data ##save true data (SimData). Currently unnecessarily bc data's true order=1:N
+    }
+  }
+}
+results <- currResults
 
 # 
 # 

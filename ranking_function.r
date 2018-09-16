@@ -265,7 +265,7 @@ RunSimulation <- function(N = 10, a_p = 1, b_p = 1, n_min = 10, n_max = 30, a_n 
   #push ps closer in debugging or make n small enough (keep making smaller)
   # as we increase sample size, it'll become clearer
   
-  #TODO dont worry about random for now. The sampel size being fixed is of interest. What happens when tail has lots of small samples,
+  #TODO dont worry about random for now. The sample size being fixed is of interest. What happens when tail has lots of small samples,
   #lots of big samples. Eventually, some scenarios where its mixed, but we'll mostly make this fixed later
   
   settings <- SelectNP(N, a_p, b_p, n_min, n_max, a_n, b_n, n_assignment_method) #this happens once per experiment
