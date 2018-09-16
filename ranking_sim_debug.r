@@ -15,10 +15,9 @@
 setwd("/Users/cora/git_repos/RankingMethods")
 source("ranking_function.r")
 #creates clean results
-currResults <- as.data.frame(matrix(nrow = 0, ncol = 7))
+currResults <- as.data.frame(matrix(nrow = 0, ncol = 6))
 names(currResults) <- c("rankPriority", "rankSteepness",
-                        "f", "loss", "totalLoss", "ranking", "data")
-currResults$data <- I(list())
+                        "loss", "totalLoss", "ranking", "samplesizen")
 results <- currResults
 
 #create dataframe by hand
@@ -27,7 +26,7 @@ data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
 
 data$item <- seq(1:N)
-data$n <- rep(100, times = N)
+data$n <- seq(from = 10, to = 100, length.out = N)
 data$p <- seq(from = 0, to = .5, length.out = N)
 #data$y <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 data$y <- rbinom(N, size = data$n, prob = data$p)
@@ -44,7 +43,6 @@ for (rp in priority){
   for (rs in steepness){
     rw <- list(as.double(RankingWeights(numItems = N, priority = rp, steepness = rs)))
     rankWeights[nrow(rankWeights) + 1,] <- list(I(rw), rp, rs)
-    
   }
 }
 
@@ -58,12 +56,13 @@ for (l in c(2)){
       totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
       ranks <- list(as.integer(rankFunctionResult[[2]]))
       
-      row <- c(rp, rs,"identity", l, totalLoss, "placeholder", "placeholder")
+      row <- c(rp, rs,"identity", l, totalLoss, "placeholder")
       currResults[nrow(currResults) + 1, ] <- row
       currResults$ranking[nrow(currResults)] <- ranks
     }
   }
 }
+currResults$samplesizen <- data$n ##save true data n (SimData)
 results <- currResults
 
 # 
