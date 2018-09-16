@@ -5,7 +5,7 @@
 ## runs experiment using function in ranking_function.r and sim_ranking_experiment.r
 #create an .RData file for with parameters + ranks
 
-#make data by hand to see if anything behaves at all sensibly. done 
+#make data by hand to see if anything behaves at all sensibly. DONE
 #Easy to print out loss function matrix.
 #eventually they'll be similar enough to make it a hard problem. 
 #see what happens with simple problem. if not working well, 
@@ -22,22 +22,26 @@ currResults$data <- I(list())
 results <- currResults
 
 #create dataframe by hand
-#i = 1; a_p = NA; b_p = NA; n_min = NA; n_max = NA; a_n = NA; b_n = NA; n_assignment_method = NA
 N = 10
 data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
 
 data$item <- seq(1:N)
-data$n <- rep(10, times = N)
-data$y <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+data$n <- rep(100, times = N)
+data$p <- seq(from = 0, to = .5, length.out = N)
+#data$y <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+data$y <- rbinom(N, size = data$n, prob = data$p)
 
 #posterior
 post <- PostSamplesEB(data)
+
 #rank weights
+steepness = c(0.001, 0.01, 0.1, 0.5)
+priority = c("top", "even")
 rankWeights <- as.data.frame(matrix(nrow = 0, ncol = 3))
 names(rankWeights) <- c("rw", "rankPriority", "rankSteepness")
-for (rp in c("top")){
-  for (rs in c(0.001, 0.01, 0.1)){
+for (rp in priority){
+  for (rs in steepness){
     rw <- list(as.double(RankingWeights(numItems = N, priority = rp, steepness = rs)))
     rankWeights[nrow(rankWeights) + 1,] <- list(I(rw), rp, rs)
     
@@ -45,8 +49,8 @@ for (rp in c("top")){
 }
 
 for (l in c(2)){
-  for (rp in c("top")){
-    for (rs in c(0.001, 0.01, 0.1)){
+  for (rp in priority){
+    for (rs in steepness){
       ranks <- list()
       rankFunctionResult <- WeightedLossRanking(sampleMatrix = post, loss = l,
                               rankWeights = filter(rankWeights, rankPriority == rp, rankSteepness == rs)$rw[[1]])
@@ -57,7 +61,6 @@ for (l in c(2)){
       row <- c(rp, rs,"identity", l, totalLoss, "placeholder", "placeholder")
       currResults[nrow(currResults) + 1, ] <- row
       currResults$ranking[nrow(currResults)] <- ranks
-      #currResults[[nrow(currResults), 16]] <- data ##save true data (SimData). Currently unnecessarily bc data's true order=1:N
     }
   }
 }
