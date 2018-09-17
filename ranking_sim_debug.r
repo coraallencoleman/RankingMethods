@@ -24,11 +24,11 @@ data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
 
 data$item <- seq(1:N)
-#data$n <- seq(from = 10, to = 100, length.out = N)
-data$n <- rep(10, times = N)
-data$p <- seq(from = 0, to =1, length.out = N)
-#data$y <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-data$y <- rbinom(N, size = data$n, prob = data$p)
+data$n <- seq(from = 10, to = 100, length.out = N)
+#data$n <- rep(10, times = N)
+#data$p <- seq(from = 0, to =1, length.out = N)
+data$y <- c(1, 4, 8, 15, 20, 40, 50, 60, 80, 90)
+#data$y <- rbinom(N, size = data$n, prob = data$p)
 
 #posterior
 post <- PostSamplesEB(data)
@@ -62,6 +62,6 @@ for (l in c(2)){
     }
   }
 }
-results <- currResults
+results <- currResults 
 #uneven_sample_size_close_p <- results
-results_even_n_spread_p <- results
+results_uneven_n_far_y <- results
