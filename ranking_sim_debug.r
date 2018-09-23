@@ -1,5 +1,4 @@
 #move first item farther from others
-
 ## runs experiment using function in ranking_function.r and sim_ranking_experiment.r
 #create an .RData file for with parameters + ranks
 
@@ -12,11 +11,11 @@
 # #run in ranking
 setwd("/Users/cora/git_repos/RankingMethods")
 source("ranking_function.r")
+
 #creates clean results
-currResults <- as.data.frame(matrix(nrow = 0, ncol = 6))
+currResults <- as.data.frame(matrix(nrow = 0, ncol = 7))
 names(currResults) <- c("rankPriority", "rankSteepness",
-                        "loss", "totalLoss", "ranking", "samplesizen")
-results <- currResults
+                        "loss", "totalLoss", "ranking", "samplesizen", "datay")
 
 #create dataframe by hand
 N = 10
@@ -24,11 +23,11 @@ data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
 
 data$item <- seq(1:N)
-data$n <- seq(from = 10, to = 100, length.out = N)
-#data$n <- rep(10, times = N)
-#data$p <- seq(from = 0, to =1, length.out = N)
-data$y <- c(1, 4, 8, 15, 20, 40, 50, 60, 80, 90)
-#data$y <- rbinom(N, size = data$n, prob = data$p)
+data$n <- rep(10, times = N)
+data$n[10] <- 100 #move one large n around to test behavior around sample size
+data$p <- seq(from = 0.1, to = 0.8, length.out = N)
+#data$y <- c(1, 4, 8, 15, 20, 40, 50, 60, 80, 90) #uneven spacing of y
+data$y <- rbinom(N, size = data$n, prob = data$p)
 
 #posterior
 post <- PostSamplesEB(data)
@@ -55,13 +54,13 @@ for (l in c(2)){
       totalLoss <- as.numeric(sum(rankFunctionResult[[1]])) #this is an nxn rank matrix, so loss = sum(matrix)
       ranks <- list(as.integer(rankFunctionResult[[2]]))
       
-      row <- c(rp, rs,"identity", l, totalLoss, "placeholder")
+      row <- c(rp, rs,"identity", l, totalLoss, "placeholder", "placeholder")
       currResults[nrow(currResults) + 1, ] <- row
       currResults$ranking[nrow(currResults)] <- ranks
       currResults$samplesizen[nrow(currResults)] <- list(data$n) ##save true data n (SimData)
+      currResults$datay[nrow(currResults)] <- list(data$y) ##save true data n (SimData)
     }
   }
 }
-results <- currResults 
-#uneven_sample_size_close_p <- results
-results_uneven_n_far_y <- results
+results_large_n <- currResults 
+
