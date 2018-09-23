@@ -23,11 +23,13 @@ data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
 
 data$item <- seq(1:N)
-data$n <- rep(10, times = N)
-data$n[10] <- 100 #move one large n around to test behavior around sample size
+data$n <- rep(1000, times = N)
+#data$n[10] <- 100 #move one large n around to test behavior around sample size
 data$p <- seq(from = 0.1, to = 0.8, length.out = N)
+#data$p[1] <- 0.172 #move one closer and farther from 2
 #data$y <- c(1, 4, 8, 15, 20, 40, 50, 60, 80, 90) #uneven spacing of y
 data$y <- rbinom(N, size = data$n, prob = data$p)
+data$y[1] <- data$y[2]-2 #move one closer and farther from 2
 
 #posterior
 post <- PostSamplesEB(data)
@@ -62,5 +64,5 @@ for (l in c(2)){
     }
   }
 }
-results_large_n <- currResults 
+results_spacing <- currResults 
 

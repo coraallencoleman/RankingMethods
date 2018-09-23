@@ -16,7 +16,7 @@ library(dplyr)
 library(rstanarm)
 library(clue)
 
-set.seed(10)
+#set.seed(10)
 
 ### Ranking Function for Extracting Parameters and Ranking ### 
 
