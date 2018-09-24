@@ -23,19 +23,24 @@ data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
 
 data$item <- seq(1:N)
-data$n <- rep(1000, times = N)
+data$n <- rep(1000, times = N) #TODO fix sample size for 1 or 2 as big. see what happens as you move
 #data$n[10] <- 100 #move one large n around to test behavior around sample size
 data$p <- seq(from = 0.1, to = 0.8, length.out = N)
 #data$p[1] <- 0.172 #move one closer and farther from 2
 #data$y <- c(1, 4, 8, 15, 20, 40, 50, 60, 80, 90) #uneven spacing of y
 data$y <- rbinom(N, size = data$n, prob = data$p)
-data$y[1] <- data$y[2]-2 #move one closer and farther from 2
+data$y[1] <- data$y[2]-1 #move one closer and farther from 2 
+#TODO this problems in this ranking is because there is an issue with posterior sample (still randomness here!) 
+#change n size here, make everything else deterministic
+#TODO in rank function, tell it to use random for ties if using
+#TODO play with real data, visualization. play with rank loss, pr loss,  weighting
 
 #posterior
 post <- PostSamplesEB(data)
 
 #rank weights
-steepness = c(0.001, 0.01, 0.1, 0.3, 0.5)
+steepness = c(0.001, 0.01, 0.1, 0.3, 0.5) #make epsilon larger? powers of 10? TODO started at (.5)^, (1/10)^, (1/100)^ 
+#when does it get infinite? Scaling depends on loss function. Try all the things we did for today with smaller ()
 priority = c("top", "even")
 rankWeights <- as.data.frame(matrix(nrow = 0, ncol = 3))
 names(rankWeights) <- c("rw", "rankPriority", "rankSteepness")

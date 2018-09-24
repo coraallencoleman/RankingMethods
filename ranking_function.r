@@ -337,5 +337,3 @@ RankMetricStrict <- function(rankObject = NULL, order = "largest", topN = 5){
   ranking <- as.integer(rankObject[[1]][1:topN])
   return(1:topN == ranking)
 }
-
-# TODO How often is #1 ranked as #1? How often is #1 and #2 ranked
