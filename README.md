@@ -12,7 +12,6 @@ RunSimulation (sim_ranking_experiment.r)
 ## Parameters for Simulation
 see lossDF data frame
 
-
 # Comparing Ranking Methods
 use variables
 For data set, vary on:
@@ -49,6 +48,7 @@ Do this for:
   - use posterior to get rankings
 4. save rankings matrix in a list by ranking method. each matrix has a cols items, rank. N, n_sim, n_rankingMethod
 
+Testing with ranking_sim_debug.r
 
 #varying gap width expected order stats from various beta distributions
 standard unif will evenly space from i/N+1
