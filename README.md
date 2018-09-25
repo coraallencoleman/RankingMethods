@@ -178,7 +178,6 @@ August 2018: send paper to Ron for final edits, submit
 ## Function specific TODOs (older)
 ## Future Work Notes ##
 ## TODO 3 outer product of the matrix to vectorize to replace double for loops. vectorizing apply outer product
-## TODO loss for zero one loss
 ## TODO Q: for rank, must use r function sort. How can we fix this? OR is this fine?
 ## TODO should there be autoscaling of original matrix to prevent numbers that are too small?
 ## TODO add checks for invalid inputs
