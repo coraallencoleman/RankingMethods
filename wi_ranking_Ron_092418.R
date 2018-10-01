@@ -18,6 +18,7 @@ lbw_HPD <- t(apply(lbw_samples,1,function(x) HPDinterval(mcmc(x))))
 lbw_rank_HPD <- t(apply(lbw_ranks,1,function(x) HPDinterval(mcmc(x))))
 lbw_order_HPD <- t(apply(lbw_order,1,function(x) HPDinterval(mcmc(x))))
 
+#calculating loss on rank scale?
 SEL_rank <- matrix(NA,71,71) #what does SEL stand for? 
 for (i in 1:71) {
   for (j in 1:71) {
@@ -25,19 +26,20 @@ for (i in 1:71) {
   }
 }
 
-SEL_prob <- matrix(NA,71,71)
+#calculating loss on prob scale?
+SEL_prob <- matrix(NA,71,71) 
 for (i in 1:71) {
   for (j in 1:71) {
     SEL_prob[i,j] <- mean((lbw_samples[i,]-lbw_order[j,])^2)
   }
 }
 
-lbw_rank_pm <- apply(lbw_ranks,1,mean)
-lbw_rank_SEL_rank_ind_opt <- apply(SEL_rank,1,which.min)
-lbw_rank_SEL_rank_joint_opt <- as.numeric(solve_LSAP(SEL_rank))
+lbw_rank_pm <- apply(lbw_ranks,1,mean) #posterior mean
+lbw_rank_SEL_rank_ind_opt <- apply(SEL_rank,1,which.min) #individually optimal ranks
+lbw_rank_SEL_rank_joint_opt <- as.numeric(solve_LSAP(SEL_rank)) #jointly optimal ranks
 
-lbw_rank_SEL_prob_ind_opt <- apply(SEL_prob,1,which.min)
-lbw_rank_SEL_prob_joint_opt <- as.numeric(solve_LSAP(SEL_prob))
+lbw_rank_SEL_prob_ind_opt <- apply(SEL_prob,1,which.min) #individually optimal ranks on pr scale
+lbw_rank_SEL_prob_joint_opt <- as.numeric(solve_LSAP(SEL_prob)) #jointly optimal ranks on pr scale
 
 
 
