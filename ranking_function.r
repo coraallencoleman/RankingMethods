@@ -73,7 +73,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
 }
 
   
-RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
+RankingWeights <- function(numItems, priority = "top", steepness = .9){
   # Computes optimal ranking for a list of estimates. Largest weight is always 1. TODO: add ability to use 0 1 weights for topN
   #   
   # Args:
@@ -94,7 +94,7 @@ RankingWeights <- function(numItems = 20, priority = "top", steepness = .9){
   } else if (priority == "bottom"){
     # reverse version (you care about last items only)
     weights = (1-steepness)^((numItems-items))
-  } else if (priority == "both"){
+  } else if (priority == "both"){ #TODO this seems broken - fix
     # weights = c(1, e, e^2, ..., e^(n+1/2) middle, ..., e^2, e, 1)
     #for even, repeats same weight at bottom. (if numItems = 20, items 10 and 11 will both have the smallest weight)
     #for odd, one item will have smallest weight. (if numItems = 21, item 11 will have the smallest weight)

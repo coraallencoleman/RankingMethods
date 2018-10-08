@@ -1,29 +1,21 @@
-library(tidyverse)
-library(reshape2)
-library(coda)
-library(clue)
+#real data, weighting, indiv ranking vs joint ranking & compromises (10/8)
 
-setwd("/Users/cora/git_repos/RankingMethods/")
+#Step 1: Run wi_ranking_Ron_092418.R
 
-lbw_wi <- read_csv("lbw_wi.csv")
-#remove missing, then create N normal birth weight, % LBW columns
-lbw_wi <- lbw_wi %>% mutate(nbw=births-lbw,perc_lbw=lbw/births*100) %>% filter(!is.na(lbw))
+#Step 2: add weights
+N = 71
+rankPriority = c("top", "bottom")
+rankSteepness = c(0, 0.0001, 0.001, 0.01,  0.1, 0.3, .5, .7, .9) #rankWeights
 
-#sample from LBW beta distribution using lbw as shape1, nbw as shape2 Q
-lbw_samples <- replicate(10000,
-                         rbeta(n = 71, shape1=lbw_wi$lbw, shape2=lbw_wi$nbw))
-#if p follows beta(a,b) and y follows bin(n,p) then p|y follows beta(a+y, b+n-y) 
-#This is an improper prior (a,b cannot be 0), but this becomes a proper posterior 
-#as long as you have > 0 successes and > 0 failures. close to doing a bootstrap. like a null model.
-
-lbw_ranks <- apply(lbw_samples,2,rank) #Q doesnt this flip? I use 1 here in WeightedLossRanking function
-lbw_order <- apply(lbw_samples,2,sort) 
-#when you do things by rows (2), it doesn't flip. Always outputs same. 
-
-#creates 71 X 2 MATRIX of HPD intervals
-lbw_HPD <- t(apply(lbw_samples,1,function(x) HPDinterval(mcmc(x)))) 
-lbw_rank_HPD <- t(apply(lbw_ranks,1,function(x) HPDinterval(mcmc(x))))
-lbw_order_HPD <- t(apply(lbw_order,1,function(x) HPDinterval(mcmc(x))))
+rankWeights <- as.data.frame(matrix(nrow = 0, ncol = 3))
+names(rankWeights) <- c("rw", "rankPriority", "rankSteepness")
+for (rp in rankPriority){
+  for (rs in rankSteepness){
+    rw <- list(as.double(RankingWeights(numItems = N, priority = rp, steepness = rs)))
+    rankWeights[nrow(rankWeights) + 1,] <- list(I(rw), rp, rs)
+    
+  }
+}
 
 #calculating loss on rank scale
 SEL_rank <- matrix(NA,71,71) #square error loss
@@ -65,14 +57,14 @@ for (i in 1:71) {
 
 #creates data frame for all the things we've calculated above for viz
 lbw_results_selr <- data_frame(county=lbw_wi$county, #SEL rank scale DF
-                          LBW_pm=apply(lbw_samples,1,mean),
-                          LBW_LCL=lbw_HPD[,1],
-                          LBW_UCL=lbw_HPD[,2],
-                          LBW_rank_pm=lbw_rank_pm,
-                          LBW_rank_io=lbw_rank_SEL_rank_ind_opt,
-                          LBW_rank_jo=lbw_rank_SEL_rank_joint_opt,
-                          LBW_rank_LCL=lbw_rank_HPD[,1],
-                          LBW_rank_UCL=lbw_rank_HPD[,2]) %>% 
+                               LBW_pm=apply(lbw_samples,1,mean),
+                               LBW_LCL=lbw_HPD[,1],
+                               LBW_UCL=lbw_HPD[,2],
+                               LBW_rank_pm=lbw_rank_pm,
+                               LBW_rank_io=lbw_rank_SEL_rank_ind_opt,
+                               LBW_rank_jo=lbw_rank_SEL_rank_joint_opt,
+                               LBW_rank_LCL=lbw_rank_HPD[,1],
+                               LBW_rank_UCL=lbw_rank_HPD[,2]) %>% 
   arrange(LBW_rank_jo)
 
 lbw_results_selp <- data_frame(county=lbw_wi$county, #pr scale DF
@@ -102,7 +94,10 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   geom_point(pch=15,cex=2)+
   scale_y_discrete("") +
   scale_x_continuous("",breaks=seq(1,71,by=5)) +
-#  scale_x_continuous(breaks=lbw_order_stats[c(1:7,seq(10,60,by=10),67:71)],minor_breaks=lbw_order_stats,labels=c(1:7,seq(10,60,by=10),67:71))+
+  #  scale_x_continuous(breaks=lbw_order_stats[c(1:7,seq(10,60,by=10),67:71)],minor_breaks=lbw_order_stats,labels=c(1:7,seq(10,60,by=10),67:71))+
   scale_color_gradient(low="white",high="black",limits=c(0,1),guide=FALSE)+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
   xlab("Rank") + ggtitle("County Ranks by Rank Frequency")
+
+#Step 3: create weighted ranking visualizations
+#add weights
