@@ -16,7 +16,7 @@ lbw_samples <- replicate(10000,
 #This is an improper prior (a,b cannot be 0), but this becomes a proper posterior 
 #as long as you have > 0 successes and > 0 failures. close to doing a bootstrap. like a null model.
 
-lbw_ranks <- apply(lbw_samples,2,rank) #Q doesnt this flip? I use 1 here in WeightedLossRanking function
+lbw_ranks <- apply(lbw_samples,2,rank)
 lbw_order <- apply(lbw_samples,2,sort) 
 #when you do things by rows (2), it doesn't flip. Always outputs same. 
 

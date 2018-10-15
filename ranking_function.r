@@ -63,7 +63,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankWeights[j]*itemweights[i]*mean(abs((rho_i[i,]-rho_j[j,]))^loss)
+        LossRnk[i,j] <- rankWeights[j]*itemWeights[i]*mean(abs((rho_i[i,]-rho_j[j,]))^loss)
       }
     }
     totalLoss = sum(LossRnk)
