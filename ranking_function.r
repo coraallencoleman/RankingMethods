@@ -22,8 +22,8 @@ library(clue)
 
 WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = NULL, loss = 2,  
                                 f=identity, 
-                                rankWeights = rep(1, times = n), itemweights = rep(1, times = n)){
-# Computes optimal ranking for a list of estimates
+                                rankWeights = rep(1, times = n), itemWeights = rep(1, times = n)){
+# Compute optimal ranking for a list of estimates
 #   
 # Args:
 #   model: a stan model for the estimates
@@ -32,7 +32,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
 #   loss: an exponent indicating the loss function for ranking. options: 2=square, 1=absolute, 0=zero
 #   f: scale for loss calculation. options: identity, rank
 #   rankWeights: a vector of length equal to number of items to be ranked. Weights positions.
-#   itemweights: a vector of length equal to number of items to be ranked. Weights items.
+#   itemWeights: a vector of length equal to number of items to be ranked. Weights items.
 #
 # Returns:
 #   totalLoss
@@ -55,7 +55,7 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
     LossRnk <- matrix(NA,n,n)
     for (i in 1:n) {
       for (j in 1:n) {
-        LossRnk[i,j] <- rankWeights[j]*itemweights[i]*mean(m_rho_i[i,]!=m_rho_j[j,])
+        LossRnk[i,j] <- rankWeights[j]*itemWeights[i]*mean(m_rho_i[i,]!=m_rho_j[j,])
         }
     }
     return(solve_LSAP(LossRnk))
