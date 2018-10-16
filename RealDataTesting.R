@@ -8,7 +8,7 @@ post <- PostSamplesEB(lbw_wi) #uses lbw_wi
 
 #Step 2a: add rank weights (1 for 1:10)
 N = 71
-rankWeightsTop10 = c(rep(1, times = 10), rep(0, times = 61))
+rankWeightsTop10 = c(rep(1, times = 10), rep(0, times = 61)) #change this to approaching 01
 #gradual weighting
 rankPriority = c("top", "bottom")
 rankSteepness = c(0, 0.0001, 0.001, 0.01,  0.1, 0.3, .5, .7, .9) #rankWeights
@@ -24,9 +24,10 @@ for (rp in rankPriority){
 }
 
 #Step 2b: add item weights 1/variance
+#this generally moves low var items to the center of groups (in group ranks)
 #get variance of each, make into a vector
-inv_variance = apply(post, 2, var)
-itemWeights = inv_variance
+variance = apply(post, 2, var)
+itemWeights = 1/variance
 
 #Step 3: Rank
 rankEven_itemInvVar <- WeightedLossRanking(sampleMatrix = post, parameter = parameter, loss = 2, #f=iden,
@@ -162,6 +163,3 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
   xlab("Rank") + ggtitle("County Ranks by Rank Frequency")
 dev.off()
-
-#Step 3: create weighted ranking visualizations
-#add weights
