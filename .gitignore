@@ -2,6 +2,7 @@ notes/
 
 *.RData
 *.Rhistory
+plots/*
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
