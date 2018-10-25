@@ -1,5 +1,8 @@
 notes/
 
+*.RData
+*.Rhistory
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -228,6 +231,7 @@ TSWLatexianTemp*
 
 *.xls
 *.jpg
+*.jpeg
 *.eps
 
 Presentations/
