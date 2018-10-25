@@ -1,3 +1,5 @@
+#functions for grouped ranking
+
 library(tidyverse)
 library(coda)
 library(reshape2)

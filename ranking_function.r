@@ -53,8 +53,8 @@ WeightedLossRanking <- function(model = NULL, sampleMatrix = NULL, parameter = N
     #Q: this doesn't make sense unless we're on the rank scale, right? 
     #TODO give an error if user tries to use another scale
     LossRnk <- matrix(NA,n,n)
-    for (i in 1:n) {
-      for (j in 1:n) {
+    for (i in 1:n) { #item
+      for (j in 1:n) { #rank
         LossRnk[i,j] <- rankWeights[j]*itemWeights[i]*mean(m_rho_i[i,]!=m_rho_j[j,])
         }
     }
