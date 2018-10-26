@@ -17,8 +17,8 @@ currResults <- as.data.frame(matrix(nrow = 0, ncol = 7))
 names(currResults) <- c("rankPriority", "rankSteepness",
                         "loss", "totalLoss", "ranking", "samplesizen", "datay")
 
-#create dataframe by hand
-N = 10
+#create dataframe
+N = 50
 data <- as.data.frame(matrix(data = NA, nrow = N, ncol = 3,
                 dimnames = list(seq(1:N), c("item","n", "y"))))
 
@@ -35,8 +35,7 @@ data$y <- rbinom(N, size = data$n, prob = data$p)
 post <- PostSamplesEB(data)
 
 #rank weights
-steepness = c(0.001, 0.01, 0.1, 0.3, 0.5, 0.8, 0.99, 0.999, 0.9999) #make epsilon larger? powers of 10? TODO started at (.5)^, (1/10)^, (1/100)^ 
-#when does it get infinite? Scaling depends on loss function. Try all the things we did for today with smaller ()
+steepness = c(0.001, 0.01, 0.1, 0.3, 0.5, 0.8, 0.99, 0.999, 0.9999) #make epsilon larger?
 priority = c("top", "even")
 rankWeights <- as.data.frame(matrix(nrow = 0, ncol = 3))
 names(rankWeights) <- c("rw", "rankPriority", "rankSteepness")
