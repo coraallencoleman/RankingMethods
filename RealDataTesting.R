@@ -72,7 +72,7 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   scale_x_continuous("",breaks=seq(1,71,by=5)) +
   scale_color_gradient(low="white",high="black",limits=c(0,1),guide=FALSE)+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
-  xlab("Rank") + ggtitle("County Ranks by Rank Frequency")
+  xlab("Rank") + ggtitle("County Ranks by Rank Frequency:\nUnweighted on Ranks, Inverse Variance on Counties")
 dev.off()
 
 #viz 2
@@ -84,7 +84,7 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   scale_x_continuous("",breaks=seq(1,71,by=5)) +
   scale_color_gradient(low="white",high="black",limits=c(0,1),guide=FALSE)+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
-  xlab("Rank") + ggtitle("County Ranks by Rank Frequency")
+  xlab("Rank") + ggtitle("County Ranks by Rank Frequency:\nZero-One Weights on Ranks, Inverse Variance on Counties")
 dev.off()
 
 #viz 3
@@ -96,7 +96,7 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   scale_x_continuous("",breaks=seq(1,71,by=5)) +
   scale_color_gradient(low="white",high="black",limits=c(0,1),guide=FALSE)+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
-  xlab("Rank") + ggtitle("County Ranks by Rank Frequency")
+  xlab("Rank") + ggtitle("County Ranks by Rank Frequency:\nGradual Weights on Ranks, Inverse Variance on Counties")
 dev.off()
 
 #old visualizations

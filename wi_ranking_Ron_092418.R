@@ -98,6 +98,8 @@ post_df$county <- factor(post_df$county,levels=rev(lbw_wi$county[order(lbw_rank_
 #puts them in correct order in visualization. Makes this an ordered factor. Reverse is because he wants low at top, high at bottom
 
 #grey scale rank viz #Q 
+ps.options(fonts=c("serif"), width = 7, height = 7)
+postscript("plots/wi_LBW_rank.eps")
 ggplot(post_df,aes(x=rank,y=county,color=value))+
   geom_point(pch=15,cex=2)+
   scale_y_discrete("") +
@@ -106,3 +108,4 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   scale_color_gradient(low="white",high="black",limits=c(0,1),guide=FALSE)+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
   xlab("Rank") + ggtitle("County Ranks by Rank Frequency")
+dev.off()
