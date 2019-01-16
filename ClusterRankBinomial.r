@@ -14,7 +14,8 @@ postSamples <- createPostSamples(data)
 postRanks <- posteriorRanks(postSamples)
 postOrders <- posteriorOrder(postSamples)
 HPDMatrices <- HPDIntervalMatrices(postSamples, postRanks, postOrders)
-
+rankLosses <- rankLoss(postSamples, postRanks)
+probLosses <- probLoss(postSamples, postOrders)
 
 ### Functions ###
 
@@ -30,7 +31,7 @@ createPostSamples <- function(data){
   #sample from LBW beta distribution using lbw as shape1, nbw as shape2 Q
   #if p follows beta(a,b) and y follows bin(n,p) then p|y follows beta(a+y, b+n-y) 
   #This is an improper prior (a,b cannot be 0), but this becomes a proper posterior  as long as you have > 0 successes and > 0 failures. close to doing a bootstrap. like a null model.
-  postSamples <- replicate(10000, rbeta(n = 71, shape1=lbw_wi$lbw, shape2=lbw_wi$nbw))
+  postSamples <- replicate(10000, rbeta(n = 71, shape1=data$lbw, shape2=data$nbw))
   return(postSamples)
 }
 
@@ -46,8 +47,6 @@ posteriorOrder <- function(postSamples){
 
 HPDIntervalMatrices <- function(postSamples, postRanks, postOrders){
   #create 3 71 X 2 MATRIX of HPD intervals
-  
-
   samples_HPD <- t(apply(postSamples,1,function(x) HPDinterval(mcmc(x)))) 
   postRanks_HPD <- t(apply(postRanks,1,function(x) HPDinterval(mcmc(x))))
   postOrders_HPD <- t(apply(postOrders,1,function(x) HPDinterval(mcmc(x))))
@@ -64,7 +63,7 @@ rankLoss <- function(postSamples, postRank){
       SEL_rank[i,j] <- mean((postRanks[i,]-j)^2)
     }
   }
-  return(rankLoss)
+  return(SEL_rank)
 }
 
 probLoss <- function(postSamples, postOrder){
@@ -75,6 +74,7 @@ probLoss <- function(postSamples, postOrder){
       SEL_prob[i,j] <- mean((postSamples[i,]-postOrder[j,])^2)
     }
   }
+  return(SEL_prob)
 }
 
 optimalRanks <- function(postSamples, SEL_rank, SEL_prob){
