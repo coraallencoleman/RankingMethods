@@ -96,7 +96,7 @@ optimalRanks <- function(postSamples, rankLosses, probLosses){
 
 ## VISUALIZATIONS ##
 
-
+#TODO fix these if you end up using this file
 DF_selr_selp <- function(data, postSamples, postStatsDF){
   #creates data frame for all the things we've calculated above for viz
  #lbw_results_selr
@@ -124,7 +124,7 @@ DF_selr_selp <- function(data, postSamples, postStatsDF){
 }
 
 
-
+#TODO some of these variable names will be wrong
 VizDataFrame <- function(postRanks, lbw_wi, lbw_rank_SEL_prob_joint_opt){
   #creates pr and scales them. Pr(given county at that rank relative to its posterior mode)
   #gives realtive prob in rank direction but not relative to other counties
