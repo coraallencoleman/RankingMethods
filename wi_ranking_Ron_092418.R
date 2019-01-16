@@ -1,3 +1,5 @@
+# Rank and Cluster Binomial Data WI Example
+
 library(tidyverse)
 library(reshape2)
 library(coda)
@@ -41,7 +43,8 @@ for (i in 1:71) {
   }
 }
 
-lbw_rank_pm <- apply(lbw_ranks,1,mean) #posterior mean
+lbw_rank_pm <- apply(lbw_ranks,1,mean) #posterior mean 
+lbw_order_stats <- order(lbw_rank_pm) #TODO is this right? previous #TODO: lbw_order_stats doesnt exist yet. needs to be created. post means of rows
 lbw_rank_SEL_rank_ind_opt <- apply(SEL_rank,1,which.min) #individually optimal ranks
 lbw_rank_SEL_rank_joint_opt <- as.numeric(solve_LSAP(SEL_rank)) #jointly optimal ranks
 
