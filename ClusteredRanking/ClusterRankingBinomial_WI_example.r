@@ -1,3 +1,5 @@
+# Rank and Cluster Binomial Data WI Example
+
 library(tidyverse)
 library(coda)
 library(reshape2)

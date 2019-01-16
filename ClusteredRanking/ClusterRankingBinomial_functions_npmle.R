@@ -7,23 +7,22 @@ library(clue)
 library(Hmisc)
 library(RColorBrewer)
 
-
 npmle.bin <- function(y,n,k=NULL,n.iter=1000,row_names=NULL) {
 #  theta <- quantile(y/n,probs=(0:(k-1))/(k-1))
   if (is.null(k)) {
-    theta<-sort(y/n)
-    k<-length(theta)
+    theta<-sort(y/n) #sorted probabilities
+    k<-length(theta) #k = number of units to rank
   } else {
     theta <- seq(min(y/n),max(y/n),length=k)
   }
-  p_theta <- rep(1/k,k)
+  p_theta <- rep(1/k,k) #evenly spaced probabilities between 0 and 1 for groups?
   
-  E_z <- matrix(NA,length(y),k)
+  E_z <- matrix(NA,length(y),k) 
   for (j in 1:n.iter) {
     for (i in 1:k) {
-      E_z[,i] <- log(p_theta[i])+dbinom(y,n,theta[i],log=TRUE)
+      E_z[,i] <- log(p_theta[i])+dbinom(y,n,theta[i],log=TRUE) #TODO E_z is log(pr associated with group) + log(quantile)?
     }
-    E_z <- t(apply(E_z,1,function(x) exp(x-max(x))/sum(exp(x-max(x)))))
+    E_z <- t(apply(E_z,1,function(x) exp(x-max(x))/sum(exp(x-max(x))))) #E_z will be
     p_theta <- apply(E_z,2,mean)
     theta <- y%*%E_z/n%*%E_z
   }
@@ -48,6 +47,7 @@ npmle.bin <- function(y,n,k=NULL,n.iter=1000,row_names=NULL) {
 }
 
 rank_cluster.bin <- function(y,n,k=NULL,scale=identity,weighted=TRUE,n.iter=1000,n.samp=10000,row_names=NULL) {
+  #assigns ranks then clusters to each item in a list for binomial data
   N <- length(y)
   
   npmle_res <- npmle.bin(y,n,k,n.iter,row_names)
@@ -92,6 +92,7 @@ rank_cluster.bin <- function(y,n,k=NULL,scale=identity,weighted=TRUE,n.iter=1000
 }
 
 getmode <- function(v) {
+  #retrieves mode from list v
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
