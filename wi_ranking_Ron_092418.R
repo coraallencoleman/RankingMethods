@@ -112,3 +112,4 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
   xlab("Rank") + ggtitle("County Ranks by Rank Frequency")
 dev.off()
+

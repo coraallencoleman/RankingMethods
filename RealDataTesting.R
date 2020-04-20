@@ -1,6 +1,7 @@
 #real data, weighting, indiv ranking vs joint ranking & compromises (10/8)
 
 #Step 1: Run wi_ranking_Ron_092418.R and:
+source("ranking_function.r")
 lbw_wi$y <- lbw_wi$lbw
 lbw_wi$n <- lbw_wi$births
 lbw_wi$item <- lbw_wi$county
@@ -64,7 +65,8 @@ post_df$rank <- post_df$Var2
 #post_df$pos <- lbw_order_stats[post_df$Var2] #TODO lbw_order_stats doesnt exist yet. needs to be created:posterior means of rows
 post_df$county <- factor(post_df$county,levels=rev(lbw_wi$county[order(as.numeric(rankEven_itemInvVar[[2]]))]),ordered=TRUE) #puts them in correct order in visualization. Makes this an ordered factor. Reverse is because he wants low at top, high at bottom
 
-#viz 1
+#viz 1: Fig 9 in Diss Ch 1.
+# order same as Fig 10 (post_SEL_weighted_rankgrad_itemInvVar)
 postscript("plots/post_SEL_weighted_rankEven_itemInvVar.eps")
 ggplot(post_df,aes(x=rank,y=county,color=value))+
   geom_point(pch=15,cex=2)+
@@ -73,6 +75,19 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   scale_color_gradient(low="white",high="black",limits=c(0,1),guide=FALSE)+
   theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
   xlab("Rank") + ggtitle("County Ranks by Rank Frequency:\nUnweighted on Ranks, Inverse Variance on Counties")
+dev.off()
+#viz 3b Fig 10 in Diss Ch 1
+# need to order same as Fig 9
+# commented out to order same as Fig9
+post_df$county <- factor(post_df$county,levels=rev(lbw_wi$county[order(as.numeric(rankgrad_itemInvVar[[2]]))]),ordered=TRUE)
+postscript("plots/post_SEL_weighted_rankgrad_itemInvVar.eps")
+ggplot(post_df,aes(x=rank,y=county,color=value))+
+  geom_point(pch=15,cex=2)+
+  scale_y_discrete("") +
+  scale_x_continuous("",breaks=seq(1,71,by=5)) +
+  scale_color_gradient(low="white",high="black",limits=c(0,1),guide=FALSE)+
+  theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank()) +
+  xlab("Rank") + ggtitle("County Ranks by Rank Frequency:\nGradual Weights on Ranks, Inverse Variance on Counties")
 dev.off()
 
 #viz 2
@@ -87,7 +102,7 @@ ggplot(post_df,aes(x=rank,y=county,color=value))+
   xlab("Rank") + ggtitle("County Ranks by Rank Frequency:\nZero-One Weights on Ranks, Inverse Variance on Counties")
 dev.off()
 
-#viz 3
+#viz 3 Fig 10
 post_df$county <- factor(post_df$county,levels=rev(lbw_wi$county[order(as.numeric(rankgrad_itemInvVar[[2]]))]),ordered=TRUE)
 postscript("plots/post_SEL_weighted_rankgrad_itemInvVar.eps")
 ggplot(post_df,aes(x=rank,y=county,color=value))+

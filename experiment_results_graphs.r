@@ -99,34 +99,44 @@ StrictMetric_e
 dev.off()
 
 ps.options(fonts=c("serif"), width = 7, height = 7)
-postscript("plots/point_StrictMetric_e.eps")
-pointStrictMetric_e <- ggplot(results) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent1)), color = "gray", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent3)), color = "black", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent7)), color = "pink", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent10)), color = "red", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent13)), color = "orange", stat="summary", fun.y=mean) +
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent16)), color = "yellow", stat="summary", fun.y=mean) +
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent18)), color = "green", stat="summary", fun.y=mean) +
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricStrictPercent20)), color = "blue", stat="summary", fun.y=mean) +
-  ggtitle("% of Top N Elements Ranked Correctly (Strict) by Weight Steepness") +
-  ylab("Mean Percent Top N Elements Correct (Strict)") + xlab("Rank Weight Steepness (epsilon)")
+postscript("plots/point_StrictMetric_e_legend.eps")
+colors <- c("N = 1" = "gray", "N = 3" = "red", "N = 7" = "orange", "N = 10" = "yellow", "N = 13" = "green","N = 16" = "blue", "N = 18" = "purple", "N = 20" = "black")
+colors <- factor(colors, levels = c("gray", "red", "orange", "yellow", "green", "blue", "purple", "black"))
+pointStrictMetric_e <- ggplot(results, aes(x = as.factor(rankSteepness))) + 
+  geom_point(aes(y = as.numeric(metricStrictPercent1), color = "N = 1"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricStrictPercent3), color = "N = 3"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricStrictPercent7), color = "N = 7"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricStrictPercent10), color = "N = 10"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricStrictPercent13), color = "N = 13"), stat="summary", fun.y=mean) +
+  geom_point(aes(y = as.numeric(metricStrictPercent16), color = "N = 16"), stat="summary", fun.y=mean) +
+  geom_point(aes(y = as.numeric(metricStrictPercent18), color = "N = 18"), stat="summary", fun.y=mean) +
+  geom_point(aes(y = as.numeric(metricStrictPercent20), color = "N = 20"), stat="summary", fun.y=mean) +
+  scale_color_manual(values = colors) + ggtitle("Percent of Top N Elements Ranked Correctly\n(Strict Metric)") +
+  theme_gray() +
+  labs(x = "Rank Weight Steepness",
+       y = "Mean Percent Top N Elements Correct (Strict Metric)",
+       color = "Count N")
 pointStrictMetric_e
 dev.off() 
 
 ps.options(fonts=c("serif"), width = 7, height = 7)
 postscript("plots/point_Metric_e.eps")
-pointMetric_e <- ggplot(results) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent1)), color = "gray", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent3)), color = "black", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent7)), color = "pink", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent10)), color = "red", stat="summary", fun.y=mean) + 
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent13)), color = "orange", stat="summary", fun.y=mean) +
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent16)), color = "yellow", stat="summary", fun.y=mean) +
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent18)), color = "green", stat="summary", fun.y=mean) +
-  geom_point(aes(as.factor(rankSteepness), as.numeric(metricPercent20)), color = "blue", stat="summary", fun.y=mean) +
-  ggtitle("% True Top N Ranked in Top N by Weight Steepness") +
-  ylab("Mean True Top N Ranked in Top N") + xlab("Rank Weight Steepness (epsilon)")
+colors <- c("N = 1" = "gray", "N = 3" = "red", "N = 7" = "orange", "N = 10" = "yellow", "N = 13" = "green","N = 16" = "blue", "N = 18" = "purple", "N = 20" = "black")
+pointMetric_e <- ggplot(results, aes(x = as.factor(rankSteepness))) + 
+  geom_point(aes(y = as.numeric(metricPercent1), color = "N = 1"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricPercent3), color = "N = 3"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricPercent7), color = "N = 7"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricPercent10), color = "N = 10"), stat="summary", fun.y=mean) + 
+  geom_point(aes(y = as.numeric(metricPercent13), color = "N = 13"), stat="summary", fun.y=mean) +
+  geom_point(aes(y = as.numeric(metricPercent16), color = "N = 16"), stat="summary", fun.y=mean) +
+  geom_point(aes(y = as.numeric(metricPercent18), color = "N = 18"), stat="summary", fun.y=mean) +
+  geom_point(aes(y = as.numeric(metricPercent20), color = "N = 20"), stat="summary", fun.y=mean) +
+  ggtitle("Percent of True Top N Ranked within Top") +
+  scale_color_manual(values = colors) +
+  theme_gray() + 
+  labs(x = "Rank Weight Steepness",
+       y = "Mean True Top N ranked within Top",
+       color = "Count N")
 pointMetric_e
 dev.off() 
 
